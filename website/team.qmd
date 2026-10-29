@@ -1,0 +1,34 @@
+---
+title: "Team"
+toc: false
+---
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.team-card}
+### Pierce Clark
+
+Bio goes here.
+
+::: {.team-links}
+[[]{.bi .bi-github} GitHub](https://github.com/pclarkhmc)
+[[]{.bi .bi-linkedin} LinkedIn](https://www.linkedin.com/in/pierce-clark949/)
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.team-card}
+### Haspard Murphy
+
+Bio goes here.
+
+::: {.team-links}
+[[]{.bi .bi-github} GitHub](https://github.com/hlmurphy)
+[[]{.bi .bi-linkedin} LinkedIn](https://www.linkedin.com/in/haspard-murphy-39893732b/)
+:::
+:::
+:::
+
+:::

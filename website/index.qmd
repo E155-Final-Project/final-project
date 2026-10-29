@@ -1,0 +1,13 @@
+---
+title: "E155 Final Project"
+subtitle: "Pierce Clark and Haspard Murphy"
+toc: false
+---
+
+A one-line summary of the project goes here.
+
+![System block diagram.](images/system_block.png){#fig-system-block}
+
+## On This Site
+
+The [Proposal](proposal.qmd) describes what we plan to build, and [Team](team.qmd) introduces the people building it. Source code for the FPGA and MCU is on [GitHub](https://github.com/E155-Final-Project/final-project).

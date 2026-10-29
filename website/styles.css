@@ -1,0 +1,17 @@
+/* css styles */
+
+.team-card {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  height: 100%;
+}
+
+.team-card h3 {
+  margin-top: 0;
+}
+
+.team-links a {
+  margin-right: 1rem;
+  text-decoration: none;
+}
