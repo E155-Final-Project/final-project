@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "E155 Final Project",
+    "section": "",
+    "text": "A one-line summary of the project goes here."
+  },
+  {
+    "objectID": "index.html#on-this-site",
+    "href": "index.html#on-this-site",
+    "title": "E155 Final Project",
+    "section": "On This Site",
+    "text": "On This Site\nThe Proposal describes what we plan to build, and Team introduces the people building it. Source code for the FPGA and MCU is on GitHub."
+  },
+  {
+    "objectID": "team.html",
+    "href": "team.html",
+    "title": "Team",
+    "section": "",
+    "text": "Pierce Clark\nBio goes here.\n\n GitHub  LinkedIn\n\n\n\n\n\nHaspard Murphy\nBio goes here.\n\n GitHub  LinkedIn"
+  }
+]
