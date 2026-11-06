@@ -1,0 +1,4 @@
+checkpoint: models/fpga_balanced_h512-512-512.weights.h5
+split: balanced  hidden: 512,512,512  test images: 18800
+golden accuracy: 84.4894%
+golden vs keras agreement: 100.0000% (0 mismatches)
