@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://E155-Final-Project.github.io/final-project/proposal.html</loc>
-    <lastmod>2026-10-29T06:41:28.167Z</lastmod>
+    <loc>https://E155-Final-Project.github.io/final-project/team.html</loc>
+    <lastmod>2026-11-07T02:17:23.619Z</lastmod>
   </url>
   <url>
     <loc>https://E155-Final-Project.github.io/final-project/index.html</loc>
-    <lastmod>2026-10-29T06:41:28.167Z</lastmod>
+    <lastmod>2026-11-07T02:17:23.613Z</lastmod>
   </url>
   <url>
-    <loc>https://E155-Final-Project.github.io/final-project/team.html</loc>
-    <lastmod>2026-10-29T06:41:28.167Z</lastmod>
+    <loc>https://E155-Final-Project.github.io/final-project/blog.html</loc>
+    <lastmod>2026-11-07T02:17:23.613Z</lastmod>
+  </url>
+  <url>
+    <loc>https://E155-Final-Project.github.io/final-project/posts/bnn-emnist-ice40/index.html</loc>
+    <lastmod>2026-11-07T02:17:23.618Z</lastmod>
+  </url>
+  <url>
+    <loc>https://E155-Final-Project.github.io/final-project/proposal.html</loc>
+    <lastmod>2026-11-07T02:17:23.619Z</lastmod>
   </url>
 </urlset>
