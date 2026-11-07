@@ -14,6 +14,6 @@ module BNN_top(
 	HSOSC #(.CLKHF_DIV(2'b00)) hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_clk));
 	
 	// BNN_spi BNN_spi();	// recieves all the data
-	// BNN_core BNN_core(); // does all the calculations
+	BNN_core BNN_core(); // does all the calculations
 	
 endmodule

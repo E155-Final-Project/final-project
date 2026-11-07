@@ -3,29 +3,20 @@
 `ifndef MY_CONFIG_SVH
 `define MY_CONFIG_SVH
 
-localparam int WORD        = 64;
-localparam int N_LAYERS    = 4;
+localparam int N_LAYERS    = 4; 	// 3*512, 1*47
 localparam int NUM_CLASSES = 47;
-localparam int L0_N_IN    = 784;
-localparam int L0_N_OUT   = 512;
-localparam int L0_WORDS   = 13;   // words per neuron
-localparam int L0_PC_BITS = 10;
-localparam int L0_TH_BITS = 10;
-localparam int L1_N_IN    = 512;
-localparam int L1_N_OUT   = 512;
-localparam int L1_WORDS   = 8;   // words per neuron
-localparam int L1_PC_BITS = 10;
-localparam int L1_TH_BITS = 10;
-localparam int L2_N_IN    = 512;
-localparam int L2_N_OUT   = 512;
-localparam int L2_WORDS   = 8;   // words per neuron
-localparam int L2_PC_BITS = 10;
-localparam int L2_TH_BITS = 10;
-localparam int L3_N_IN    = 512;
-localparam int L3_N_OUT   = 47;
-localparam int L3_WORDS   = 8;   // words per neuron
-localparam int L3_PC_BITS = 10;
 
+localparam int L0_Neurons  = 512;
+localparam int L0_WORDS    = 13;   	// words per neuron
+
+localparam int L1_Neurons  = 512;
+localparam int L1_WORDS    = 8;   	// words per neuron
+
+localparam int L2_Neurons  = 512;
+localparam int L2_WORDS    = 8;   	// words per neuron
+
+localparam int L3_N_OUT    = 47;
+localparam int L3_WORDS    = 8;   	// words per neuron
 
 `endif
 

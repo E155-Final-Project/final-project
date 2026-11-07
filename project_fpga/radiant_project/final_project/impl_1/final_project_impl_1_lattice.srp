@@ -1,0 +1,206 @@
+synthesis:  version Radiant Software (64-bit) 2026.1.0.37.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
+Fri Nov  6 19:36:38 2026
+
+
+Command Line:  C:\lscc\radiant\2026.1\ispfpga\bin\nt64\synthesis.exe -f C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1_lattice.synproj -logfile final_project_impl_1_lattice.srp -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml 
+
+Lattice Synthesis Engine launched.
+
+Synthesis options:
+The -a option is iCE40UP.
+The -t option is SG48.
+The -sp option is High-Performance_1.2V.
+The -p option is iCE40UP5K.
+
+###################### Device Information ######################
+----------------------------------------------------------------
+Lattice Family        | iCE40UP
+----------------------------------------------------------------
+Device                | iCE40UP5K
+----------------------------------------------------------------
+Package               | SG48
+----------------------------------------------------------------
+Performance Grade     | High-Performance_1.2V
+----------------------------------------------------------------
+################################################################
+
+####################### Device Resources #######################
+----------------------------------------------------------------
+Logic Cells           | 5280
+----------------------------------------------------------------
+RAM Blocks            | 30
+----------------------------------------------------------------
+DSP Blocks            | 8
+----------------------------------------------------------------
+PLLs                  | 1
+----------------------------------------------------------------
+I/O Pins              | 56
+----------------------------------------------------------------
+################################################################
+
+Resolving user-selected strategy settings...
+
+INFO <35001797> - synthesis: Use DCC Insertion disabled by default.
+
+###################### Strategy Settings #######################
+----------------------------------------------------------------
+Optimization Goal     | Area
+----------------------------------------------------------------
+Top-level Module Name | BNN_top
+----------------------------------------------------------------
+Target Frequency      | 200.000 MHz
+----------------------------------------------------------------
+Maximum Fanout        | 1000
+----------------------------------------------------------------
+Timing Path Count     | 3
+----------------------------------------------------------------
+RAM Read/Write Check  | False
+----------------------------------------------------------------
+BRAM Utilization      | 100.0%
+----------------------------------------------------------------
+DSP Usage             | True
+----------------------------------------------------------------
+DSP Utilization       | 100.0%
+----------------------------------------------------------------
+FSM Encoding Style    | Auto
+----------------------------------------------------------------
+Resolve Mixed Drivers | False
+----------------------------------------------------------------
+Fix Gated Clocks      | True
+----------------------------------------------------------------
+Mux Style             | Auto
+----------------------------------------------------------------
+Use Carry Chain       | True
+----------------------------------------------------------------
+Carry Chain Length    | Infinite
+----------------------------------------------------------------
+Loop Limit            | 1950
+----------------------------------------------------------------
+Use I/O Insertion     | True
+----------------------------------------------------------------
+Use I/O Registers     | True
+----------------------------------------------------------------
+Resource Sharing      | True
+----------------------------------------------------------------
+Propagate Constants   | True
+----------------------------------------------------------------
+Remove Duplicate Reg  | True
+----------------------------------------------------------------
+Force GSR             | False
+----------------------------------------------------------------
+ROM Style             | Auto
+----------------------------------------------------------------
+RAM Style             | Auto
+----------------------------------------------------------------
+Remove LOC Properties | False
+----------------------------------------------------------------
+Partition Flow        | False
+----------------------------------------------------------------
+Use DCC Insertion     | None
+----------------------------------------------------------------
+################################################################
+
+
+The -comp option is FALSE.
+The -syn option is FALSE.
+
+Output HDL filename: final_project_impl_1.vm
+-sdc option: SDC file input is final_project_impl_1_cpe.ldc.
+-path . (searchpath added)
+-path .. (searchpath added)
+-path ../../../src (searchpath added)
+-path C:/lscc/radiant/2026.1/ispfpga/ice40tp/data (searchpath added)
+Mixed language design
+Verilog design file: C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.v
+Verilog design file: ../../../src/BNN_params.svh
+WARNING <30054000> - synthesis: Unexpected file name extension for Verilog file: ../../../src/BNN_params.svh
+Verilog design file: ../../../src/BNN_core.sv
+Verilog design file: ../../../src/BNN_top.sv
+Verilog design file: ../../../src/popcount.sv
+Verilog design file: ../../../src/BNN_spi.sv
+VHDL library: pmi
+VHDL design file: C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.vhd
+
+Compiling design...
+
+Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\generic.v. VERI-1482
+Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v. VERI-1482
+Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v. VERI-1482
+Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP\iCE40UP_sp.v. VERI-1482
+Analyzing Verilog file ../../../src/BNN_params.svh. VERI-1482
+Analyzing Verilog file C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.v. VERI-1482
+Analyzing Verilog file ../../../src/BNN_core.sv. VERI-1482
+Analyzing Verilog file ../../../src/BNN_top.sv. VERI-1482
+Analyzing Verilog file ../../../src/popcount.sv. VERI-1482
+Analyzing Verilog file ../../../src/BNN_spi.sv. VERI-1482
+Top module name (Verilog): BNN_top
+INFO <35901018> - synthesis: ../../../src/BNN_top.sv(3): compiling module BNN_top. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b0). VERI-1018
+INFO <35901018> - synthesis: ../../../src/BNN_core.sv(1): compiling module BNN_core. VERI-1018
+WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(53): expression size 64 truncated to fit in target size 1. VERI-1209
+INFO <35901018> - synthesis: ../../../src/popcount.sv(1): compiling module popcount. VERI-1018
+WARNING <35901330> - synthesis: ../../../src/BNN_core.sv(55): actual bit length 1 differs from formal bit length 64 for port data_in. VERI-1330
+WARNING <35901330> - synthesis: ../../../src/BNN_core.sv(55): actual bit length 10 differs from formal bit length 7 for port count_out. VERI-1330
+WARNING <35931013> - synthesis: ../../../src/BNN_top.sv(17): input port thresh[63] is not connected on this instance. VDB-1013
+[Parameter Setting Section Start]
+
+	[Parameter Settings for Instance(s): hf_osc]
+	(Module: HSOSC)
+		CLKHF_DIV                 2'b00
+
+	[Parameter Settings for Instance(s): popcount1]
+	(Module: popcount)
+		WIDTH                     64
+
+[Parameter Setting Section End]
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sck
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdi
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdo
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: load
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: done
+######## Missing driver on net sdo. Patching with GND.
+######## Missing driver on net done. Patching with GND.
+
+
+
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sck
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdi
+CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: load
+
+################### Begin Area Report (BNN_top)######################
+Number of register bits => 0 of 5280 (0 % )
+OB => 2
+################### End Area Report ##################
+Number of odd-length carry chains : 0
+Number of even-length carry chains : 0
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 0
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : sdo, loads : 0
+  Net : done, loads : 0
+################### End Clock Report ##################
+
+################### Begin Constraint Report ######################
+Constraint Summary:
+  Total number of constraints: 0
+  Total number of constraints dropped: 0
+###################  End Constraint Report  ######################
+
+Peak Memory Usage: 89 MB
+
+--------------------------------------------------------------
+Total CPU Time: 0 secs 
+Total REAL Time: 4 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: 23c9c7254d6e7661a42b92b3eb117ab5a0dafc08

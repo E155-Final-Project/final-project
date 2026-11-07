@@ -1,13 +1,19 @@
 module BNN_core(
-	input logic clk, reset,
-	output logic done
+	input logic clk, reset,		// control signals
+	output logic done,
+	
+	input logic [63:0] data_in, weight, thresh,
+	output logic [4:0] word,
+	output logic [1:0] layer,
+	output logic [9:0] neuron_hidden,
+	output logic [6:0] neuron_out
+	
 	);
 
 	logic sum;
-	logic [1:0] layer;
-	logic [9:0] neuron_hidden;
-	logic [4:0] word; 
-	logic [6:0] neuron_out;
+
+	logic [N_LAYERS-1:0][4:0] N_word = '{L0_WORDS, L1_WORDS, L2_WORDS, L3_WORDS};
+	logic [N_LAYERS-1:0][9:0] N_neuron = '{L0_WORDS, L1_WORDS, L2_WORDS, L3_WORDS};
 	
 	always_ff @(posedge clk) begin
 		if (reset) begin
@@ -20,17 +26,20 @@ module BNN_core(
 		else begin
 			// if word < maxword[layer] // (13 / 5)
 				// word++
+				// sum += popcount
 			// else
 				// word = 0
-				// if neuron_hidden < 512
+				// neuron =  (sum >= thresh)
+				// sum = 0
+				// if neuron_hidden < Neurons[layer]
 					// neuron++
 				// else
 					// neuron = 0
-					// if layer < 3
+					// if layer < (N_Layers - 1)
 						// layer++
 					// else
 						// layer = 0
-						// if neuron_out = 47
+						// if neuron_out = NUM_CLASSES
 							// neuron_out ++
 						// else
 							// done = 1
@@ -40,9 +49,8 @@ module BNN_core(
 	
 	end
 	
-	logic [63:0] data_in, weights;
 	logic [63:0] data_xnor;
-	assign data_xor = ~(data_in ^ weights);
+	assign data_xor = ~(data_in ^ weight);
 	logic [9:0] popcount;
 	popcount popcount1(.data_in(data_xor), .count_out(popcount));
 	
