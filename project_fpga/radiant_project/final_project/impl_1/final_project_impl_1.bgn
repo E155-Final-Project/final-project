@@ -1,0 +1,30 @@
+BITGEN: Bitstream Generator Radiant Software (64-bit) 2026.1.0.37.0
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
+Fri Nov  6 19:37:13 2026
+
+
+Command: bitgen -w -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml -freq 0 final_project_impl_1.udb C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1 
+
+Running DRC.
+DRC detected 0 errors and 0 warnings.
+
+Preference Summary:
++---------------------------------+---------------------------------+
+|  Preference                     |  Current Setting                |
++---------------------------------+---------------------------------+
+ *  Default setting.
+ ** The specified setting matches the default setting.
+
+
+Creating bit map...
+Saving bit stream in "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1.bin".
+Bitstream generation complete!
+
+Total CPU Time: 0 secs 
+Total REAL Time: 5 secs 
+Peak Memory Usage: 112 MB
+

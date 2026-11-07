@@ -1,0 +1,9 @@
+-ver "C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.v"
+-lib pmi -vhd "C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.vhd"
+-ver "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.svh"
+-sver "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/popcount.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv"
+-path "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project"
+-top BNN_top
+-isTop
+-a "iCE40UP"
+-t "iCE40UP5K"
