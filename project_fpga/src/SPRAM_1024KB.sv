@@ -10,22 +10,56 @@ module SPRAM_1024KB (
     output logic [63:0] data_out
 );
 
-    genvar i;
-    generate
-        for (i = 0; i < 4; i++) begin : blk
-            SP256K spram (
-                .AD      (addr),
-                .DI      (data_in [16*i +: 16]),
-                .MASKWE  (mask    [4*i  +: 4]),
-                .WE      (wren),
-                .CS      (1'b1),
-                .CK      (clk),
-                .STDBY   (1'b0),
-                .SLEEP   (1'b0),
-                .PWROFF_N(1'b1),   // active low: 1 = powered on
-                .DO      (data_out[16*i +: 16])
-            );
-        end
-    endgenerate
+    SP256K spram0 (
+        .AD      (addr),
+        .DI      (data_in[15:0]),
+        .MASKWE  (mask[3:0]),
+        .WE      (wren),
+        .CS      (1'b1),
+        .CK      (clk),
+        .STDBY   (1'b0),
+        .SLEEP   (1'b0),
+        .PWROFF_N(1'b1),   // active low: 1 = powered on
+        .DO      (data_out[15:0])
+    );
+
+    SP256K spram1 (
+        .AD      (addr),
+        .DI      (data_in[31:16]),
+        .MASKWE  (mask[7:4]),
+        .WE      (wren),
+        .CS      (1'b1),
+        .CK      (clk),
+        .STDBY   (1'b0),
+        .SLEEP   (1'b0),
+        .PWROFF_N(1'b1),   // active low: 1 = powered on
+        .DO      (data_out[31:16])
+    );
+
+    SP256K spram2 (
+        .AD      (addr),
+        .DI      (data_in[47:32]),
+        .MASKWE  (mask[11:8]),
+        .WE      (wren),
+        .CS      (1'b1),
+        .CK      (clk),
+        .STDBY   (1'b0),
+        .SLEEP   (1'b0),
+        .PWROFF_N(1'b1),   // active low: 1 = powered on
+        .DO      (data_out[47:32])
+    );
+
+    SP256K spram3 (
+        .AD      (addr),
+        .DI      (data_in[63:48]),
+        .MASKWE  (mask[15:12]),
+        .WE      (wren),
+        .CS      (1'b1),
+        .CK      (clk),
+        .STDBY   (1'b0),
+        .SLEEP   (1'b0),
+        .PWROFF_N(1'b1),   // active low: 1 = powered on
+        .DO      (data_out[63:48])
+    );
 
 endmodule
