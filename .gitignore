@@ -1,0 +1,28 @@
+# OS cruft
+.DS_Store
+._*
+Thumbs.db
+
+# Vendor libraries (large, redownloadable)
+project_mcu/CMSIS_5/
+project_mcu/reference/Trill/
+
+# SEGGER Embedded Studio build output
+project_mcu/Output/
+project_mcu/*.emSession
+project_mcu/*.emProject.bak
+
+# Radiant / FPGA build output
+project_fpga/radiant_project/impl/
+project_fpga/radiant_project/*.ldf.lock
+project_fpga/radiant_project/*.sty
+project_fpga/radiant_project/*.bak
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
+.idea/
+*.swp
