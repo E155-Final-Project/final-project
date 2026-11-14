@@ -26,6 +26,9 @@ module BNN_spi(input  logic        sck,
         if (!load) bitcnt <= 0;
         else       bitcnt <= bitcnt + 1;
 
+    // iCE40 flip-flops start at 0; this makes simulation match
+    initial word_tog = 1'b0;
+
     // shift in at the top, so after 64 bits the first bit is in bit 0
     always_ff @(posedge sck) begin
         shreg <= {sdi, shreg[63:1]};

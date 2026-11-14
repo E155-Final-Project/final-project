@@ -135,6 +135,7 @@ sim: $(PRED) | $(VENV)  ## simulate vector set VEC (smoke|full) in Questa and sc
 $(PRED): $(RTL_SRCS) $(wildcard $(TB_SRCS)) $(GEN)
 	@test -f $(TB_SRCS) || { echo "no testbench at $(TB_SRCS) (set TB_DIR / TB)"; exit 1; }
 	rm -rf $(SIM_DIR) && mkdir -p $(SIM_DIR)
+	cp mem/l*_thresh.mem $(SIM_DIR)/                 # BNN_thresh opens these by bare name
 	cd $(SIM_DIR) && $(QUESTA_BIN)vlib work && $(QUESTA_BIN)vlog -sv \
 	    +incdir+$(abspath mem) +incdir+$(abspath vectors/$(VEC)) \
 	    $(abspath $(RTL_SRCS) $(TB_SRCS))
