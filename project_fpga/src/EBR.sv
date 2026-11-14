@@ -5,15 +5,17 @@ module BNN_thresh (
     output logic [9:0] thresh
 );
 
+    // Paths are relative to Radiant's synthesis folder (radiant_project/final_project/impl_1).
+    // Testbenches load these ROMs themselves from +MEM_DIR.
     logic [9:0] l0_thresh, l1_thresh, l2_thresh;
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("l0_thresh.mem")) l0_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
         .clk(clk), .addr(neuron), .data(l0_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("l1_thresh.mem")) l1_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
         .clk(clk), .addr(neuron), .data(l1_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("l2_thresh.mem")) l2_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
         .clk(clk), .addr(neuron), .data(l2_thresh));
 
     always_comb

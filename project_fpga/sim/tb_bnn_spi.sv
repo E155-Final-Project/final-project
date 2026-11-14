@@ -73,6 +73,10 @@ module tb_bnn_spi;
         $readmemh({mem_dir, "/l1_weights.mem"}, w_exp, L1_BASE, L2_BASE - 1);
         $readmemh({mem_dir, "/l2_weights.mem"}, w_exp, L2_BASE, L3_BASE - 1);
         $readmemh({mem_dir, "/l3_weights.mem"}, w_exp, L3_BASE, N_WEIGHT_WORDS - 1);
+        // threshold ROMs: load them from MEM_DIR, whatever the working directory is
+        $readmemh({mem_dir, "/l0_thresh.mem"}, dut.memory.thresh_rom.l0_thresh_rom.mem);
+        $readmemh({mem_dir, "/l1_thresh.mem"}, dut.memory.thresh_rom.l1_thresh_rom.mem);
+        $readmemh({mem_dir, "/l2_thresh.mem"}, dut.memory.thresh_rom.l2_thresh_rom.mem);
         $readmemh({vec_dir, "/inputs.mem"},     inputs);
         $readmemh({vec_dir, "/expected.mem"},   expected);
 

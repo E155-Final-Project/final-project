@@ -5,8 +5,8 @@
 // 2. Reads every weight word back (one-clock latency) and compares.
 // 3. Reads every threshold for layers 0..2 and checks that layer 3 gives 0.
 //
-// Run with the working directory set to BNN/mem (BNN_thresh opens
-// l<i>_thresh.mem by bare name), or copy the .mem files next to the sim.
+// Run with the working directory set to BNN/mem. The testbench loads the
+// threshold ROMs itself, since BNN_thresh's paths are set for Radiant.
 // Needs the Radiant iCE40UP simulation library for SP256K.
 
 module memory_tb;
@@ -58,6 +58,9 @@ module memory_tb;
         $readmemh("l0_thresh.mem",  t0);
         $readmemh("l1_thresh.mem",  t1);
         $readmemh("l2_thresh.mem",  t2);
+        $readmemh("l0_thresh.mem",  dut.thresh_rom.l0_thresh_rom.mem);
+        $readmemh("l1_thresh.mem",  dut.thresh_rom.l1_thresh_rom.mem);
+        $readmemh("l2_thresh.mem",  dut.thresh_rom.l2_thresh_rom.mem);
 
         new_word = 0; load_start = 0; load_weights = 0; load_data = 0;
         weight_addr = 0; layer = 0; neuron = 0;
