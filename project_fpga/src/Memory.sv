@@ -1,9 +1,7 @@
-`include "BNN_params.svh"
-
 // All memory for BNN_core: weights in SPRAM, thresholds in EBR ROM,
 // and the ping-pong activation buffer in EBR.
 
-module memory (
+module memory #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) (
     input  logic        clk,
 
     // load port (from the SPI, already synchronized to clk)

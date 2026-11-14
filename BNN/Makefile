@@ -68,7 +68,7 @@ GEN   := mem/bnn_params.svh
 RTL_DIR    ?= ../project_fpga/src
 TB_DIR     ?= ../project_fpga/sim
 TB         ?= tb_bnn
-RTL_SRCS   ?= $(filter-out $(RTL_DIR)/tb_%,$(wildcard $(RTL_DIR)/*.sv))
+RTL_SRCS   ?= $(RTL_DIR)/BNN_params.sv $(filter-out $(RTL_DIR)/tb_% $(RTL_DIR)/BNN_params.sv,$(wildcard $(RTL_DIR)/*.sv))  # package first
 TB_SRCS    ?= $(TB_DIR)/$(TB).sv
 # QUESTA_BIN: e.g. C:/lscc/radiant/<ver>/questasim/win64/ if vsim is not on PATH
 # VSIM_FLAGS: e.g. -L iCE40UP for the Lattice SB_SPRAM256KA simulation model

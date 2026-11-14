@@ -1,6 +1,4 @@
-`include "BNN_params.svh"
-
-module BNN_top(
+module BNN_top #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) (
 	input  logic sck,
 	input  logic sdi,
 	output logic sdo,
@@ -49,14 +47,14 @@ module BNN_top(
 	logic [13:0] weight_addr;
 	logic        act_bit, act_we;
 
-	memory memory(
+	memory #(.P(P)) memory(
 		.clk(clk),
 		.new_word(new_word), .load_start(load_start), .load_weights(lw_s[1]), .load_data(spi_word),
 		.weight_addr(weight_addr), .layer(layer), .word(word_idx), .neuron(neuron),
 		.act_bit(act_bit), .act_we(act_we),
 		.weight(weight), .thresh(thresh), .activations(data_in));
 
-	BNN_core BNN_core(
+	BNN_core #(.P(P)) BNN_core(
 		.clk(clk), .reset(core_reset), .done(done),
 		.data_in(data_in), .weight(weight), .thresh(thresh),
 		.word(word_idx), .layer(layer), .neuron(neuron),

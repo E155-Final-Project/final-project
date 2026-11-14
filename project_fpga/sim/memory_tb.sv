@@ -1,5 +1,4 @@
 `timescale 1ns/1ps
-`include "BNN_params.svh"
 
 // memory testbench.
 // 1. Writes l0..l3_weights.mem into the SPRAM through the load port.
@@ -12,11 +11,14 @@
 
 module memory_tb;
 
+    import BNN_params::*;
+    localparam bnn_params_t P = BNN_PARAMS;
+
     localparam int L0_BASE = 0;
-    localparam int L1_BASE = L0_BASE + L0_Neurons * L0_WORDS;   // 6656
-    localparam int L2_BASE = L1_BASE + L1_Neurons * L1_WORDS;   // 10752
-    localparam int L3_BASE = L2_BASE + L2_Neurons * L2_WORDS;   // 14848
-    localparam int N_WEIGHT_WORDS = L3_BASE + L3_N_OUT * L3_WORDS;  // 15224
+    localparam int L1_BASE = L0_BASE + P.L0_NEURONS * P.L0_WORDS;   // 6656
+    localparam int L2_BASE = L1_BASE + P.L1_NEURONS * P.L1_WORDS;   // 10752
+    localparam int L3_BASE = L2_BASE + P.L2_NEURONS * P.L2_WORDS;   // 14848
+    localparam int N_WEIGHT_WORDS = L3_BASE + P.L3_NEURONS * P.L3_WORDS;  // 15224
 
     logic        clk = 0;
     logic        new_word, load_start, load_weights;
@@ -86,7 +88,7 @@ module memory_tb;
         end
 
         // 3. thresholds
-        for (int l = 0; l < N_LAYERS; l++) begin
+        for (int l = 0; l < P.N_LAYERS; l++) begin
             for (int n = 0; n < 512; n++) begin
                 layer = l; neuron = n;
                 @(negedge clk);

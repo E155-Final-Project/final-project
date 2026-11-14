@@ -1,6 +1,4 @@
-`include "BNN_params.svh"
-
-module BNN_core(
+module BNN_core #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) (
 	input logic clk, reset,		// control signals
 	output logic done,
 	
@@ -21,12 +19,12 @@ module BNN_core(
 	popcount popcount1(.data_in(data_xnor), .count_out(pop));
 
 	// Control Signals
-	localparam logic [0:N_LAYERS-1][4:0] N_WORD   = '{L0_WORDS, L1_WORDS, L2_WORDS, L3_WORDS};
-	localparam logic [0:N_LAYERS-1][9:0] N_NEURON = '{L0_Neurons, L1_Neurons, L2_Neurons, L3_N_OUT};
+	localparam logic [0:P.N_LAYERS-1][4:0] N_WORD   = '{P.L0_WORDS, P.L1_WORDS, P.L2_WORDS, P.L3_WORDS};
+	localparam logic [0:P.N_LAYERS-1][9:0] N_NEURON = '{P.L0_NEURONS, P.L1_NEURONS, P.L2_NEURONS, P.L3_NEURONS};
 	logic  last_word, last_neuron, last_layer;
 	assign last_word   = (word == N_WORD[layer]);
 	assign last_neuron = (neuron == N_NEURON[layer] - 1);
-	assign last_layer  = (layer == N_LAYERS - 1);
+	assign last_layer  = (layer == P.N_LAYERS - 1);
 
 	// Popcount sums
 	logic [9:0]  sum, sum_next, best;
