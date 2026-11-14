@@ -1,29 +1,51 @@
-module BNN_spi(input  logic sck, 
-               input  logic sdi,
-               output logic sdo,
-               input  logic done,
-               output logic [127:0] key, plaintext,
-               input  logic [127:0] cyphertext);
+module BNN_spi(input  logic        sck,
+               input  logic        sdi,
+               input  logic        load,
+               output logic        sdo,
+               input  logic        done,
+               output logic [63:0] word,       // last finished 64-bit chunk
+               output logic        word_tog,   // flips each time word updates
+               input  logic [7:0]  class_out);
 
-    logic         sdodelayed, wasdone;
-    logic [127:0] cyphertextcaptured;
-               
-    // assert load
-    // apply 256 sclks to shift in key and plaintext, starting with plaintext[127]
-    // then deassert load, wait until done
-    // then apply 128 sclks to shift out cyphertext, starting with cyphertext[127]
-    // SPI mode is equivalent to cpol = 0, cpha = 0 since data is sampled on first edge and the first
-    // edge is a rising edge (clock going from low in the idle state to high).
+    logic [5:0]  bitcnt;                // bit counter
+    logic [63:0] shreg;                 // spi shift register
+    logic        sdodelayed, wasdone;   
+    logic [7:0]  resultcaptured;        // class from BNN core
+
+    // How a transaction works:
+    //   1. The MCU raises load (and load_weights too, if it is sending weights).
+    //   2. The MCU sends the data, LSB first.
+    //   3. Every 64 bits make one word. The word goes to the weights or the image.
+    //   4. The MCU drops load. The BNN starts.
+    //   5. When the BNN finishes, done goes high.
+    //   6. The MCU sends 8 more clocks and reads back the class, LSB first.
+    // SPI mode 0: data is sampled on the rising edge of sck
+
+    // count bits while load is high, wraps every 64
+    always_ff @(posedge sck or negedge load)
+        if (!load) bitcnt <= 0;
+        else       bitcnt <= bitcnt + 1;
+
+    // shift in at the top, so after 64 bits the first bit is in bit 0
+    always_ff @(posedge sck) begin
+        shreg <= {sdi, shreg[63:1]};
+        if (load && bitcnt == 6'd63) begin
+            word     <= {sdi, shreg[63:1]};
+            word_tog <= ~word_tog;
+        end
+    end
+
+    // class out, LSB first
     always_ff @(posedge sck)
-        if (!wasdone)  {cyphertextcaptured, plaintext, key} = {cyphertext, plaintext[126:0], key, sdi};
-        else           {cyphertextcaptured, plaintext, key} = {cyphertextcaptured[126:0], plaintext, key, sdi}; 
-    
+        if (!wasdone) resultcaptured <= class_out;
+        else          resultcaptured <= {1'b0, resultcaptured[7:1]};
+
     // sdo should change on the negative edge of sck
     always_ff @(negedge sck) begin
-        wasdone = done;
-        sdodelayed = cyphertextcaptured[126];
+        wasdone    <= done;
+        sdodelayed <= resultcaptured[1];
     end
-    
-    // when done is first asserted, shift out msb before clock edge
-    assign sdo = (done & !wasdone) ? cyphertext[127] : sdodelayed;
+
+    // when done is first asserted, shift out the lsb before the clock edge
+    assign sdo = (done & !wasdone) ? class_out[0] : sdodelayed;
 endmodule

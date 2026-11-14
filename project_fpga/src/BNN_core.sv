@@ -10,7 +10,7 @@ module BNN_core(
 	output logic [1:0]  layer,
 	output logic [9:0]  neuron,
 	output logic [13:0] weight_addr,
-	output logic [5:0]  class_out,
+	output logic [7:0]  class_out,
 	output logic        act_bit, act_we
 	);
 
@@ -53,7 +53,7 @@ module BNN_core(
 				sum  <= 0;
 				if (last_layer && sum_next > best) begin 
 					best      <= sum_next;
-					class_out <= neuron[5:0];
+					class_out <= neuron[7:0];
 				end
 				if (!last_neuron)
 					neuron <= neuron + 1;

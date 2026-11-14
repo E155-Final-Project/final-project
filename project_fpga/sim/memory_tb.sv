@@ -19,14 +19,16 @@ module memory_tb;
     localparam int N_WEIGHT_WORDS = L3_BASE + L3_N_OUT * L3_WORDS;  // 15224
 
     logic        clk = 0;
-    logic        load_we;
-    logic [13:0] load_addr;
+    logic        new_word, load_start, load_weights;
     logic [63:0] load_data;
     logic [13:0] weight_addr;
     logic [1:0]  layer;
     logic [9:0]  neuron;
     logic [63:0] weight;
     logic [9:0]  thresh;
+    logic [4:0]  word = 0;                 // activation port unused here
+    logic        act_bit = 0, act_we = 0;
+    logic [63:0] activations;
 
     memory dut (.*);
 
@@ -55,16 +57,21 @@ module memory_tb;
         $readmemh("l1_thresh.mem",  t1);
         $readmemh("l2_thresh.mem",  t2);
 
-        load_we = 0; load_addr = 0; load_data = 0;
+        new_word = 0; load_start = 0; load_weights = 0; load_data = 0;
         weight_addr = 0; layer = 0; neuron = 0;
         @(negedge clk);
 
-        // 1. load
+        // 1. load: load_start resets the address, then one new_word per word
+        load_weights = 1;
+        load_start = 1;
+        @(negedge clk);
+        load_start = 0;
         for (int a = 0; a < N_WEIGHT_WORDS; a++) begin
-            load_we = 1; load_addr = a; load_data = w_exp[a];
+            new_word = 1; load_data = w_exp[a];
             @(negedge clk);
         end
-        load_we = 0;
+        new_word = 0;
+        load_weights = 0;
         @(negedge clk);
 
         // 2. weight read-back: address set at a negedge, data valid after the next posedge
