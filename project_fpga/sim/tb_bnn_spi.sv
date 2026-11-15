@@ -16,8 +16,8 @@ module tb_bnn_spi;
     import BNN_params::*;
     localparam bnn_params_t P = BNN_PARAMS;
 
-    localparam int N_IMAGES  = 18800;
-    localparam bit HAS_TRACE = 0;
+    localparam int N_IMAGES  = 16;      // the smoke set (VEC_DIR defaults to BNN/vectors/smoke)
+    localparam bit HAS_TRACE = 1;
 
     localparam int L1_BASE        = P.L0_NEURONS * P.L0_WORDS;
     localparam int L2_BASE        = L1_BASE + P.L1_NEURONS * P.L1_WORDS;
