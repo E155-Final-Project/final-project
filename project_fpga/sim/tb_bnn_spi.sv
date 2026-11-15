@@ -55,7 +55,7 @@ module tb_bnn_spi;
             #(SCK_HALF) sck = 1;
             b[i] = sdo;                  // sampled on the rising edge
             #(SCK_HALF) sck = 0;
-        end
+        endC:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn_spi.sv
     endtask
 
     // ---- test ----

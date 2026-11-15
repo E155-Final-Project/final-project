@@ -11,13 +11,13 @@ module BNN_thresh (
     // wide; every threshold fits in 10 bits, so only the low 10 are used.
     logic [11:0] l0_thresh, l1_thresh, l2_thresh;
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
         .clk(clk), .addr(neuron), .data(l0_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
         .clk(clk), .addr(neuron), .data(l1_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
         .clk(clk), .addr(neuron), .data(l2_thresh));
 
     always_comb
