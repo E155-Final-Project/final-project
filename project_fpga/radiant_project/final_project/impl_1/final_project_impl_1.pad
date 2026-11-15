@@ -6,21 +6,27 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Fri Nov  6 19:37:03 2026
+Sat Nov 14 15:42:32 2026
 
 Pinout by Port Name:
-+-----------+----------+--------------+-------+-----------------------------------------+
-| Port Name | Pin/Bank | Buffer Type  | Site  | Properties                              |
-+-----------+----------+--------------+-------+-----------------------------------------+
-| done      | 26/0     | LVCMOS33_OUT | PR19A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA  |
-| sdo       | 27/0     | LVCMOS33_OUT | PR19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA  |
-+-----------+----------+--------------+-------+-----------------------------------------+
++--------------+----------+--------------+-------+------------------------------------------+
+| Port Name    | Pin/Bank | Buffer Type  | Site  | Properties                               |
++--------------+----------+--------------+-------+------------------------------------------+
+| done         | 10/1     | LVCMOS33_OUT | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| load         | 11/1     | LVCMOS33_IN  | PL18A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| load_weights | 6/1      | LVCMOS33_IN  | PL14B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| sck          | 35/0     | LVCMOS33_IN  | PR13B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| sdi          | 46/2     | LVCMOS33_IN  | PL6A  | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| sdo          | 9/1      | LVCMOS33_OUT | PL16A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
++--------------+----------+--------------+-------+------------------------------------------+
 
 Vccio by Bank:
 +------+-------+
 | Bank | Vccio |
 +------+-------+
 | 0    | 3.3V  |
+| 1    | 3.3V  |
+| 2    | 3.3V  |
 +------+-------+
 
 Pinout by Pin Number:
@@ -30,10 +36,10 @@ Pinout by Pin Number:
 | 2/2      |     unused, PULL:UP |            |              | PL9A  |                  |
 | 3/2      |     unused, PULL:UP |            |              | PL10B |                  |
 | 4/2      |     unused, PULL:UP |            |              | PL10A |                  |
-| 6/1      |     unused, PULL:UP |            |              | PL14B |                  |
-| 9/1      |     unused, PULL:UP |            |              | PL16A |                  |
-| 10/1     |     unused, PULL:UP |            |              | PL17A |                  |
-| 11/1     |     unused, PULL:UP |            |              | PL18A |                  |
+| 6/1      | load_weights        |            | LVCMOS33_IN  | PL14B |                  |
+| 9/1      | sdo                 |            | LVCMOS33_OUT | PL16A |                  |
+| 10/1     | done                |            | LVCMOS33_OUT | PL17A |                  |
+| 11/1     | load                |            | LVCMOS33_IN  | PL18A |                  |
 | 12/1     |     unused, PULL:UP |            |              | PL19A |                  |
 | 13/1     |     unused, PULL:UP |            |              | PL20A |                  |
 | 14/1     |     unused, PULL:UP |            |              | PL24A | SPI_SO           |
@@ -46,13 +52,13 @@ Pinout by Pin Number:
 | 21/1     |     unused, PULL:UP |            |              | PL19B |                  |
 | 23/0     |     unused, PULL:UP |            |              | PR20A |                  |
 | 25/0     |     unused, PULL:UP |            |              | PR20B |                  |
-| 26/0     | done                |            | LVCMOS33_OUT | PR19A |                  |
-| 27/0     | sdo                 |            | LVCMOS33_OUT | PR19B |                  |
+| 26/0     |     unused, PULL:UP |            |              | PR19A |                  |
+| 27/0     |     unused, PULL:UP |            |              | PR19B |                  |
 | 28/0     |     unused, PULL:UP |            |              | PR18A |                  |
 | 31/0     |     unused, PULL:UP |            |              | PR17B |                  |
 | 32/0     |     unused, PULL:UP |            |              | PR17A |                  |
 | 34/0     |     unused, PULL:UP |            |              | PR14B |                  |
-| 35/0     |     unused, PULL:UP |            |              | PR13B | GPLL_IN/PCLKT0_1 |
+| 35/0     | sck                 |            | LVCMOS33_IN  | PR13B | GPLL_IN/PCLKT0_1 |
 | 36/0     |     unused, PULL:UP |            |              | PR10B |                  |
 | 37/0     |     unused, PULL:UP |            |              | PR14A | PCLKT0_0         |
 | 38/0     |     unused, PULL:UP |            |              | PR9B  |                  |
@@ -63,7 +69,7 @@ Pinout by Pin Number:
 | 43/0     |     unused, PULL:UP |            |              | PR10A |                  |
 | 44/2     |     unused, PULL:UP |            |              | PL7B  | PCLKT2_0         |
 | 45/2     |     unused, PULL:UP |            |              | PL8B  |                  |
-| 46/2     |     unused, PULL:UP |            |              | PL6A  |                  |
+| 46/2     | sdi                 |            | LVCMOS33_IN  | PL6A  |                  |
 | 47/2     |     unused, PULL:UP |            |              | PL7A  |                  |
 | 48/2     |     unused, PULL:UP |            |              | PL8A  |                  |
 | PL6B/2   |     unused, PULL:UP |            |              | PL6B  |                  |
@@ -88,8 +94,12 @@ Pinout by Pin Number:
 
 Locate Constraints for each Pin: 
 
-ldc_set_location -site {26} [ get_ports {done} ]
-ldc_set_location -site {27} [ get_ports {sdo} ]
+ldc_set_location -site {10} [ get_ports {done} ]
+ldc_set_location -site {11} [ get_ports {load} ]
+ldc_set_location -site {6} [ get_ports {load_weights} ]
+ldc_set_location -site {35} [ get_ports {sck} ]
+ldc_set_location -site {46} [ get_ports {sdi} ]
+ldc_set_location -site {9} [ get_ports {sdo} ]
 
 
 
@@ -97,5 +107,5 @@ ldc_set_location -site {27} [ get_ports {sdo} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Fri Nov  6 19:37:03 2026
+Sat Nov 14 15:42:32 2026
 

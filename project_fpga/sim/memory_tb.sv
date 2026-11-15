@@ -106,7 +106,7 @@ module memory_tb;
 
         if (errors == 0) $display("PASS: %0d weight words, %0d thresholds", N_WEIGHT_WORDS, 3*512);
         else             $display("FAIL: %0d mismatches", errors);
-        $finish;
+        $stop;
     end
 
 endmodule

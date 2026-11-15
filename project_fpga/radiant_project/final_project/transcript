@@ -1,0 +1,645 @@
+# Reading pref.tcl
+# //  Questa Lattice OEM Edition-64
+# //  Version 2025.2 win64 May 31 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading project project_sim
+# Compile of activation_tb.sv was successful.
+# Compile of memory_tb.sv was successful.
+# Compile of tb_bnn.sv was successful.
+# Compile of tb_bnn_spi.sv was successful.
+# Compile of Activation_EBR.sv was successful.
+# Compile of BNN_params.sv was successful.
+# Compile of BNN_spi.sv was successful.
+# Compile of BNN_top.sv was successful.
+# Compile of EBR.sv was successful.
+# Compile of Memory.sv was successful.
+# Compile of popcount.sv was successful.
+# Compile of SPRAM_1024KB.sv was successful.
+# Compile of BNN_core.sv was successful.
+# Compile of vectors.svh was successful.
+# 14 compiles, 0 failed with no errors.
+vsim -gui work.tb_bnn -voptargs=+acc -L iCE40UP
+# ** Note: (vsim-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# vsim -gui work.tb_bnn -voptargs="+acc" -L iCE40UP 
+# Start time: 15:43:49 on Nov 14,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.BNN_params(fast)
+# Loading work.tb_bnn(fast)
+# Loading work.memory(fast)
+# Loading work.SPRAM_1024KB(fast)
+# Loading iCE40UP.SP256K(fast)
+# Loading work.BNN_thresh(fast)
+# Loading work.BNN_ebr_rom(fast)
+# Loading work.BNN_ebr_rom(fast__1)
+# Loading work.BNN_ebr_rom(fast__2)
+# Loading work.Activation_EBR(fast)
+# Loading work.EBR_256x16(fast)
+# Loading work.BNN_core(fast)
+# Loading work.popcount(fast)
+run
+# ** Warning: (vsim-7) Failed to open readmem file "../../../../BNN/mem/l0_thresh.mem" in read mode.
+# No such file or directory. (errno = ENOENT)    : C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_bnn/mem/thresh_rom/l0_thresh_rom
+# ** Warning: (vsim-7) Failed to open readmem file "../../../../BNN/mem/l1_thresh.mem" in read mode.
+# No such file or directory. (errno = ENOENT)    : C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_bnn/mem/thresh_rom/l1_thresh_rom
+# ** Warning: (vsim-7) Failed to open readmem file "../../../../BNN/mem/l2_thresh.mem" in read mode.
+# No such file or directory. (errno = ENOENT)    : C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_bnn/mem/thresh_rom/l2_thresh_rom
+quit -sim
+# End time: 16:01:10 on Nov 14,2026, Elapsed time: 0:17:21
+# Errors: 0, Warnings: 6
+# Compile of activation_tb.sv was successful.
+# Compile of memory_tb.sv was successful.
+# Compile of tb_bnn.sv was successful.
+# Compile of tb_bnn_spi.sv was successful.
+# Compile of Activation_EBR.sv was successful.
+# Compile of BNN_params.sv was successful.
+# Compile of BNN_spi.sv was successful.
+# Compile of BNN_top.sv was successful.
+# Compile of EBR.sv was successful.
+# Compile of Memory.sv was successful.
+# Compile of popcount.sv was successful.
+# Compile of SPRAM_1024KB.sv was successful.
+# Compile of BNN_core.sv was successful.
+# Compile of vectors.svh was successful.
+# 14 compiles, 0 failed with no errors.
+vsim -gui -voptargs=+acc -L iCE40UP work.tb_bnn
+# ** Note: (vsim-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# vsim -gui -voptargs="+acc" -L iCE40UP work.tb_bnn 
+# Start time: 16:04:28 on Nov 14,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.BNN_params(fast)
+# Loading work.tb_bnn(fast)
+# Loading work.memory(fast)
+# Loading work.SPRAM_1024KB(fast)
+# Loading iCE40UP.SP256K(fast)
+# Loading work.BNN_thresh(fast)
+# Loading work.BNN_ebr_rom(fast)
+# Loading work.BNN_ebr_rom(fast__1)
+# Loading work.BNN_ebr_rom(fast__2)
+# Loading work.Activation_EBR(fast)
+# Loading work.EBR_256x16(fast)
+# Loading work.BNN_core(fast)
+# Loading work.popcount(fast)
+run
+add wave -position insertpoint sim:/tb_bnn/core/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: pclark  Hostname: GGMZ0R3  ProcessID: 3416
+#           Attempting to use alternate WLF file "./wlftegwiy8".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftegwiy8
+run -all
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304530000.000   RCLK Time:304530000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304530000.000   RCLK Time:304530000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304530000.000   RCLK Time:304530000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304530000.000   RCLK Time:304530000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304550000.000   RCLK Time:304550000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304550000.000   RCLK Time:304550000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304550000.000   RCLK Time:304550000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 304550000.000   RCLK Time:304550000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640970000.000   RCLK Time:640970000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640970000.000   RCLK Time:640970000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640970000.000   RCLK Time:640970000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640970000.000   RCLK Time:640970000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640990000.000   RCLK Time:640990000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640990000.000   RCLK Time:640990000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640990000.000   RCLK Time:640990000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 640990000.000   RCLK Time:640990000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977410000.000   RCLK Time:977410000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977410000.000   RCLK Time:977410000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977410000.000   RCLK Time:977410000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977410000.000   RCLK Time:977410000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977430000.000   RCLK Time:977430000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977430000.000   RCLK Time:977430000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977430000.000   RCLK Time:977430000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 977430000.000   RCLK Time:977430000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313850000.000   RCLK Time:1313850000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313850000.000   RCLK Time:1313850000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313850000.000   RCLK Time:1313850000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313850000.000   RCLK Time:1313850000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313870000.000   RCLK Time:1313870000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313870000.000   RCLK Time:1313870000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313870000.000   RCLK Time:1313870000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1313870000.000   RCLK Time:1313870000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650290000.000   RCLK Time:1650290000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650290000.000   RCLK Time:1650290000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650290000.000   RCLK Time:1650290000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650290000.000   RCLK Time:1650290000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650310000.000   RCLK Time:1650310000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650310000.000   RCLK Time:1650310000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650310000.000   RCLK Time:1650310000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1650310000.000   RCLK Time:1650310000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986730000.000   RCLK Time:1986730000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986730000.000   RCLK Time:1986730000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986730000.000   RCLK Time:1986730000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986730000.000   RCLK Time:1986730000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986750000.000   RCLK Time:1986750000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986750000.000   RCLK Time:1986750000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986750000.000   RCLK Time:1986750000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 1986750000.000   RCLK Time:1986750000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323170000.000   RCLK Time:2323170000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323170000.000   RCLK Time:2323170000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323170000.000   RCLK Time:2323170000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323170000.000   RCLK Time:2323170000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323190000.000   RCLK Time:2323190000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323190000.000   RCLK Time:2323190000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323190000.000   RCLK Time:2323190000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2323190000.000   RCLK Time:2323190000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659610000.000   RCLK Time:2659610000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659610000.000   RCLK Time:2659610000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659610000.000   RCLK Time:2659610000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659610000.000   RCLK Time:2659610000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659630000.000   RCLK Time:2659630000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659630000.000   RCLK Time:2659630000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659630000.000   RCLK Time:2659630000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2659630000.000   RCLK Time:2659630000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996050000.000   RCLK Time:2996050000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996050000.000   RCLK Time:2996050000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996050000.000   RCLK Time:2996050000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996050000.000   RCLK Time:2996050000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996070000.000   RCLK Time:2996070000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996070000.000   RCLK Time:2996070000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996070000.000   RCLK Time:2996070000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 2996070000.000   RCLK Time:2996070000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332490000.000   RCLK Time:3332490000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332490000.000   RCLK Time:3332490000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332490000.000   RCLK Time:3332490000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332490000.000   RCLK Time:3332490000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332510000.000   RCLK Time:3332510000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332510000.000   RCLK Time:3332510000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332510000.000   RCLK Time:3332510000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3332510000.000   RCLK Time:3332510000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668930000.000   RCLK Time:3668930000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668930000.000   RCLK Time:3668930000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668930000.000   RCLK Time:3668930000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668930000.000   RCLK Time:3668930000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668950000.000   RCLK Time:3668950000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668950000.000   RCLK Time:3668950000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668950000.000   RCLK Time:3668950000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 3668950000.000   RCLK Time:3668950000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005370000.000   RCLK Time:4005370000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005370000.000   RCLK Time:4005370000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005370000.000   RCLK Time:4005370000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005370000.000   RCLK Time:4005370000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005390000.000   RCLK Time:4005390000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005390000.000   RCLK Time:4005390000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005390000.000   RCLK Time:4005390000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4005390000.000   RCLK Time:4005390000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341810000.000   RCLK Time:4341810000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341810000.000   RCLK Time:4341810000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341810000.000   RCLK Time:4341810000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341810000.000   RCLK Time:4341810000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341830000.000   RCLK Time:4341830000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341830000.000   RCLK Time:4341830000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341830000.000   RCLK Time:4341830000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4341830000.000   RCLK Time:4341830000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678250000.000   RCLK Time:4678250000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678250000.000   RCLK Time:4678250000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678250000.000   RCLK Time:4678250000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678250000.000   RCLK Time:4678250000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678270000.000   RCLK Time:4678270000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678270000.000   RCLK Time:4678270000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678270000.000   RCLK Time:4678270000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 4678270000.000   RCLK Time:4678270000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014690000.000   RCLK Time:5014690000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014690000.000   RCLK Time:5014690000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014690000.000   RCLK Time:5014690000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014690000.000   RCLK Time:5014690000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014710000.000   RCLK Time:5014710000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014710000.000   RCLK Time:5014710000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014710000.000   RCLK Time:5014710000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5014710000.000   RCLK Time:5014710000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351130000.000   RCLK Time:5351130000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351130000.000   RCLK Time:5351130000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351130000.000   RCLK Time:5351130000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351130000.000   RCLK Time:5351130000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351150000.000   RCLK Time:5351150000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351150000.000   RCLK Time:5351150000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351150000.000   RCLK Time:5351150000.000  WADDR: 128   RADDR:128
+# 
+# Warning: Write-Read collision detected, Data read value is XXXX
+# 
+# WCLK Time: 5351150000.000   RCLK Time:5351150000.000  WADDR: 128   RADDR:128
+# 
+# PASS: 16 images match expected.mem
+# ** Note: $finish    : C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn.sv(135)
+#    Time: 5687560 ns  Iteration: 1  Instance: /tb_bnn
+# 1
+# Break in Module tb_bnn at C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn.sv line 135
+quit -sim
+# End time: 16:06:23 on Nov 14,2026, Elapsed time: 0:01:55
+# Errors: 0, Warnings: 5
+vsim -gui -voptargs=+acc -L iCE40UP work.tb_bnn_spi
+# ** Note: (vsim-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# vsim -gui -voptargs="+acc" -L iCE40UP work.tb_bnn_spi 
+# Start time: 16:06:32 on Nov 14,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vopt-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+# ** Error (suppressible): C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv(37): (vopt-7061) Variable 'word_tog' driven in an always_ff block, may not be driven by any other process. See C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv(30).
+# Optimization failed
+# ** Error: (vopt-2064) Compiler back-end code generation process terminated due to previous errors with code 12.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=2, Warnings=1.
+# Error loading design
+# End time: 16:06:33 on Nov 14,2026, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 2

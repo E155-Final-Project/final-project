@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
-Fri Nov  6 19:36:38 2026
+Sat Nov 14 15:42:12 2026
 
 
 Command Line:  C:\lscc\radiant\2026.1\ispfpga\bin\nt64\synthesis.exe -f C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1_lattice.synproj -logfile final_project_impl_1_lattice.srp -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml 
@@ -118,12 +118,15 @@ Output HDL filename: final_project_impl_1.vm
 -path C:/lscc/radiant/2026.1/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
 Verilog design file: C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.v
-Verilog design file: ../../../src/BNN_params.svh
-WARNING <30054000> - synthesis: Unexpected file name extension for Verilog file: ../../../src/BNN_params.svh
+Verilog design file: ../../../src/Activation_EBR.sv
 Verilog design file: ../../../src/BNN_core.sv
-Verilog design file: ../../../src/BNN_top.sv
-Verilog design file: ../../../src/popcount.sv
+Verilog design file: ../../../src/BNN_params.sv
 Verilog design file: ../../../src/BNN_spi.sv
+Verilog design file: ../../../src/BNN_top.sv
+Verilog design file: ../../../src/EBR.sv
+Verilog design file: ../../../src/Memory.sv
+Verilog design file: ../../../src/popcount.sv
+Verilog design file: ../../../src/SPRAM_1024KB.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.vhd
 
@@ -133,62 +136,189 @@ Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\v
 Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v. VERI-1482
 Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v. VERI-1482
 Analyzing Verilog file C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP\iCE40UP_sp.v. VERI-1482
-Analyzing Verilog file ../../../src/BNN_params.svh. VERI-1482
 Analyzing Verilog file C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.v. VERI-1482
+Analyzing Verilog file ../../../src/Activation_EBR.sv. VERI-1482
+Analyzing Verilog file ../../../src/BNN_params.sv. VERI-1482
 Analyzing Verilog file ../../../src/BNN_core.sv. VERI-1482
-Analyzing Verilog file ../../../src/BNN_top.sv. VERI-1482
-Analyzing Verilog file ../../../src/popcount.sv. VERI-1482
 Analyzing Verilog file ../../../src/BNN_spi.sv. VERI-1482
+Analyzing Verilog file ../../../src/BNN_top.sv. VERI-1482
+Analyzing Verilog file ../../../src/EBR.sv. VERI-1482
+Analyzing Verilog file ../../../src/Memory.sv. VERI-1482
+Analyzing Verilog file ../../../src/popcount.sv. VERI-1482
+Analyzing Verilog file ../../../src/SPRAM_1024KB.sv. VERI-1482
 Top module name (Verilog): BNN_top
-INFO <35901018> - synthesis: ../../../src/BNN_top.sv(3): compiling module BNN_top. VERI-1018
-INFO <35901018> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b0). VERI-1018
-INFO <35901018> - synthesis: ../../../src/BNN_core.sv(1): compiling module BNN_core. VERI-1018
-WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(53): expression size 64 truncated to fit in target size 1. VERI-1209
+INFO <35901018> - synthesis: ../../../src/BNN_top.sv(1): compiling module BNN_top. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b10). VERI-1018
+INFO <35901018> - synthesis: ../../../src/BNN_spi.sv(1): compiling module BNN_spi. VERI-1018
+WARNING <35901209> - synthesis: ../../../src/BNN_spi.sv(27): expression size 32 truncated to fit in target size 6. VERI-1209
+INFO <35901018> - synthesis: ../../../src/Memory.sv(4): compiling module memory(P='{4,47,512,13,512,8,512,8,47,8}). VERI-1018
+WARNING <35901209> - synthesis: ../../../src/Memory.sv(31): expression size 32 truncated to fit in target size 14. VERI-1209
+INFO <35901018> - synthesis: ../../../src/SPRAM_1024KB.sv(4): compiling module SPRAM_1024KB. VERI-1018
+INFO <35901018> - synthesis: ../../../src/EBR.sv(1): compiling module BNN_thresh. VERI-1018
+INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem"). VERI-1018
+WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l0_thresh.mem:1 does not match memory width 10. VERI-2474
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem"). VERI-1018
+WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l1_thresh.mem:1 does not match memory width 10. VERI-2474
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem"). VERI-1018
+WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l2_thresh.mem:1 does not match memory width 10. VERI-2474
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/Activation_EBR.sv(2): compiling module Activation_EBR. VERI-1018
+INFO <35901018> - synthesis: ../../../src/Activation_EBR.sv(94): compiling module EBR_256x16. VERI-1018
+INFO <35901018> - synthesis: ../../../src/BNN_core.sv(1): compiling module BNN_core(P='{4,47,512,13,512,8,512,8,47,8}). VERI-1018
 INFO <35901018> - synthesis: ../../../src/popcount.sv(1): compiling module popcount. VERI-1018
-WARNING <35901330> - synthesis: ../../../src/BNN_core.sv(55): actual bit length 1 differs from formal bit length 64 for port data_in. VERI-1330
-WARNING <35901330> - synthesis: ../../../src/BNN_core.sv(55): actual bit length 10 differs from formal bit length 7 for port count_out. VERI-1330
-WARNING <35931013> - synthesis: ../../../src/BNN_top.sv(17): input port thresh[63] is not connected on this instance. VDB-1013
+WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(45): expression size 32 truncated to fit in target size 5. VERI-1209
+WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(46): expression size 32 truncated to fit in target size 14. VERI-1209
+WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(57): expression size 32 truncated to fit in target size 10. VERI-1209
+WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(61): expression size 32 truncated to fit in target size 2. VERI-1209
 [Parameter Setting Section Start]
+
+	[Parameter Settings for top-level module]
+	(Module: BNN_top)
+		P                         320'b00000000000000000000000000000100000000000000000000000000001011110000000000000000000000100000000000000000000000000000000000001101000000000000000000000010000000000000000000000000000000000000100000000000000000000000001000000000000000000000000000000000000010000000000000000000000000000010111100000000000000000000000000001000
 
 	[Parameter Settings for Instance(s): hf_osc]
 	(Module: HSOSC)
-		CLKHF_DIV                 2'b00
+		CLKHF_DIV                 2'b10
+
+	[Parameter Settings for Instance(s): memory]
+	(Module: memory)
+		P                         320'b00000000000000000000000000000100000000000000000000000000001011110000000000000000000000100000000000000000000000000000000000001101000000000000000000000010000000000000000000000000000000000000100000000000000000000000001000000000000000000000000000000000000010000000000000000000000000000010111100000000000000000000000000001000
+
+	[Parameter Settings for Instance(s): BNN_core]
+	(Module: BNN_core)
+		P                         320'b00000000000000000000000000000100000000000000000000000000001011110000000000000000000000100000000000000000000000000000000000001101000000000000000000000010000000000000000000000000000000000000100000000000000000000000001000000000000000000000000000000000000010000000000000000000000000000010111100000000000000000000000000001000
+		N_WORD                    20'b01101010000100001000
+		N_NEURON                  40'b1000000000100000000010000000000000101111
 
 	[Parameter Settings for Instance(s): popcount1]
 	(Module: popcount)
 		WIDTH                     64
 
+	[Parameter Settings for Instance(s): l0_thresh_rom]
+	(Module: BNN_ebr_rom)
+		DEPTH                     512
+		WIDTH                     10
+		MEM_FILE                  "../../../../BNN/mem/l0_thresh.mem"
+
+	[Parameter Settings for Instance(s): l1_thresh_rom]
+	(Module: BNN_ebr_rom)
+		DEPTH                     512
+		WIDTH                     10
+		MEM_FILE                  "../../../../BNN/mem/l1_thresh.mem"
+
+	[Parameter Settings for Instance(s): l2_thresh_rom]
+	(Module: BNN_ebr_rom)
+		DEPTH                     512
+		WIDTH                     10
+		MEM_FILE                  "../../../../BNN/mem/l2_thresh.mem"
+
+	[Parameter Settings for Instance(s): ram256x16_inst]
+	(Module: SB_RAM256x16)
+		INIT_0                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_1                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_2                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_3                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_4                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_5                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_6                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_7                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_8                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_9                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_A                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_B                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_C                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_D                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_E                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_F                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+
+	[Parameter Settings for Instance(s): i0]
+	(Module: EBR_B)
+		INIT_0                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_1                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_2                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_3                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_4                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_5                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_6                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_7                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_8                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_9                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_A                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_B                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_C                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_D                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_E                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		INIT_F                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+		DATA_WIDTH_W              "16"
+		DATA_WIDTH_R              "16"
+
 [Parameter Setting Section End]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sck
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdi
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdo
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: load
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: done
-######## Missing driver on net sdo. Patching with GND.
-######## Missing driver on net done. Patching with GND.
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+
+WARNING <35931002> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP/legacy.v(1724): net \memory/act_ram/ebr0/ram256x16_inst/gnd does not have a driver. VDB-1002
+######## Missing driver on net \memory/act_ram/ebr0/ram256x16_inst/gnd. Patching with GND.
 
 
 
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sck
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: sdi
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: load
+WARNING <35002062> - synthesis: Port rejected for I/O register mapping: sck
+WARNING <35002062> - synthesis: Port rejected for I/O register mapping: sdi
+WARNING <35002062> - synthesis: Port rejected for I/O register mapping: sdo
+WARNING <35002062> - synthesis: Port rejected for I/O register mapping: load
+INFO <35002061> - synthesis: Port accepted for I/O register mapping: load_weights
+WARNING <35002062> - synthesis: Port rejected for I/O register mapping: done
+INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 ################### Begin Area Report (BNN_top)######################
-Number of register bits => 0 of 5280 (0 % )
+Number of register bits => 224 of 5280 (4 % )
+EBR_B => 10
+CCU2 => 36
+FD1P3XZ => 224
+HSOSC_CORE => 1
+IB => 4
+INV => 1
+IOL_B => 1
+LUT4 => 411
 OB => 2
+VFB_B => 4
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
-Number of even-length carry chains : 0
+Number of even-length carry chains : 6
 
 ################### Begin Clock Report ######################
 Clock Nets
-Number of Clocks: 0
+Number of Clocks: 2
+  Net : clk, loads : 14
+  Net : sck_c, loads : 1
 Clock Enable Nets
-Number of Clock Enables: 0
+Number of Clock Enables: 4
+  Net : memory/act_ram/we[2], loads : 1
+  Net : memory/act_ram/we[1], loads : 1
+  Net : memory/act_ram/we[3], loads : 1
+  Net : memory/act_ram/we[0], loads : 1
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : sdo, loads : 0
-  Net : done, loads : 0
+  Net : img_we, loads : 90
+  Net : BNN_spi/n48, loads : 68
+  Net : BNN_core/act_bit, loads : 63
+  Net : core_reset, loads : 62
+  Net : n2747, loads : 36
+  Net : BNN_core/n2707, loads : 30
+  Net : BNN_core/n2711, loads : 30
+  Net : BNN_core/n2725, loads : 30
+  Net : BNN_core/n2715, loads : 30
+  Net : BNN_core/n2717, loads : 30
 ################### End Clock Report ##################
 
 ################### Begin Constraint Report ######################
@@ -197,10 +327,10 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 89 MB
+Peak Memory Usage: 404 MB
 
 --------------------------------------------------------------
-Total CPU Time: 0 secs 
-Total REAL Time: 4 secs 
+Total CPU Time: 4 secs 
+Total REAL Time: 7 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 23c9c7254d6e7661a42b92b3eb117ab5a0dafc08
+Checksum -- synthesis -- netlist: 69b83c392175ec483bea3e4652bce30b37c03a66

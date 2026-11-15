@@ -13,7 +13,8 @@ module tb_bnn;
     import BNN_params::*;
     localparam bnn_params_t P = BNN_PARAMS;
 
-    `include "vectors.svh"      // N_IMAGES, HAS_TRACE
+    localparam int N_IMAGES  = 16;
+    localparam bit HAS_TRACE = 1;
 
     localparam int L1_BASE        = P.L0_NEURONS * P.L0_WORDS;
     localparam int L2_BASE        = L1_BASE + P.L1_NEURONS * P.L1_WORDS;

@@ -1,8 +1,212 @@
 ----------------------------------------------------------------------
 Report for cell BNN_top.TECH
-Register bits:  0 of 5280 (0.000%)
-I/O cells:      2
+Register bits:  224 of 5280 (4.242%)
+I/O cells:      6
                                   Cell usage:
                                cell     count   Res Usage(%)
+                              EBR_B        10          100.0
+                               CCU2        36          100.0
+                            FD1P3XZ       224          100.0
+                         HSOSC_CORE         1          100.0
+                                 IB         4          100.0
+                                INV         1          100.0
+                              IOL_B         1          100.0
+                               LUT4       411          100.0
                                  OB         2          100.0
+                              VFB_B         4          100.0
+SUB MODULES
+                     Activation_EBR         1
+BNN_core(P='{4,47,512,13,512,8,512,8,47,8})         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem")         1
+                            BNN_spi         1
+                         BNN_thresh         1
+                         EBR_256x16         1
+                      EBR_256x16_U3         1
+                      EBR_256x16_U4         1
+                      EBR_256x16_U5         1
+                       SB_RAM256x16         1
+                    SB_RAM256x16_U0         1
+                    SB_RAM256x16_U1         1
+                    SB_RAM256x16_U2         1
+                       SPRAM_1024KB         1
+memory(P='{4,47,512,13,512,8,512,8,47,8})         1
+                           popcount         1
+                              TOTAL       712
+----------------------------------------------------------------------
+Report for cell BNN_spi.v1
+Instance Path : BNN_spi
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4           11.1
+                            FD1P3XZ       143           63.8
+                                INV         1          100.0
+                               LUT4        11            2.7
+                              TOTAL       159
+----------------------------------------------------------------------
+Report for cell memory(P='{4,47,512,13,512,8,512,8,47,8}).v1
+Instance Path : memory
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B        10          100.0
+                                FA2         8           22.2
+                            FD1P3XZ        14            6.2
+                               LUT4       128           31.1
+                              VFB_B         4          100.0
+SUB MODULES
+                     Activation_EBR         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem")         1
+                         BNN_thresh         1
+                         EBR_256x16         1
+                      EBR_256x16_U3         1
+                      EBR_256x16_U4         1
+                      EBR_256x16_U5         1
+                       SB_RAM256x16         1
+                    SB_RAM256x16_U0         1
+                    SB_RAM256x16_U1         1
+                    SB_RAM256x16_U2         1
+                       SPRAM_1024KB         1
+                              TOTAL       178
+----------------------------------------------------------------------
+Report for cell SPRAM_1024KB.v1
+Instance Path : memory.weight_ram
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              VFB_B         4          100.0
+                              TOTAL         4
+----------------------------------------------------------------------
+Report for cell BNN_thresh.v1
+Instance Path : memory.thresh_rom
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         6           60.0
+                               LUT4        20            4.9
+SUB MODULES
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem")         1
+BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem")         1
+                              TOTAL        29
+----------------------------------------------------------------------
+Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem").v1
+Instance Path : memory.thresh_rom.l2_thresh_rom
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         2           20.0
                               TOTAL         2
+----------------------------------------------------------------------
+Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem").v1
+Instance Path : memory.thresh_rom.l1_thresh_rom
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         2           20.0
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem").v1
+Instance Path : memory.thresh_rom.l0_thresh_rom
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         2           20.0
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell Activation_EBR.v1
+Instance Path : memory.act_ram
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         4           40.0
+                               LUT4        94           22.9
+SUB MODULES
+                         EBR_256x16         1
+                      EBR_256x16_U3         1
+                      EBR_256x16_U4         1
+                      EBR_256x16_U5         1
+                       SB_RAM256x16         1
+                    SB_RAM256x16_U0         1
+                    SB_RAM256x16_U1         1
+                    SB_RAM256x16_U2         1
+                              TOTAL       106
+----------------------------------------------------------------------
+Report for cell EBR_256x16.v1
+Instance Path : memory.act_ram.ebr3
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+SUB MODULES
+                       SB_RAM256x16         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell SB_RAM256x16.v1
+Instance Path : memory.act_ram.ebr3.ram256x16_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell EBR_256x16_U3.v1
+Instance Path : memory.act_ram.ebr2
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+SUB MODULES
+                    SB_RAM256x16_U0         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell SB_RAM256x16_U0.v1
+Instance Path : memory.act_ram.ebr2.ram256x16_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell EBR_256x16_U4.v1
+Instance Path : memory.act_ram.ebr1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+SUB MODULES
+                    SB_RAM256x16_U1         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell SB_RAM256x16_U1.v1
+Instance Path : memory.act_ram.ebr1.ram256x16_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell EBR_256x16_U5.v1
+Instance Path : memory.act_ram.ebr0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+SUB MODULES
+                    SB_RAM256x16_U2         1
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell SB_RAM256x16_U2.v1
+Instance Path : memory.act_ram.ebr0.ram256x16_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              EBR_B         1           10.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell BNN_core(P='{4,47,512,13,512,8,512,8,47,8}).v1
+Instance Path : BNN_core
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        24           66.7
+                            FD1P3XZ        60           26.8
+                               LUT4       263           64.0
+SUB MODULES
+                           popcount         1
+                              TOTAL       348
+----------------------------------------------------------------------
+Report for cell popcount.v1
+Instance Path : BNN_core.popcount1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         4           11.1
+                               LUT4       126           30.7
+                              TOTAL       130

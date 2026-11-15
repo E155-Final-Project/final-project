@@ -8,9 +8,9 @@ module BNN_top #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) 
 	);
 
 
-	// declare an internal clock of 48 Mhz
+	// declare an internal clock of 12 Mhz TODO pipeline to increase speed to 48Mhz
 	logic clk;
-	HSOSC #(.CLKHF_DIV(2'b00)) hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(clk));
+	HSOSC #(.CLKHF_DIV(2'b10)) hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(clk));
 
 	// SPI: recieves 64-bit words, sends back the class
 	logic [63:0] spi_word;

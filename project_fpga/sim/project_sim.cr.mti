@@ -1,0 +1,112 @@
+C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module BNN_core
+-- Importing package BNN_params
+
+Top level modules:
+	BNN_core
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/memory_tb.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/memory_tb.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module memory_tb
+-- Importing package BNN_params
+
+Top level modules:
+	memory_tb
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/popcount.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/popcount.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module popcount
+
+Top level modules:
+	popcount
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module BNN_spi
+
+Top level modules:
+	BNN_spi
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling package BNN_params
+
+Top level modules:
+	--none--
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module memory
+-- Importing package BNN_params
+
+Top level modules:
+	memory
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module Activation_EBR
+-- Compiling module EBR_256x16
+
+Top level modules:
+	Activation_EBR
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/BNN/vectors/smoke/vectors.svh {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/BNN/vectors/smoke/vectors.svh
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling package vectors_svh_unit
+
+Top level modules:
+	--none--
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/SPRAM_1024KB.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/SPRAM_1024KB.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module SPRAM_1024KB
+
+Top level modules:
+	SPRAM_1024KB
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn_spi.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn_spi.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module tb_bnn_spi
+-- Importing package BNN_params
+
+Top level modules:
+	tb_bnn_spi
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module BNN_top
+-- Importing package BNN_params
+
+Top level modules:
+	BNN_top
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/activation_tb.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/activation_tb.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module activation_tb
+
+Top level modules:
+	activation_tb
+
+} {} {}} C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/tb_bnn.sv
+Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+** Note: (vlog-220) 'C:/Users/pclark/Documents/GitHub/final-project/project_fpga/sim/project_sim.mpf' is used as the ini file.
+-- Compiling module tb_bnn
+-- Importing package BNN_params
+
+Top level modules:
+	tb_bnn
+
+} {} {}}

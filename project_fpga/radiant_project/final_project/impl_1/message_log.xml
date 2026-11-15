@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliMessageLog>
-    <Task name="Map">
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-    </Task>
     <Task name="Synthesis">
-        <Message>
-            <ID>30054000</ID>
-            <Severity>16</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.svh</Dynamic>
-        </Message>
         <Message>
             <ID>35831038</ID>
             <Severity>1</Severity>
@@ -796,14 +759,6 @@
             <Navigation>17</Navigation>
         </Message>
         <Message>
-            <ID>35901328</ID>
-            <Severity>1</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv(1): </Dynamic>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.svh</Dynamic>
-            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv</Navigation>
-            <Navigation>1</Navigation>
-        </Message>
-        <Message>
             <ID>35921014</ID>
             <Severity>1</Severity>
             <Dynamic>C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.vhd(4): </Dynamic>
@@ -814,35 +769,173 @@
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv(3): </Dynamic>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv(1): </Dynamic>
             <Dynamic>BNN_top</Dynamic>
             <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv</Navigation>
-            <Navigation>3</Navigation>
+            <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): </Dynamic>
-            <Dynamic>HSOSC(CLKHF_DIV=2'b0)</Dynamic>
+            <Dynamic>HSOSC(CLKHF_DIV=2'b10)</Dynamic>
             <Navigation>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v</Navigation>
             <Navigation>756</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(1): </Dynamic>
-            <Dynamic>BNN_core</Dynamic>
-            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv(1): </Dynamic>
+            <Dynamic>BNN_spi</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv</Navigation>
             <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(53): </Dynamic>
-            <Dynamic>64</Dynamic>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv(27): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>6</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv</Navigation>
+            <Navigation>27</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv(4): </Dynamic>
+            <Dynamic>memory(P='{4,47,512,13,512,8,512,8,47,8})</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv</Navigation>
+            <Navigation>4</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv(31): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>14</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/SPRAM_1024KB.sv(4): </Dynamic>
+            <Dynamic>SPRAM_1024KB</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/SPRAM_1024KB.sv</Navigation>
+            <Navigation>4</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(1): </Dynamic>
+            <Dynamic>BNN_thresh</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l0_thresh.mem&quot;)</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l0_thresh.mem</Dynamic>
             <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l1_thresh.mem&quot;)</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l1_thresh.mem</Dynamic>
+            <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l2_thresh.mem&quot;)</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l2_thresh.mem</Dynamic>
+            <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv(2): </Dynamic>
+            <Dynamic>Activation_EBR</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv</Navigation>
+            <Navigation>2</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv(94): </Dynamic>
+            <Dynamic>EBR_256x16</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv</Navigation>
+            <Navigation>94</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(1): </Dynamic>
+            <Dynamic>BNN_core(P='{4,47,512,13,512,8,512,8,47,8})</Dynamic>
             <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
-            <Navigation>53</Navigation>
+            <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
@@ -853,74 +946,215 @@
             <Navigation>1</Navigation>
         </Message>
         <Message>
-            <ID>35901330</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(55): </Dynamic>
-            <Dynamic>1</Dynamic>
-            <Dynamic>64</Dynamic>
-            <Dynamic>data_in</Dynamic>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(45): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>5</Dynamic>
             <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
-            <Navigation>55</Navigation>
+            <Navigation>45</Navigation>
         </Message>
         <Message>
-            <ID>35901330</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(55): </Dynamic>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(46): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>14</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
+            <Navigation>46</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(57): </Dynamic>
+            <Dynamic>32</Dynamic>
             <Dynamic>10</Dynamic>
-            <Dynamic>7</Dynamic>
-            <Dynamic>count_out</Dynamic>
             <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
-            <Navigation>55</Navigation>
+            <Navigation>57</Navigation>
         </Message>
         <Message>
-            <ID>35931013</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv(17): </Dynamic>
-            <Dynamic>thresh[63]</Dynamic>
-            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv</Navigation>
-            <Navigation>17</Navigation>
+            <Dynamic>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv(61): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>2</Dynamic>
+            <Navigation>C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv</Navigation>
+            <Navigation>61</Navigation>
         </Message>
         <Message>
             <ID>35001797</ID>
             <Severity>1</Severity>
         </Message>
         <Message>
-            <ID>30054000</ID>
-            <Severity>16</Severity>
-            <Dynamic>../../../src/BNN_params.svh</Dynamic>
-        </Message>
-        <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>../../../src/BNN_top.sv(3): </Dynamic>
+            <Dynamic>../../../src/BNN_top.sv(1): </Dynamic>
             <Dynamic>BNN_top</Dynamic>
             <Navigation>../../../src/BNN_top.sv</Navigation>
-            <Navigation>3</Navigation>
+            <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
             <Dynamic>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): </Dynamic>
-            <Dynamic>HSOSC(CLKHF_DIV=2'b0)</Dynamic>
+            <Dynamic>HSOSC(CLKHF_DIV=2'b10)</Dynamic>
             <Navigation>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v</Navigation>
             <Navigation>756</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
             <Severity>1</Severity>
-            <Dynamic>../../../src/BNN_core.sv(1): </Dynamic>
-            <Dynamic>BNN_core</Dynamic>
-            <Navigation>../../../src/BNN_core.sv</Navigation>
+            <Dynamic>../../../src/BNN_spi.sv(1): </Dynamic>
+            <Dynamic>BNN_spi</Dynamic>
+            <Navigation>../../../src/BNN_spi.sv</Navigation>
             <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>../../../src/BNN_core.sv(53): </Dynamic>
-            <Dynamic>64</Dynamic>
+            <Dynamic>../../../src/BNN_spi.sv(27): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>6</Dynamic>
+            <Navigation>../../../src/BNN_spi.sv</Navigation>
+            <Navigation>27</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/Memory.sv(4): </Dynamic>
+            <Dynamic>memory(P='{4,47,512,13,512,8,512,8,47,8})</Dynamic>
+            <Navigation>../../../src/Memory.sv</Navigation>
+            <Navigation>4</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/Memory.sv(31): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>14</Dynamic>
+            <Navigation>../../../src/Memory.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/SPRAM_1024KB.sv(4): </Dynamic>
+            <Dynamic>SPRAM_1024KB</Dynamic>
+            <Navigation>../../../src/SPRAM_1024KB.sv</Navigation>
+            <Navigation>4</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/EBR.sv(1): </Dynamic>
+            <Dynamic>BNN_thresh</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l0_thresh.mem&quot;)</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l0_thresh.mem</Dynamic>
             <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l1_thresh.mem&quot;)</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l1_thresh.mem</Dynamic>
+            <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/EBR.sv(31): </Dynamic>
+            <Dynamic>BNN_ebr_rom(MEM_FILE=&quot;../../../../BNN/mem/l2_thresh.mem&quot;)</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>31</Navigation>
+        </Message>
+        <Message>
+            <ID>35902474</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(43): </Dynamic>
+            <Dynamic>12</Dynamic>
+            <Dynamic>../../../../BNN/mem/l2_thresh.mem</Dynamic>
+            <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): </Dynamic>
+            <Dynamic>mem</Dynamic>
+            <Navigation>../../../src/EBR.sv</Navigation>
+            <Navigation>41</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/Activation_EBR.sv(2): </Dynamic>
+            <Dynamic>Activation_EBR</Dynamic>
+            <Navigation>../../../src/Activation_EBR.sv</Navigation>
+            <Navigation>2</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/Activation_EBR.sv(94): </Dynamic>
+            <Dynamic>EBR_256x16</Dynamic>
+            <Navigation>../../../src/Activation_EBR.sv</Navigation>
+            <Navigation>94</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>1</Severity>
+            <Dynamic>../../../src/BNN_core.sv(1): </Dynamic>
+            <Dynamic>BNN_core(P='{4,47,512,13,512,8,512,8,47,8})</Dynamic>
             <Navigation>../../../src/BNN_core.sv</Navigation>
-            <Navigation>53</Navigation>
+            <Navigation>1</Navigation>
         </Message>
         <Message>
             <ID>35901018</ID>
@@ -931,134 +1165,118 @@
             <Navigation>1</Navigation>
         </Message>
         <Message>
-            <ID>35901330</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>../../../src/BNN_core.sv(55): </Dynamic>
-            <Dynamic>1</Dynamic>
-            <Dynamic>64</Dynamic>
-            <Dynamic>data_in</Dynamic>
+            <Dynamic>../../../src/BNN_core.sv(45): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>5</Dynamic>
             <Navigation>../../../src/BNN_core.sv</Navigation>
-            <Navigation>55</Navigation>
+            <Navigation>45</Navigation>
         </Message>
         <Message>
-            <ID>35901330</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>../../../src/BNN_core.sv(55): </Dynamic>
+            <Dynamic>../../../src/BNN_core.sv(46): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>14</Dynamic>
+            <Navigation>../../../src/BNN_core.sv</Navigation>
+            <Navigation>46</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/BNN_core.sv(57): </Dynamic>
+            <Dynamic>32</Dynamic>
             <Dynamic>10</Dynamic>
-            <Dynamic>7</Dynamic>
-            <Dynamic>count_out</Dynamic>
             <Navigation>../../../src/BNN_core.sv</Navigation>
-            <Navigation>55</Navigation>
+            <Navigation>57</Navigation>
         </Message>
         <Message>
-            <ID>35931013</ID>
+            <ID>35901209</ID>
             <Severity>16</Severity>
-            <Dynamic>../../../src/BNN_top.sv(17): </Dynamic>
-            <Dynamic>thresh[63]</Dynamic>
-            <Navigation>../../../src/BNN_top.sv</Navigation>
-            <Navigation>17</Navigation>
+            <Dynamic>../../../src/BNN_core.sv(61): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>2</Dynamic>
+            <Navigation>../../../src/BNN_core.sv</Navigation>
+            <Navigation>61</Navigation>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009991</ID>
+            <Severity>16</Severity>
+            <Dynamic>../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>16</Severity>
+            <Dynamic>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP/legacy.v(1724): </Dynamic>
+            <Dynamic>\memory/act_ram/ebr0/ram256x16_inst/gnd</Dynamic>
+            <Navigation>C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP/legacy.v</Navigation>
+            <Navigation>1724</Navigation>
+        </Message>
+        <Message>
+            <ID>35002062</ID>
+            <Severity>16</Severity>
             <Dynamic>sck</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
+            <ID>35002062</ID>
+            <Severity>16</Severity>
             <Dynamic>sdi</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
+            <ID>35002062</ID>
+            <Severity>16</Severity>
             <Dynamic>sdo</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
+            <ID>35002062</ID>
+            <Severity>16</Severity>
             <Dynamic>load</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
+            <ID>35002061</ID>
+            <Severity>1</Severity>
+            <Dynamic>load_weights</Dynamic>
+        </Message>
+        <Message>
+            <ID>35002062</ID>
+            <Severity>16</Severity>
             <Dynamic>done</Dynamic>
         </Message>
         <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>35002028</ID>
-            <Severity>256</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-    </Task>
-    <Task name="PAR">
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sck</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>sdi</Dynamic>
-        </Message>
-        <Message>
-            <ID>71003020</ID>
-            <Severity>16</Severity>
-            <Dynamic>load</Dynamic>
+            <ID>35002039</ID>
+            <Severity>1</Severity>
         </Message>
     </Task>
 </BaliMessageLog>

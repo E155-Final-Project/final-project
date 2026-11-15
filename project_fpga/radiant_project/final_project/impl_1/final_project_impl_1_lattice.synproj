@@ -40,11 +40,15 @@
 -lib pmi -vhd "C:/lscc/radiant/2026.1/ip/pmi/pmi_iCE40UP.vhd"
 
 # Source Files
+-sver "../../../src/Activation_EBR.sv"
 -sver "../../../src/BNN_core.sv"
--sver "../../../src/BNN_top.sv"
--sver "../../../src/popcount.sv"
--ver "../../../src/BNN_params.svh"
+-sver "../../../src/BNN_params.sv"
 -sver "../../../src/BNN_spi.sv"
+-sver "../../../src/BNN_top.sv"
+-sver "../../../src/EBR.sv"
+-sver "../../../src/Memory.sv"
+-sver "../../../src/popcount.sv"
+-sver "../../../src/SPRAM_1024KB.sv"
 -path ".."
 -top BNN_top
 # Output Configuration
