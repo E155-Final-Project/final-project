@@ -12,6 +12,7 @@
 !predictions*.txt
 !*.log
 !transcript
+!*.png
 
 # Questa compile library, even the files above would match
 work/
