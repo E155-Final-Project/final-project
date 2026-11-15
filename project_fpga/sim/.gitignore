@@ -8,6 +8,10 @@
 !*.sv
 !*.svh
 !*.do
+!*.mpf
 !predictions*.txt
 !*.log
 !transcript
+
+# Questa compile library, even the files above would match
+work/

@@ -4,7 +4,7 @@ module BNN_spi(input  logic        sck,
                output logic        sdo,
                input  logic        done,
                output logic [63:0] word,       // last finished 64-bit chunk
-               output logic        word_tog,   // flips each time word updates
+               output logic        word_half,  // high for bits 32-63 of a word; falls when word updates
                input  logic [7:0]  class_out);
 
     logic [5:0]  bitcnt;                // bit counter
@@ -24,19 +24,19 @@ module BNN_spi(input  logic        sck,
     // count bits while load is high, wraps every 64
     always_ff @(posedge sck or negedge load)
         if (!load) bitcnt <= 0;
-        else       bitcnt <= bitcnt + 1;
-
-    // iCE40 flip-flops start at 0; this makes simulation match
-    initial word_tog = 1'b0;
+        else       bitcnt <= bitcnt + 6'd1;
 
     // shift in at the top, so after 64 bits the first bit is in bit 0
     always_ff @(posedge sck) begin
         shreg <= {sdi, shreg[63:1]};
         if (load && bitcnt == 6'd63) begin
-            word     <= {sdi, shreg[63:1]};
-            word_tog <= ~word_tog;
+            word <= {sdi, shreg[63:1]};
         end
     end
+
+    // bitcnt[5] falls on the same edge word updates (63 -> 0), and resets
+    // with load, so it needs no initial value
+    assign word_half = bitcnt[5];
 
     // class out, LSB first
     always_ff @(posedge sck)

@@ -28,7 +28,7 @@ module memory #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) (
     logic [13:0] load_addr;
     always_ff @(posedge clk)
         if (load_start)    load_addr <= 0;
-        else if (new_word) load_addr <= load_addr + 1;
+        else if (new_word) load_addr <= load_addr + 14'd1;
 
     logic w_we, img_we;
     assign w_we   = new_word &  load_weights;

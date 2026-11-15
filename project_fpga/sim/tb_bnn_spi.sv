@@ -82,6 +82,8 @@ module tb_bnn_spi;
         $readmemh({vec_dir, "/expected.mem"},   expected);
 
         fd = $fopen(pred_file, "w");
+        load = 1;                        // pulse load so bitcnt resets
+        #100 load = 0;
         #1000;
 
         // 1. weights

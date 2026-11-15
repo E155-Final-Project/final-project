@@ -7,22 +7,24 @@ module BNN_thresh (
 
     // Paths are relative to Radiant's synthesis folder (radiant_project/final_project/impl_1).
     // Testbenches load these ROMs themselves from +MEM_DIR.
-    logic [9:0] l0_thresh, l1_thresh, l2_thresh;
+    // The .mem files hold 3 hex digits (12 bits) per value, so the ROMs are 12 bits
+    // wide; every threshold fits in 10 bits, so only the low 10 are used.
+    logic [11:0] l0_thresh, l1_thresh, l2_thresh;
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
         .clk(clk), .addr(neuron), .data(l0_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
         .clk(clk), .addr(neuron), .data(l1_thresh));
 
-    BNN_ebr_rom #(.DEPTH(512), .WIDTH(10), .MEM_FILE("../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
         .clk(clk), .addr(neuron), .data(l2_thresh));
 
     always_comb
         case (layer)
-            2'd0:    thresh = l0_thresh;
-            2'd1:    thresh = l1_thresh;
-            2'd2:    thresh = l2_thresh;
+            2'd0:    thresh = l0_thresh[9:0];
+            2'd1:    thresh = l1_thresh[9:0];
+            2'd2:    thresh = l2_thresh[9:0];
             default: thresh = '0;    // output layer uses argmax, not a threshold
         endcase
 

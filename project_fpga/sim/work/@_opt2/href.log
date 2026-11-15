@@ -1,5 +1,0 @@
-BEGIN 1:generic_behav_sadslspk4s1p16384x16m16b4w1c0p1d0t0:fast:iCE40UP
-    pwr_dwn :  1:sadslspk4s1p16384x16m16b4w1c0p1d0t0:fast:iCE40UP
-    Q :  1:sadslspk4s1p16384x16m16b4w1c0p1d0t0:fast:iCE40UP
-    mes_all_valid :  1:sadslspk4s1p16384x16m16b4w1c0p1d0t0:fast:iCE40UP
-END 

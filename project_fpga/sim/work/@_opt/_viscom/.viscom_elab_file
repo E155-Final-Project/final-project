@@ -1,1 +1,0 @@
-C:/lscc/radiant/2026.1/questasim/win64/VisualizerRls/bin/viscom.exe -nolock -quiet -jmem_size 934320 work.tb_bnn -quiet -auto_acc_if_foreign -work work -L iCE40UP +acc -allow_unnamed -o _opt -id 1-8cf8c5f816aa-6af8f70d-99-5b68 +__betafsm

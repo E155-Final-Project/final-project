@@ -14,24 +14,24 @@ module BNN_top #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) 
 
 	// SPI: recieves 64-bit words, sends back the class
 	logic [63:0] spi_word;
-	logic        word_tog;
+	logic        word_half;
 	logic [7:0]  class_out;
 
 	BNN_spi BNN_spi(
 		.sck(sck), .sdi(sdi), .load(load), .sdo(sdo), .done(done),
-		.word(spi_word), .word_tog(word_tog), .class_out(class_out));
+		.word(spi_word), .word_half(word_half), .class_out(class_out));
 
-	// bring word_tog, load and load_weights into clk
-	logic [2:0] tog_s, load_s;
+	// bring word_half, load and load_weights into clk
+	logic [2:0] half_s, load_s;
 	logic [1:0] lw_s;
 	always_ff @(posedge clk) begin
-		tog_s  <= {tog_s[1:0],  word_tog};
+		half_s <= {half_s[1:0], word_half};
 		load_s <= {load_s[1:0], load};
 		lw_s   <= {lw_s[0],     load_weights};
 	end
 
 	logic new_word, load_start;
-	assign new_word   = tog_s[2] ^ tog_s[1];		// one clk pulse per 64-bit word
+	assign new_word   = half_s[2] & ~half_s[1];	// word_half fell: one clk pulse per 64-bit word
 	assign load_start = load_s[1] & ~load_s[2];		// one clk pulse when load rises
 
 	// core runs once a transfer finishes, and is held in reset during one

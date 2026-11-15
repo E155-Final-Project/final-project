@@ -42,8 +42,8 @@ module BNN_core #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS)
 		end
 		else if (!done) begin // cycle through words
 			if (!last_word) begin
-				word        <= word + 1;
-				weight_addr <= weight_addr + 1;
+				word        <= word + 5'd1;
+				weight_addr <= weight_addr + 14'd1;
 				if (word != 0) sum <= sum_next;   // data for word-1 arrives now
 			end
 			else begin // end of neuron
@@ -54,11 +54,11 @@ module BNN_core #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS)
 					class_out <= neuron[7:0];
 				end
 				if (!last_neuron)
-					neuron <= neuron + 1;
+					neuron <= neuron + 10'd1;
 				else begin // end of layer
 					neuron <= 0;
 					if (last_layer) done  <= 1;
-					else            layer <= layer + 1;
+					else            layer <= layer + 2'd1;
 				end
 			end
 		end
