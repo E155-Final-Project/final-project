@@ -45,6 +45,8 @@ To meet the final deliverable, we still need to write the TPS65 driver, fix the 
 
 ### BNN block diagram
 
+![BNN_top module.](images/bnn_top.png){#fig-bnn-top}
+
 At start, the MCU asserts load_weights, then sends all the weights over SPI to the FPGA. The FPGA takes the weights and stores them in the SPRAM. After this the FPGA is ready to receive images for processing.
 
 When the MCU needs to make a prediction, it sends the entire image data over SPI while load weights = 0. As soon as load falls, the BNN started calculating. When it's done, it raises the done flag, and the MCU can read back the resulting class to confirm its correctness.
@@ -81,6 +83,6 @@ To verify the BNN, we checked its predictions on 16 images, each of a different 
 
 | **Part** | **Vendor** | **Qty** | **Ordered** | **Received** | **Cost** |
 |---|---|---|---|---|---|
-| TPS65-201A-S<br>Azoteq Capacitance Touch Sensor Modules | Mouser | 2 | Yes | No | 23.10 |
+| TPS65-201A-S<br>Azoteq Capacitance Touch Sensor Modules | Mouser | 2 | Yes | No | \$23.10 |
 | Seven Seg Displays | DigiKey | 4 | Yes | Yes | \$23.13 |
 | **Total** | | | | | **\$46.23** |
