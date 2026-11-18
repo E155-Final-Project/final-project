@@ -9,6 +9,8 @@ website:
         text: Home
       - href: proposal.qmd
         text: Proposal
+      - href: midpoint.qmd
+        text: Midpoint
       - href: blog.qmd
         text: Blog
       - href: team.qmd
