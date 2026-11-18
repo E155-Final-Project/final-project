@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project Proposal – E155 Final Project</title>
+<title>E155 Project Proposal: Touchscreen to Character BNN – E155 Final Project</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -104,6 +104,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./midpoint.html"> 
+<span class="menu-text">Midpoint</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
@@ -130,15 +134,32 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project overview</a></li>
+  <li><a href="#specifications" id="toc-specifications" class="nav-link" data-scroll-target="#specifications">Specifications</a></li>
+  <li><a href="#subsystems" id="toc-subsystems" class="nav-link" data-scroll-target="#subsystems">Subsystems</a>
+  <ul class="collapse">
+  <li><a href="#mcu-stm32l432kc" id="toc-mcu-stm32l432kc" class="nav-link" data-scroll-target="#mcu-stm32l432kc">MCU (STM32L432KC)</a></li>
+  <li><a href="#fpga-ice40-up5k" id="toc-fpga-ice40-up5k" class="nav-link" data-scroll-target="#fpga-ice40-up5k">FPGA (iCE40 UP5K)</a></li>
+  </ul></li>
+  <li><a href="#new-hardware" id="toc-new-hardware" class="nav-link" data-scroll-target="#new-hardware">New hardware</a></li>
+  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block diagram</a></li>
+  <li><a href="#performance-calculations" id="toc-performance-calculations" class="nav-link" data-scroll-target="#performance-calculations">Performance calculations</a></li>
+  <li><a href="#scheduled-work-and-project-breakdown" id="toc-scheduled-work-and-project-breakdown" class="nav-link" data-scroll-target="#scheduled-work-and-project-breakdown">Scheduled Work and Project Breakdown)</a></li>
+  <li><a href="#bill-of-materials" id="toc-bill-of-materials" class="nav-link" data-scroll-target="#bill-of-materials">Bill of materials</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content" tabindex="-1">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project Proposal</h1>
+<h1 class="title">E155 Project Proposal: Touchscreen to Character BNN</h1>
 </div>
 
 
@@ -155,8 +176,216 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><strong>Team:</strong> Pierce Clark, Luke Murphy</p>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project overview</h2>
+<p>The proposed device will translate fingerstrokes on a touchpad into letters on a hex-segment display. On demo day, people will be able to write to the seven-seg display using just their fingers to draw letters or numbers on the touchpad.</p>
+<p>To achieve this, the MCU will continuously sample the touchpad for inputs using I2C. The MCU will stream the touch data to the FPGA on completion of a keystroke. The FPGA will run a binarized digit classification model on the data to determine which letter to write to the hex-segment display. The predicted character will be shifted onto the displays for the user to see.</p>
+</section>
+<section id="specifications" class="level2">
+<h2 class="anchored" data-anchor-id="specifications">Specifications</h2>
+<p>At the demo, the hardware of the project will:</p>
+<ul>
+<li>Scan the touchscreen at 100 Hz for inputs.</li>
+<li>Classify all 26 letters and 10 numbers from live sensor data</li>
+<li>Have an accuracy rate of 80% over 50 trials.</li>
+<li>Produce the result within 100 ms of the completed input</li>
+<li>Display the result on the seven-segment display at 90 hz (no visible flickering)</li>
+<li>Only displayable letters/numbers are shown. Ineligible characters are represented with a single dash (through segment G).</li>
+<li>Consecutive characters are properly shifted along a segmented display array.</li>
+</ul>
+</section>
+<section id="subsystems" class="level2">
+<h2 class="anchored" data-anchor-id="subsystems">Subsystems</h2>
+<section id="mcu-stm32l432kc" class="level3">
+<h3 class="anchored" data-anchor-id="mcu-stm32l432kc">MCU (STM32L432KC)</h3>
+<p>The MCU reads the finger position from the Trill Square using I2C. When the letter is done being written, it turns the stroke into a 28×28 bitmap. It sends the bitmap to the FPGA over SPI.</p>
+<ul>
+<li><strong>Peripherals used:</strong> I2C (touchpad), SPI (FPGA), timer (100 Hz sampling), GPIO interrupts (FPGA done, submit button),</li>
+<li><strong>Firmware structure:</strong> Timer-driven sampling loop</li>
+</ul>
+</section>
+<section id="fpga-ice40-up5k" class="level3">
+<h3 class="anchored" data-anchor-id="fpga-ice40-up5k">FPGA (iCE40 UP5K)</h3>
+<p>The FPGA will act both as the inference accelerator and display controller for the overall system. It receives a 784-bit bitmap from the MCU over SPI and runs into a binarized neural network or BNN (implemented as a custom datapath) to classify it as one of 47 EMNIST classes (0-9, A-Z, and 11 lowercase letters). The classified character is then decoded to a 14-segment pattern and shown on a multiplexed display.</p>
+<p>*The BNN uses no multiplier, as each neuron XNORs the input with the stored weights, counts the matches (popcount), and then compares the count to a trained threshold.</p>
+<p>Tasks)</p>
+<ul>
+<li>At boot: read MCU stream of weights and trained thresholds over SPI and write them into an on-chip SPRAM, and EBR respectively.</li>
+<li>For each character: receiver 784 bit bitmap over SPI into an input register’</li>
+<li>Run a 4-layer BNN (784→512→512→512→47), reading 64 weight bits per clock cycle from the 4 SPRAM blocks</li>
+<li>Select highest score of the final 47 neurons (argmax)</li>
+<li>Decode the output to a 14-segment pattern and drive the multiplexed display.</li>
+<li>Return the class index to the MCU over MISO for UART logging.</li>
+</ul>
+<p>Peripherals Used: SPI (MCU), SPRAM (MCU writes weights into upon booting), EBR (storing offline calculated thresholds)</p>
+<ul>
+<li><p>Modules: SPI peripheral, input bitmap register, SPRAM weight holder, layer sequencer FSM, output 14-segment LUT, display multiplexer</p></li>
+<li><p>Resources: 4 SPRAM blocks read in parallel (weights), 6 EBR (thresholds), 0 DSP blocks, &lt;30% of 5,280 LUTs; 24 MHz clock from the internal HSOSC; inference ≤ 700 µs.</p></li>
+</ul>
+</section>
+</section>
+<section id="new-hardware" class="level2">
+<h2 class="anchored" data-anchor-id="new-hardware">New hardware</h2>
+<p>The project uses one new MCU peripheral, one new FPGA IP, and one new external device.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Category</strong></th>
+<th><strong>Item</strong></th>
+<th><strong>Role in this project</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>New MCU peripheral</td>
+<td>I2C1</td>
+<td>Communicates with touch pad</td>
+</tr>
+<tr class="even">
+<td>New FPGA IP</td>
+<td>SPRAM</td>
+<td>Storage of weights</td>
+</tr>
+<tr class="odd">
+<td>New external hardware</td>
+<td>Trill Square Rev C</td>
+<td>Detects touch input from users</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="block-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="block-diagram">Block diagram</h2>
+<p><img src="images/proposal_block.png" class="img-fluid"></p>
+</section>
+<section id="performance-calculations" class="level2">
+<h2 class="anchored" data-anchor-id="performance-calculations">Performance calculations</h2>
+<p>The MCU polls the Trill Square over I²C every 10 ms (100 Hz). That is longer than the sensor’s 6.15 ms full scan and uses under 10% of the 400 kbit/s bus.</p>
+<p>The MCU and FPGA share one SPI link at 5 MHz. That is under a quarter of the FPGA’s 24 MHz clock, so the FPGA can sample SCK through a synchronizer, and one data line is fast enough. Each character takes about 159 µs of SPI time: 157 µs to send the 784-bit bitmap and 1.6 µs to read the class index back over MISO.</p>
+<p>The BNN (784→512→512→512→47) reads its 949,760 binary weights 64 bits per cycle and finishes in 15,224 cycles (634 µs). It scores 84.4% on the EMNIST Balanced test set across all 47 classes (mean of 3 seeds). We have not measured accuracy on touchpad input yet. Loading 124.9 KB of weights and thresholds at boot takes 200 ms.</p>
+<p>A 500 ms end-of-character timeout dominates end-to-end latency, which is at most 600 ms from finger lift to display. Estimated system power is 0.35 W, mostly from the multiplexed displays.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Touch sample rate</td>
+<td>100 Hz (I²C, 9.5% bus load)</td>
+</tr>
+<tr class="even">
+<td>SPI link (MCU to FPGA)</td>
+<td>5 MHz, 1 data line (under ¼ of the 24 MHz FPGA clock)</td>
+</tr>
+<tr class="odd">
+<td>Bitmap transfer</td>
+<td>98 B in 157 µs @ 5 MHz SPI</td>
+</tr>
+<tr class="even">
+<td>Boot weight load</td>
+<td>124.9 KB in 200 ms</td>
+</tr>
+<tr class="odd">
+<td>Inference</td>
+<td>949,760 binary ops, 15,224 cycles, 634 µs @ 24 MHz</td>
+</tr>
+<tr class="even">
+<td>Model accuracy</td>
+<td>84.4% test (mean of 3 seeds), EMNIST Balanced, 47 classes</td>
+</tr>
+<tr class="odd">
+<td>SPI time per character</td>
+<td>≈ 159 µs (157 µs bitmap in, 1.6 µs class index out)</td>
+</tr>
+<tr class="even">
+<td>FPGA memory</td>
+<td>121.8 KB weights in SPRAM (93%), 6 EBR for thresholds</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Riskiest element</strong></p>
+<p>The riskiest element of this project will be the BNN. Fitting the model in the FPGA may be a challenge. Our model should be maximized to the size of the FPGA’s memory blocks, so we can get as accurate of a model as possible..</p>
+<p>Additionally, training the model is a major bottleneck that needs to be overcome for the project to succeed. If the model is inaccurate or cannot fit, then we will have to find another way to classify user input. Additionally, we need to develop the understanding of how a BNN works in order to implement the logic correctly.</p>
+<p>Testing the BNN will be hard because it is a black box. Developing a rigorous testing plan and having a reference model of the BNN in code will help us measure the hardware against simulated results.</p>
+</section>
+<section id="scheduled-work-and-project-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="scheduled-work-and-project-breakdown">Scheduled Work and Project Breakdown)</h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1Ezt3dacDeXingCH_D66IfCKbtVyyRdMZJSXwZwZAFqY/edit?gid=0#gid=0">Gantt chart</a></p>
+</section>
+<section id="bill-of-materials" class="level2">
+<h2 class="anchored" data-anchor-id="bill-of-materials">Bill of materials</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Part number</th>
+<th>Qty</th>
+<th>Unit price</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MCU dev board</td>
+<td>[STM32L432KC Nucleo]</td>
+<td>1</td>
+<td>Stockroom</td>
+<td>Stockroom</td>
+</tr>
+<tr class="even">
+<td>FPGA board</td>
+<td>[iCE40 UP5K board]</td>
+<td>1</td>
+<td>Stockroom</td>
+<td>Stockroom</td>
+</tr>
+<tr class="odd">
+<td>Trill Square Rev C</td>
+<td><a href="https://www.mouser.com/catalog/specsheets/Bela_02-14-2025_TRILL_sensors_datasheet-3359251.pdf">160702-SQUARE</a></td>
+<td>1</td>
+<td>$27.00 ($19.00 + $8.00 shipping)</td>
+<td>https://www.crowdsupply.com/bela/trill</td>
+</tr>
+<tr class="even">
+<td>14-segment alphanumeric display</td>
+<td>COM-21214</td>
+<td>4</td>
+<td>$23.13 ($14.64 + $8.49 Shipping)</td>
+<td>https://www.digikey.com/en/products/detail/sparkfun-electronics/COM-21214/16892534</td>
+</tr>
+<tr class="odd">
+<td>Miscellaneous Components</td>
+<td>PNP Transistor<br>NPN Transistor<br>Segment current limiting resistors<br>Transistor base resistors<br>Decoupling Caps<br>Breadboards<br>Jumper Wires</td>
+<td>N/A</td>
+<td>Stockroom</td>
+<td>Stockroom</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td><strong>$50.13</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>Hint: every row needs a part number, quantity, and price or “stockroom”. See <a href="https://hmc-e155.github.io/project/assignments/purchasing-parts.html">Purchasing Parts</a>.</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

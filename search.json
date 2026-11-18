@@ -21,13 +21,6 @@
     "text": "On This Site\nThe Proposal describes what we plan to build, and Team introduces the people building it. Source code for the FPGA and MCU is on GitHub."
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Fitting a Binarized Neural Network on an iCE40 UP5K\n\n\n\nHow I settled on a 784→512→512→512→47 binary network for E155, after testing models in SPRAM, in EBR, and in flash for accuracy, timing, and storage.\n\n\n\n\n\n\nNov 3, 2026\n\n\nPierce Clark\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/bnn-emnist-ice40/index.html",
     "href": "posts/bnn-emnist-ice40/index.html",
     "title": "Fitting a Binarized Neural Network on an iCE40 UP5K",
@@ -110,5 +103,131 @@
     "title": "Fitting a Binarized Neural Network on an iCE40 UP5K",
     "section": "Sources",
     "text": "Sources\n\nHubara et al., Binarized Neural Networks, NeurIPS 2016\nUmuroglu et al., FINN: A Framework for Fast, Scalable Binarized Neural Network Inference, FPGA 2017\nRastegari et al., XNOR-Net, ECCV 2016\nCohen et al., EMNIST: an extension of MNIST to handwritten letters, 2017\njarnoh/mnist64, the binary CNN in the comparison above\nLattice FPGA-TN-02022, iCE40 SPRAM Usage Guide\nLattice FPGA-TN-02002, Memory Usage Guide for iCE40 Devices"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Fitting a Binarized Neural Network on an iCE40 UP5K\n\n\n\nHow I settled on a 784→512→512→512→47 binary network for E155, after testing models in SPRAM, in EBR, and in flash for accuracy, timing, and storage.\n\n\n\n\n\n\nNov 3, 2026\n\n\nPierce Clark\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "midpoint.html",
+    "href": "midpoint.html",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "",
+    "text": "The FPGA has been partially completed. The BNN module was completed and verified against a set of testvectors. Multiple testbenches were used to verify the BNN’s behavior. One test bench tested the BNN_core, which does the prediction. Another test bench simulated a full SPI transaction. The testbench confirmed that the BNN would correctly predict and send back the result over SPI. The BNN verilog was simulated and debugged in Questa.\nThe BNN was flashed to the FPGA, and completed a SPI transaction on real hardware with a simple script that sent over hardcoded image data. Oscope probes show a time of 1.4ms for the inference, with the SPI transaction being the limiting factor for speed.\nTo meet the final deliverable, we still need to develop the VGA display module and find a VGA display. We also need to tie the second FPGA to the first via SPI. The Hex displays need to be wired to the FPGA output.\n\n\n\nThe MCU firmware has similarly been partially completed. The peripheral drivers (USART2, I2C, SPI1, external interrupts, etc.) for the STM32L432KC have been written and run on the board. The rasterizer (converts captured stroke into bitmap for BNN) was verified against the training vectors.\nA laptop test suite, verified the firmware stages before running them on hardware. A C model of the BNN reproduced the python model’s predictions and all 47 output scores on every test image.\n\nThe stroke-capture state machine was tested on multi-stroke characters, the 500 ms end-of-character gap, and brief finger dropouts.\nThe SPI protocol was tested against a bit-level model of the FPGA_A’s SPI slave: the weights arrived intact, all 16 test images were received word for word, and every predicted class was read back correctly.\nA live UART view that shows the user’s trace beside the bitmap sent to the FPGA was written and tested on the laptop with replayed strokes via screen session on local terminal\n\nOn hardware, the MCU loads the trained model weights (121,792 bytes stored in flash) into the FPGA at every boot, in 341 ms (notional latency). It then sent the 16 test images to the FPGA over SPI and read back each prediction: 9 of 16 matched the expected classes. We are debugging link errors until we can reliably match 16/16 classes.\nWe replaced the Trill Square with an Azoteq TPS65 trackpad, which arrives this week. Because of that, the touchpad driver and stroke capture have not yet been verified on real handwriting.\nTo meet the final deliverable, we still need to write the TPS65 driver, fix the remaining SPI errors, and write the main loop that connects touch input, stroke capture, rasterization and classification."
+  },
+  {
+    "objectID": "midpoint.html#status-summary",
+    "href": "midpoint.html#status-summary",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "",
+    "text": "The FPGA has been partially completed. The BNN module was completed and verified against a set of testvectors. Multiple testbenches were used to verify the BNN’s behavior. One test bench tested the BNN_core, which does the prediction. Another test bench simulated a full SPI transaction. The testbench confirmed that the BNN would correctly predict and send back the result over SPI. The BNN verilog was simulated and debugged in Questa.\nThe BNN was flashed to the FPGA, and completed a SPI transaction on real hardware with a simple script that sent over hardcoded image data. Oscope probes show a time of 1.4ms for the inference, with the SPI transaction being the limiting factor for speed.\nTo meet the final deliverable, we still need to develop the VGA display module and find a VGA display. We also need to tie the second FPGA to the first via SPI. The Hex displays need to be wired to the FPGA output.\n\n\n\nThe MCU firmware has similarly been partially completed. The peripheral drivers (USART2, I2C, SPI1, external interrupts, etc.) for the STM32L432KC have been written and run on the board. The rasterizer (converts captured stroke into bitmap for BNN) was verified against the training vectors.\nA laptop test suite, verified the firmware stages before running them on hardware. A C model of the BNN reproduced the python model’s predictions and all 47 output scores on every test image.\n\nThe stroke-capture state machine was tested on multi-stroke characters, the 500 ms end-of-character gap, and brief finger dropouts.\nThe SPI protocol was tested against a bit-level model of the FPGA_A’s SPI slave: the weights arrived intact, all 16 test images were received word for word, and every predicted class was read back correctly.\nA live UART view that shows the user’s trace beside the bitmap sent to the FPGA was written and tested on the laptop with replayed strokes via screen session on local terminal\n\nOn hardware, the MCU loads the trained model weights (121,792 bytes stored in flash) into the FPGA at every boot, in 341 ms (notional latency). It then sent the 16 test images to the FPGA over SPI and read back each prediction: 9 of 16 matched the expected classes. We are debugging link errors until we can reliably match 16/16 classes.\nWe replaced the Trill Square with an Azoteq TPS65 trackpad, which arrives this week. Because of that, the touchpad driver and stroke capture have not yet been verified on real handwriting.\nTo meet the final deliverable, we still need to write the TPS65 driver, fix the remaining SPI errors, and write the main loop that connects touch input, stroke capture, rasterization and classification."
+  },
+  {
+    "objectID": "midpoint.html#system-block-diagram",
+    "href": "midpoint.html#system-block-diagram",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "System Block Diagram",
+    "text": "System Block Diagram\n\n\n\n\n\n\nFigure 1"
+  },
+  {
+    "objectID": "midpoint.html#breadboard-schematics",
+    "href": "midpoint.html#breadboard-schematics",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "Breadboard Schematics",
+    "text": "Breadboard Schematics\n\n\n\n\n\n\nFigure 2: MCU Schematic—with external signals labeled\n\n\n\n\n\n\n\n\n\nFigure 3: FPGA_A Schematic—facilitating MCU, FPGA_B, and VGA Display communication\n\n\n\n\n\n\n\n\n\nFigure 4: Display Driver Schematic—VGA driver board between FPGA_A and DE15 VGA Male Connector"
+  },
+  {
+    "objectID": "midpoint.html#fpga-block-diagrams",
+    "href": "midpoint.html#fpga-block-diagrams",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "FPGA Block Diagrams",
+    "text": "FPGA Block Diagrams\n\nBNN block diagram\nAt start, the MCU asserts load_weights, then sends all the weights over SPI to the FPGA. The FPGA takes the weights and stores them in the SPRAM. After this the FPGA is ready to receive images for processing.\nWhen the MCU needs to make a prediction, it sends the entire image data over SPI while load weights = 0. As soon as load falls, the BNN started calculating. When it’s done, it raises the done flag, and the MCU can read back the resulting class to confirm its correctness."
+  },
+  {
+    "objectID": "midpoint.html#mcu-routine-outline",
+    "href": "midpoint.html#mcu-routine-outline",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "MCU Routine Outline",
+    "text": "MCU Routine Outline\n\nBoot and weight load: sets up clock and peripherals, after waiting a set delay for the fpga to do the same, then loads the trained model weights from flash memory into the FPGA (once per every power up).\nTouchpad Sampling: reads finger/stylus position from the TPS65 trackpad over I2C whenever a new sample is detected.\nStroke Capture: collects and processes the sent over samples into “strokes” and determines if and when a character is finished being written (currently waiting 500ms after the last sample).\nRasterizer: turn the finished character (strokes) into a centered 28x28 bitmap (the same the network was trained on).\nFPGA link (for inference): sends the bitmap to FPGA_A over SPI, waits for results, and reads back the predicted class.\nUART Debug: sends the result to a terminal “screen” session on a laptop over UART2 protocol. Displays the bitmap sent to the fpga for inference, and the live trace from the trackpad.\nUser Interface: coordinates the status leds of the MCU and the CLEAR button\n\nChronology\nRoutine 1 happens only once per session.\nRoutines 4,5, and 6* run sequentially as each relies on the output of the other (6*: the bitmap sent and final result class return rely on routine 4 and 5.)\nRoutines 2, 3, and 6* are concurrent meaning as the user is writing, they run together (6* the live trace the user’s finger/stylus, CLEAR button debounce, and status LED0."
+  },
+  {
+    "objectID": "midpoint.html#riskiest-element",
+    "href": "midpoint.html#riskiest-element",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "Riskiest Element",
+    "text": "Riskiest Element\nThe proposal named the binarized neural network (BNN) as the riskiest part of the project. The BNN Verilog is now finished and verified on hardware, so that risk is behind us.\nFitting the network on the FPGA was the main design challenge. Because every weight is a single bit, we could calculate exactly how much memory the weights would take. We stored them in SPRAM instead of flash so inference would run faster.\nDuring training we tried many combinations of layer count and layer width. The best runs reached nearly 90% accuracy on the test data. We kept the most accurate configuration that fit in memory. The final configuration was three layers of 512 neurons followed by the output layer.\nTo verify the BNN, we checked its predictions on 16 images, each of a different letter. We also have a test suite of 5,000 images, but time constraints kept the simulation to those 16."
+  },
+  {
+    "objectID": "midpoint.html#parts-status",
+    "href": "midpoint.html#parts-status",
+    "title": "Touchscreen to Character BNN: Midpoint Report",
+    "section": "Parts Status",
+    "text": "Parts Status\n\n\n\n\n\n\n\n\n\n\n\nPart\nVendor\nQty\nOrdered\nReceived\nCost\n\n\n\n\nTPS65-201A-SAzoteq Capacitance Touch Sensor Modules\nMouser\n2\nYes\nNo\n23.10\n\n\nSeven Seg Displays\nDigiKey\n4\nYes\nYes\n$23.13\n\n\nTotal\n\n\n\n\n$46.23"
+  },
+  {
+    "objectID": "proposal.html",
+    "href": "proposal.html",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "",
+    "text": "Team: Pierce Clark, Luke Murphy"
+  },
+  {
+    "objectID": "proposal.html#project-overview",
+    "href": "proposal.html#project-overview",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Project overview",
+    "text": "Project overview\nThe proposed device will translate fingerstrokes on a touchpad into letters on a hex-segment display. On demo day, people will be able to write to the seven-seg display using just their fingers to draw letters or numbers on the touchpad.\nTo achieve this, the MCU will continuously sample the touchpad for inputs using I2C. The MCU will stream the touch data to the FPGA on completion of a keystroke. The FPGA will run a binarized digit classification model on the data to determine which letter to write to the hex-segment display. The predicted character will be shifted onto the displays for the user to see."
+  },
+  {
+    "objectID": "proposal.html#specifications",
+    "href": "proposal.html#specifications",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Specifications",
+    "text": "Specifications\nAt the demo, the hardware of the project will:\n\nScan the touchscreen at 100 Hz for inputs.\nClassify all 26 letters and 10 numbers from live sensor data\nHave an accuracy rate of 80% over 50 trials.\nProduce the result within 100 ms of the completed input\nDisplay the result on the seven-segment display at 90 hz (no visible flickering)\nOnly displayable letters/numbers are shown. Ineligible characters are represented with a single dash (through segment G).\nConsecutive characters are properly shifted along a segmented display array."
+  },
+  {
+    "objectID": "proposal.html#subsystems",
+    "href": "proposal.html#subsystems",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Subsystems",
+    "text": "Subsystems\n\nMCU (STM32L432KC)\nThe MCU reads the finger position from the Trill Square using I2C. When the letter is done being written, it turns the stroke into a 28×28 bitmap. It sends the bitmap to the FPGA over SPI.\n\nPeripherals used: I2C (touchpad), SPI (FPGA), timer (100 Hz sampling), GPIO interrupts (FPGA done, submit button),\nFirmware structure: Timer-driven sampling loop\n\n\n\nFPGA (iCE40 UP5K)\nThe FPGA will act both as the inference accelerator and display controller for the overall system. It receives a 784-bit bitmap from the MCU over SPI and runs into a binarized neural network or BNN (implemented as a custom datapath) to classify it as one of 47 EMNIST classes (0-9, A-Z, and 11 lowercase letters). The classified character is then decoded to a 14-segment pattern and shown on a multiplexed display.\n*The BNN uses no multiplier, as each neuron XNORs the input with the stored weights, counts the matches (popcount), and then compares the count to a trained threshold.\nTasks)\n\nAt boot: read MCU stream of weights and trained thresholds over SPI and write them into an on-chip SPRAM, and EBR respectively.\nFor each character: receiver 784 bit bitmap over SPI into an input register’\nRun a 4-layer BNN (784→512→512→512→47), reading 64 weight bits per clock cycle from the 4 SPRAM blocks\nSelect highest score of the final 47 neurons (argmax)\nDecode the output to a 14-segment pattern and drive the multiplexed display.\nReturn the class index to the MCU over MISO for UART logging.\n\nPeripherals Used: SPI (MCU), SPRAM (MCU writes weights into upon booting), EBR (storing offline calculated thresholds)\n\nModules: SPI peripheral, input bitmap register, SPRAM weight holder, layer sequencer FSM, output 14-segment LUT, display multiplexer\nResources: 4 SPRAM blocks read in parallel (weights), 6 EBR (thresholds), 0 DSP blocks, &lt;30% of 5,280 LUTs; 24 MHz clock from the internal HSOSC; inference ≤ 700 µs."
+  },
+  {
+    "objectID": "proposal.html#new-hardware",
+    "href": "proposal.html#new-hardware",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "New hardware",
+    "text": "New hardware\nThe project uses one new MCU peripheral, one new FPGA IP, and one new external device.\n\n\n\n\n\n\n\n\nCategory\nItem\nRole in this project\n\n\n\n\nNew MCU peripheral\nI2C1\nCommunicates with touch pad\n\n\nNew FPGA IP\nSPRAM\nStorage of weights\n\n\nNew external hardware\nTrill Square Rev C\nDetects touch input from users"
+  },
+  {
+    "objectID": "proposal.html#block-diagram",
+    "href": "proposal.html#block-diagram",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Block diagram",
+    "text": "Block diagram"
+  },
+  {
+    "objectID": "proposal.html#performance-calculations",
+    "href": "proposal.html#performance-calculations",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Performance calculations",
+    "text": "Performance calculations\nThe MCU polls the Trill Square over I²C every 10 ms (100 Hz). That is longer than the sensor’s 6.15 ms full scan and uses under 10% of the 400 kbit/s bus.\nThe MCU and FPGA share one SPI link at 5 MHz. That is under a quarter of the FPGA’s 24 MHz clock, so the FPGA can sample SCK through a synchronizer, and one data line is fast enough. Each character takes about 159 µs of SPI time: 157 µs to send the 784-bit bitmap and 1.6 µs to read the class index back over MISO.\nThe BNN (784→512→512→512→47) reads its 949,760 binary weights 64 bits per cycle and finishes in 15,224 cycles (634 µs). It scores 84.4% on the EMNIST Balanced test set across all 47 classes (mean of 3 seeds). We have not measured accuracy on touchpad input yet. Loading 124.9 KB of weights and thresholds at boot takes 200 ms.\nA 500 ms end-of-character timeout dominates end-to-end latency, which is at most 600 ms from finger lift to display. Estimated system power is 0.35 W, mostly from the multiplexed displays.\n\n\n\n\n\n\n\nParameter\nValue\n\n\n\n\nTouch sample rate\n100 Hz (I²C, 9.5% bus load)\n\n\nSPI link (MCU to FPGA)\n5 MHz, 1 data line (under ¼ of the 24 MHz FPGA clock)\n\n\nBitmap transfer\n98 B in 157 µs @ 5 MHz SPI\n\n\nBoot weight load\n124.9 KB in 200 ms\n\n\nInference\n949,760 binary ops, 15,224 cycles, 634 µs @ 24 MHz\n\n\nModel accuracy\n84.4% test (mean of 3 seeds), EMNIST Balanced, 47 classes\n\n\nSPI time per character\n≈ 159 µs (157 µs bitmap in, 1.6 µs class index out)\n\n\nFPGA memory\n121.8 KB weights in SPRAM (93%), 6 EBR for thresholds\n\n\n\nRiskiest element\nThe riskiest element of this project will be the BNN. Fitting the model in the FPGA may be a challenge. Our model should be maximized to the size of the FPGA’s memory blocks, so we can get as accurate of a model as possible..\nAdditionally, training the model is a major bottleneck that needs to be overcome for the project to succeed. If the model is inaccurate or cannot fit, then we will have to find another way to classify user input. Additionally, we need to develop the understanding of how a BNN works in order to implement the logic correctly.\nTesting the BNN will be hard because it is a black box. Developing a rigorous testing plan and having a reference model of the BNN in code will help us measure the hardware against simulated results."
+  },
+  {
+    "objectID": "proposal.html#scheduled-work-and-project-breakdown",
+    "href": "proposal.html#scheduled-work-and-project-breakdown",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Scheduled Work and Project Breakdown)",
+    "text": "Scheduled Work and Project Breakdown)\nGantt chart"
+  },
+  {
+    "objectID": "proposal.html#bill-of-materials",
+    "href": "proposal.html#bill-of-materials",
+    "title": "E155 Project Proposal: Touchscreen to Character BNN",
+    "section": "Bill of materials",
+    "text": "Bill of materials\n\n\n\nPart\nPart number\nQty\nUnit price\nSource\n\n\n\n\nMCU dev board\n[STM32L432KC Nucleo]\n1\nStockroom\nStockroom\n\n\nFPGA board\n[iCE40 UP5K board]\n1\nStockroom\nStockroom\n\n\nTrill Square Rev C\n160702-SQUARE\n1\n$27.00 ($19.00 + $8.00 shipping)\nhttps://www.crowdsupply.com/bela/trill\n\n\n14-segment alphanumeric display\nCOM-21214\n4\n$23.13 ($14.64 + $8.49 Shipping)\nhttps://www.digikey.com/en/products/detail/sparkfun-electronics/COM-21214/16892534\n\n\nMiscellaneous Components\nPNP TransistorNPN TransistorSegment current limiting resistorsTransistor base resistorsDecoupling CapsBreadboardsJumper Wires\nN/A\nStockroom\nStockroom\n\n\nTotal\n\n\n$50.13\n\n\n\n\nHint: every row needs a part number, quantity, and price or “stockroom”. See Purchasing Parts."
   }
 ]
