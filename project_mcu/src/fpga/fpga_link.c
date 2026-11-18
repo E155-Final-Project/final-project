@@ -40,9 +40,16 @@ fpga_status_t fpga_load_weights(void)
     gap();                                   /* last word reaches SPRAM */
     fpga_port_load(0);
     gap();
-    fpga_port_load_weights(0);               /* core leaves reset; it runs once on
-                                                a stale image, harmless */
-    gap();
+    done_flag = 0;
+    fpga_port_load_weights(0);               /* core leaves reset and runs once on
+                                                a stale image; wait it out so its
+                                                done edge can't race the next classify */
+    uint32_t start = fpga_port_millis();
+    while (!done_flag) {
+        if ((uint32_t)(fpga_port_millis() - start) > FPGA_DONE_TIMEOUT_MS) {
+            return FPGA_ERR_TIMEOUT;
+        }
+    }
     return FPGA_OK;
 }
 

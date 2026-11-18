@@ -1,57 +1,67 @@
 CC      = gcc
-CFLAGS  = -std=c11 -Wall -Wextra -O2 -Isrc -Itest
+INC     = -Isrc/app -Isrc/capture -Isrc/raster -Isrc/fpga -Isrc/ui -Isrc/testdata -Itest/support
+CFLAGS  = -std=c11 -Wall -Wextra -O2 $(INC)
 BUILD   = build
 
-HOST_SRCS = src/bitmap_print.c src/classes.c src/rasterize.c \
-			test/mem_io.c test/strokes.c test/golden.c test/host_rasterize.c
-HOST_BIN = $(BUILD)/host_rasterize
+# Every header in src/ and test/: any change rebuilds the tests
+HEADERS = $(wildcard src/*/*.h test/support/*.h)
 
-LIVE_SRCS = src/live_view.c test/strokes.c test/host_live.c
+# Shared pieces
+SUPPORT_MEM    = test/support/mem_io.c
+SUPPORT_GOLDEN = test/support/golden.c
+SUPPORT_STROKE = test/support/strokes.c
 
-UI_SRCS = src/ui.c test/test_ui.c
+RASTER_SRCS  = src/ui/bitmap_print.c src/ui/classes.c src/raster/rasterize.c \
+               $(SUPPORT_MEM) $(SUPPORT_STROKE) $(SUPPORT_GOLDEN) test/host_rasterize.c
+LIVE_SRCS    = src/ui/live_view.c $(SUPPORT_STROKE) test/host_live.c
+UI_SRCS      = src/ui/ui.c test/test_ui.c
+WEIGHTS_SRCS = src/fpga/weights.c $(SUPPORT_MEM) test/test_weights.c
+LINK_SRCS    = src/fpga/fpga_link.c src/ui/classes.c src/raster/rasterize.c src/fpga/weights.c \
+               test/support/fpga_port_fake.c $(SUPPORT_GOLDEN) $(SUPPORT_MEM) $(SUPPORT_STROKE) \
+               test/test_fpga_link.c
+STROKE_SRCS  = src/capture/stroke.c src/raster/rasterize.c $(SUPPORT_STROKE) test/test_stroke.c
 
-WEIGHTS_SRCS = src/weights.c test/mem_io.c test/test_weights.c
-
-LINK_SRCS = src/fpga_link.c src/classes.c  src/rasterize.c  src/weights.c \
-			test/fpga_port_fake.c test/golden.c test/mem_io.c test/strokes.c \
-			test/test_fpga_link.c
-
-STROKE_SRCS = src/stroke.c src/rasterize.c test/strokes.c test/test_stroke.c
+DEMO_SRCS    = src/ui/live_view.c src/ui/classes.c src/raster/rasterize.c \
+               $(SUPPORT_GOLDEN) $(SUPPORT_MEM) $(SUPPORT_STROKE) test/demo_live.c
 
 
+.PHONY: all test weights link stroke ui live clean demo
 
-ui: $(UI_SRCS) $(wildcard scr/*.h) | $(BUILD)
-	$(CC) $(CFLAGS) $(UI_SRCS) -o $(BUILD)/test_ui
-	./$(BUILD)/test_ui
+# make all: every pass/fail test (the live demo is separate)
+all: test weights link stroke ui
 
-live: $(LIVE_SRCS) $(wildcard src/*.h test/*.h) | $(BUILD)
-	$(CC) $(CFLAGS) $(LIVE_SRCS) -o $(BUILD)/host_live
-	./$(BUILD)/host_live
+test: $(BUILD)/host_rasterize
+	./$<
+weights: $(BUILD)/test_weights
+	./$<
+link: $(BUILD)/test_fpga_link
+	./$<
+stroke: $(BUILD)/test_stroke
+	./$<
+ui: $(BUILD)/test_ui
+	./$<
+live: $(BUILD)/host_live
+	./$<
+demo: $(BUILD)/demo_live
+	./$<
 
-weights: $(WEIGHTS_SRCS) src/weights.h | $(BUILD)
-	$(CC) $(CFLAGS) $(WEIGHTS_SRCS) -o $(BUILD)/test_weights
-	./$(BUILD)/test_weights
-
-link: $(LINK_SRCS) $(wildcard src/*.h test/*.h) | $(BUILD)
-	$(CC) $(CFLAGS) $(LINK_SRCS) -o $(BUILD)/test_fpga_link
-	./$(BUILD)/test_fpga_link
-
-stroke: $(STROKE_SRCS) $(wildcard src/*.h test/*.h) | $(BUILD)
-	$(CC) $(CFLAGS) $(STROKE_SRCS) -o $(BUILD)/test_stroke
-	./$(BUILD)/test_stroke
-
-.PHONY: host test clean live ui weights link stroke
-
-host: $(HOST_BIN)
-
-$(HOST_BIN): $(HOST_SRCS) $(wildcard src/*.h test/*.h) | $(BUILD)
-	$(CC) $(CFLAGS) $(HOST_SRCS) -o $@
+$(BUILD)/demo_live:      $(DEMO_SRCS)    $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(DEMO_SRCS) -o $@
+$(BUILD)/host_rasterize: $(RASTER_SRCS)  $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(RASTER_SRCS) -o $@
+$(BUILD)/test_weights:   $(WEIGHTS_SRCS) $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(WEIGHTS_SRCS) -o $@
+$(BUILD)/test_fpga_link: $(LINK_SRCS)    $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(LINK_SRCS) -o $@
+$(BUILD)/test_stroke:    $(STROKE_SRCS)  $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(STROKE_SRCS) -o $@
+$(BUILD)/test_ui:        $(UI_SRCS)      $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(UI_SRCS) -o $@
+$(BUILD)/host_live:      $(LIVE_SRCS)    $(HEADERS) | $(BUILD)
+	$(CC) $(CFLAGS) $(LIVE_SRCS) -o $@
 
 $(BUILD):
 	mkdir -p $@
-
-test: host
-	./$(HOST_BIN)
 
 clean:
 	rm -rf $(BUILD)
