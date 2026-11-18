@@ -144,7 +144,7 @@
     "href": "midpoint.html#fpga-block-diagrams",
     "title": "Touchscreen to Character BNN: Midpoint Report",
     "section": "FPGA Block Diagrams",
-    "text": "FPGA Block Diagrams\n\nBNN block diagram\nAt start, the MCU asserts load_weights, then sends all the weights over SPI to the FPGA. The FPGA takes the weights and stores them in the SPRAM. After this the FPGA is ready to receive images for processing.\nWhen the MCU needs to make a prediction, it sends the entire image data over SPI while load weights = 0. As soon as load falls, the BNN started calculating. When it’s done, it raises the done flag, and the MCU can read back the resulting class to confirm its correctness."
+    "text": "FPGA Block Diagrams\n\nBNN block diagram\n\n\n\n\n\n\nFigure 5: BNN_top module.\n\n\n\nAt start, the MCU asserts load_weights, then sends all the weights over SPI to the FPGA. The FPGA takes the weights and stores them in the SPRAM. After this the FPGA is ready to receive images for processing.\nWhen the MCU needs to make a prediction, it sends the entire image data over SPI while load weights = 0. As soon as load falls, the BNN started calculating. When it’s done, it raises the done flag, and the MCU can read back the resulting class to confirm its correctness."
   },
   {
     "objectID": "midpoint.html#mcu-routine-outline",
@@ -165,7 +165,7 @@
     "href": "midpoint.html#parts-status",
     "title": "Touchscreen to Character BNN: Midpoint Report",
     "section": "Parts Status",
-    "text": "Parts Status\n\n\n\n\n\n\n\n\n\n\n\nPart\nVendor\nQty\nOrdered\nReceived\nCost\n\n\n\n\nTPS65-201A-SAzoteq Capacitance Touch Sensor Modules\nMouser\n2\nYes\nNo\n23.10\n\n\nSeven Seg Displays\nDigiKey\n4\nYes\nYes\n$23.13\n\n\nTotal\n\n\n\n\n$46.23"
+    "text": "Parts Status\n\n\n\n\n\n\n\n\n\n\n\nPart\nVendor\nQty\nOrdered\nReceived\nCost\n\n\n\n\nTPS65-201A-SAzoteq Capacitance Touch Sensor Modules\nMouser\n2\nYes\nNo\n$23.10\n\n\nSeven Seg Displays\nDigiKey\n4\nYes\nYes\n$23.13\n\n\nTotal\n\n\n\n\n$46.23"
   },
   {
     "objectID": "proposal.html",
