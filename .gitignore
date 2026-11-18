@@ -30,3 +30,4 @@ __pycache__/
 # KiCad / schematic tool auto-save history (contains its own embedded .git)
 hardware/**/.history/
 project_mcu/build/
+hardware/**/~*.lck

@@ -1,4 +1,4 @@
 Output/
 *.emSession
 *.jlink
-build/
+build/hardware/**/~*.lck
