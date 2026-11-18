@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Nov 14 15:42:12 2026
+Tue Nov 17 19:46:12 2026
 
 
 Command Line:  C:\lscc\radiant\2026.1\ispfpga\bin\nt64\synthesis.exe -f C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1_lattice.synproj -logfile final_project_impl_1_lattice.srp -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml 
@@ -150,28 +150,19 @@ Top module name (Verilog): BNN_top
 INFO <35901018> - synthesis: ../../../src/BNN_top.sv(1): compiling module BNN_top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\synthesis\verilog\iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b10). VERI-1018
 INFO <35901018> - synthesis: ../../../src/BNN_spi.sv(1): compiling module BNN_spi. VERI-1018
-WARNING <35901209> - synthesis: ../../../src/BNN_spi.sv(27): expression size 32 truncated to fit in target size 6. VERI-1209
 INFO <35901018> - synthesis: ../../../src/Memory.sv(4): compiling module memory(P='{4,47,512,13,512,8,512,8,47,8}). VERI-1018
-WARNING <35901209> - synthesis: ../../../src/Memory.sv(31): expression size 32 truncated to fit in target size 14. VERI-1209
 INFO <35901018> - synthesis: ../../../src/SPRAM_1024KB.sv(4): compiling module SPRAM_1024KB. VERI-1018
 INFO <35901018> - synthesis: ../../../src/EBR.sv(1): compiling module BNN_thresh. VERI-1018
-INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem"). VERI-1018
-WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l0_thresh.mem:1 does not match memory width 10. VERI-2474
-WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
-INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem"). VERI-1018
-WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l1_thresh.mem:1 does not match memory width 10. VERI-2474
-WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
-INFO <35901018> - synthesis: ../../../src/EBR.sv(31): compiling module BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem"). VERI-1018
-WARNING <35902474> - synthesis: ../../../src/EBR.sv(43): entry size 12 at ../../../../BNN/mem/l2_thresh.mem:1 does not match memory width 10. VERI-2474
-WARNING <35931002> - synthesis: ../../../src/EBR.sv(41): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/EBR.sv(33): compiling module BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l0_thresh.mem"). VERI-1018
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(43): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/EBR.sv(33): compiling module BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l1_thresh.mem"). VERI-1018
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(43): net mem does not have a driver. VDB-1002
+INFO <35901018> - synthesis: ../../../src/EBR.sv(33): compiling module BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l2_thresh.mem"). VERI-1018
+WARNING <35931002> - synthesis: ../../../src/EBR.sv(43): net mem does not have a driver. VDB-1002
 INFO <35901018> - synthesis: ../../../src/Activation_EBR.sv(2): compiling module Activation_EBR. VERI-1018
 INFO <35901018> - synthesis: ../../../src/Activation_EBR.sv(94): compiling module EBR_256x16. VERI-1018
 INFO <35901018> - synthesis: ../../../src/BNN_core.sv(1): compiling module BNN_core(P='{4,47,512,13,512,8,512,8,47,8}). VERI-1018
 INFO <35901018> - synthesis: ../../../src/popcount.sv(1): compiling module popcount. VERI-1018
-WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(45): expression size 32 truncated to fit in target size 5. VERI-1209
-WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(46): expression size 32 truncated to fit in target size 14. VERI-1209
-WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(57): expression size 32 truncated to fit in target size 10. VERI-1209
-WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(61): expression size 32 truncated to fit in target size 2. VERI-1209
 [Parameter Setting Section Start]
 
 	[Parameter Settings for top-level module]
@@ -199,20 +190,20 @@ WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(61): expression size 32
 	[Parameter Settings for Instance(s): l0_thresh_rom]
 	(Module: BNN_ebr_rom)
 		DEPTH                     512
-		WIDTH                     10
-		MEM_FILE                  "../../../../BNN/mem/l0_thresh.mem"
+		WIDTH                     12
+		MEM_FILE                  "../../BNN/mem/l0_thresh.mem"
 
 	[Parameter Settings for Instance(s): l1_thresh_rom]
 	(Module: BNN_ebr_rom)
 		DEPTH                     512
-		WIDTH                     10
-		MEM_FILE                  "../../../../BNN/mem/l1_thresh.mem"
+		WIDTH                     12
+		MEM_FILE                  "../../BNN/mem/l1_thresh.mem"
 
 	[Parameter Settings for Instance(s): l2_thresh_rom]
 	(Module: BNN_ebr_rom)
 		DEPTH                     512
-		WIDTH                     10
-		MEM_FILE                  "../../../../BNN/mem/l2_thresh.mem"
+		WIDTH                     12
+		MEM_FILE                  "../../BNN/mem/l2_thresh.mem"
 
 	[Parameter Settings for Instance(s): ram256x16_inst]
 	(Module: SB_RAM256x16)
@@ -255,17 +246,17 @@ WARNING <35901209> - synthesis: ../../../src/BNN_core.sv(61): expression size 32
 		DATA_WIDTH_R              "16"
 
 [Parameter Setting Section End]
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): RAM 'mem_original_ramnet' has no write-port
 
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
 
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): RAM 'mem_original_ramnet' has no write-port
 
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
 
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): RAM 'mem_original_ramnet' has no write-port
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): RAM 'mem_original_ramnet' has no write-port
 
-WARNING <1009991> - synthesis: ../../../src/EBR.sv(41): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
+WARNING <1009991> - synthesis: ../../../src/EBR.sv(43): initial value for RAM 'mem_original_ramnet' must be preserved to avoid dangling nets after RAM blasting
 
 WARNING <35931002> - synthesis: C:/lscc/radiant/2026.1/ispfpga\..\cae_library\simulation\verilog\iCE40UP/legacy.v(1724): net \memory/act_ram/ebr0/ram256x16_inst/gnd does not have a driver. VDB-1002
 ######## Missing driver on net \memory/act_ram/ebr0/ram256x16_inst/gnd. Patching with GND.
@@ -281,15 +272,15 @@ WARNING <35002062> - synthesis: Port rejected for I/O register mapping: done
 INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 ################### Begin Area Report (BNN_top)######################
-Number of register bits => 224 of 5280 (4 % )
+Number of register bits => 223 of 5280 (4 % )
 EBR_B => 10
 CCU2 => 36
-FD1P3XZ => 224
+FD1P3XZ => 223
 HSOSC_CORE => 1
 IB => 4
 INV => 1
 IOL_B => 1
-LUT4 => 411
+LUT4 => 413
 OB => 2
 VFB_B => 4
 ################### End Area Report ##################
@@ -310,14 +301,14 @@ Number of Clock Enables: 4
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : img_we, loads : 90
-  Net : BNN_spi/n48, loads : 68
+  Net : BNN_spi/n22, loads : 67
   Net : BNN_core/act_bit, loads : 63
   Net : core_reset, loads : 62
-  Net : n2747, loads : 36
-  Net : BNN_core/n2707, loads : 30
-  Net : BNN_core/n2711, loads : 30
-  Net : BNN_core/n2725, loads : 30
+  Net : n2749, loads : 36
   Net : BNN_core/n2715, loads : 30
+  Net : BNN_core/n2709, loads : 30
+  Net : BNN_core/n2711, loads : 30
+  Net : BNN_core/n2713, loads : 30
   Net : BNN_core/n2717, loads : 30
 ################### End Clock Report ##################
 
@@ -327,10 +318,10 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 404 MB
+Peak Memory Usage: 402 MB
 
 --------------------------------------------------------------
-Total CPU Time: 4 secs 
-Total REAL Time: 7 secs 
+Total CPU Time: 5 secs 
+Total REAL Time: 8 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 69b83c392175ec483bea3e4652bce30b37c03a66
+Checksum -- synthesis -- netlist: 78c942b1e3693b00a03e5bf923fc0918bf95eaee

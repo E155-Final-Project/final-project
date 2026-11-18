@@ -4,36 +4,56 @@ Report for cell BNN_top
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                  IOLGC	       1.00        100.0
-                                  LUT4	        629        100.0
-                               LUTGATE	        557        100.0
+                                  LUT4	        631        100.0
+                               LUTGATE	        559        100.0
                                 LUTCCU	         72        100.0
                                  IOREG	          1        100.0
                                  IOBUF	          6        100.0
-                                PFUREG	        224        100.0
+                                PFUREG	        223        100.0
                                    EBR	         10        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-BNN_core(P='{4,47,512,13,512,8,512,8,47,8})	          1        48.5
-                               BNN_spi	          1         3.0
-memory(P='{4,47,512,13,512,8,512,8,47,8})	          1        21.3
+BNN_core(P='{4,47,512,13,512,8,512,8,47,8})	          1        49.0
+                               BNN_spi	          1         2.9
+memory(P='{4,47,512,13,512,8,512,8,47,8})	          1        21.2
 ---------------------------------------------------
 Report for cell BNN_spi
    Instance path: BNN_top/BNN_spi
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         19         3.0
-                               LUTGATE	         11         2.0
+                                  LUT4	         18         2.9
+                               LUTGATE	         10         1.8
                                 LUTCCU	          8        11.1
-                                PFUREG	        143        63.8
+                                PFUREG	        142        63.7
+---------------------------------------------------
+Report for cell BNN_core(P='{4,47,512,13,512,8,512,8,47,8})
+   Instance path: BNN_top/BNN_core
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        309        49.0
+                               LUTGATE	        261        46.7
+                                LUTCCU	         48        66.7
+                                PFUREG	         60        26.9
+SUB MODULES
+                                  cell	      count    LUT4 Usage(%)
+                              popcount	          1        21.2
+---------------------------------------------------
+Report for cell popcount
+   Instance path: BNN_top/BNN_core/popcount1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        134        21.2
+                               LUTGATE	        126        22.5
+                                LUTCCU	          8        11.1
 ---------------------------------------------------
 Report for cell memory(P='{4,47,512,13,512,8,512,8,47,8})
    Instance path: BNN_top/memory
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        134        21.3
-                               LUTGATE	        118        21.2
+                                  LUT4	        134        21.2
+                               LUTGATE	        118        21.1
                                 LUTCCU	         16        22.2
-                                PFUREG	         14         6.2
+                                PFUREG	         14         6.3
                                    EBR	         10        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
@@ -51,27 +71,27 @@ Report for cell BNN_thresh
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                   LUT4	         12         1.9
-                               LUTGATE	         12         2.2
+                               LUTGATE	         12         2.1
                                    EBR	          6        60.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem")	          1         0.0
-BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem")	          1         0.0
-BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem")	          1         0.0
+BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l0_thresh.mem")	          1         0.0
+BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l1_thresh.mem")	          1         0.0
+BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l2_thresh.mem")	          1         0.0
 ---------------------------------------------------
-Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l2_thresh.mem")
+Report for cell BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l2_thresh.mem")
    Instance path: BNN_top/memory/thresh_rom/l2_thresh_rom
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                    EBR	          2        20.0
 ---------------------------------------------------
-Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l1_thresh.mem")
+Report for cell BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l1_thresh.mem")
    Instance path: BNN_top/memory/thresh_rom/l1_thresh_rom
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                    EBR	          2        20.0
 ---------------------------------------------------
-Report for cell BNN_ebr_rom(MEM_FILE="../../../../BNN/mem/l0_thresh.mem")
+Report for cell BNN_ebr_rom(WIDTH=12,MEM_FILE="../../BNN/mem/l0_thresh.mem")
    Instance path: BNN_top/memory/thresh_rom/l0_thresh_rom
                      Cell usage:
                                   cell	      count    Res Usage(%)
@@ -150,23 +170,3 @@ Report for cell SB_RAM256x16_U2
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                    EBR	          1        10.0
----------------------------------------------------
-Report for cell BNN_core(P='{4,47,512,13,512,8,512,8,47,8})
-   Instance path: BNN_top/BNN_core
-                     Cell usage:
-                                  cell	      count    Res Usage(%)
-                                  LUT4	        305        48.5
-                               LUTGATE	        257        46.1
-                                LUTCCU	         48        66.7
-                                PFUREG	         60        26.8
-SUB MODULES
-                                  cell	      count    LUT4 Usage(%)
-                              popcount	          1        20.7
----------------------------------------------------
-Report for cell popcount
-   Instance path: BNN_top/BNN_core/popcount1
-                     Cell usage:
-                                  cell	      count    Res Usage(%)
-                                  LUT4	        130        20.7
-                               LUTGATE	        122        21.9
-                                LUTCCU	          8        11.1

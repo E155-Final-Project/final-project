@@ -23,6 +23,9 @@ if {[file exists {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/ra
   file copy -force -- {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1_syn.udb} {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/incr/postsyn.udb}
   file copy -force -- {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1_map.udb} {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/incr/postmap.udb}
   file copy -force -- {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1.udb} {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/incr/postpar.udb}
+  if [file exists {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/PDC.pdc}] {
+    file copy -force -- {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/PDC.pdc} {C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/incr/lastrun.pdc}
+  }
 }
 
 } out]} {
