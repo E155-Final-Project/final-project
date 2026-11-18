@@ -16,6 +16,7 @@
 // hardware modules reach into lib/.
 
 #include <stdint.h>
+#include <stdio.h>
 
 #include "STM32L432KC.h"
 #include "pins.h"
@@ -25,6 +26,37 @@
 #include "rasterize.h"
 #include "strokes_mcu.h"
 #include "ui.h"
+#include "fpga_link.h"
+#include "smoke_vectors.h"
+#include "classes.h"
+
+static void run_link_test(void)
+{
+    char line[80];
+
+    delay_ms(500);                      // let FPGA_A finish configuring from flash
+
+    uint32_t t0 = millis();
+    fpga_load_weights();
+    snprintf(line, sizeof line, "\r\nweights: %lu ms\r\n", (unsigned long)(millis() - t0));
+    uart_puts(line);
+
+    int pass = 0;
+    for (int n = 0; n < SMOKE_N; n++) {
+        uint8_t cls = 0xEE;
+        fpga_status_t s = fpga_classify(SMOKE_IMAGES[n], &cls);
+        int ok = (s == FPGA_OK && cls == SMOKE_EXPECTED[n]);
+        pass += ok;
+        snprintf(line, sizeof line, "img %2d: %-24s got %c (%3u)  want %c  %s\r\n",
+                 n, fpga_status_str(s),
+                 class_char(cls), cls, class_char(SMOKE_EXPECTED[n]),
+                 ok ? "ok" : "MISMATCH");
+        uart_puts(line);
+    }
+    snprintf(line, sizeof line, "smoke over SPI: %d/16\r\n", pass);
+    uart_puts(line);
+}
+
 
 
 
@@ -47,12 +79,15 @@ static void boardInit(void) {
 
     // SPI1 master, Mode 0, ~5 MHz (BR=3 -> PCLK2/16 = 5 MHz at 80 MHz PCLK2).
     initSPI(/*br=*/3, /*cpol=*/0, /*cpha=*/0);
+    fpga_link_init();  
 
     // I2C1 400 kHz.
     i2cInit();
 
     // External interrupts (FPGA done rising on PB0, button falling on PB1).
     extiInit();
+
+    run_link_test();                    /* smoke test the FPGA link */
 }
 
 static void printRasterTest(void) {
@@ -94,6 +129,8 @@ static void i2cScan(void) {
 
 int main(void)
 {
+    boardInit();
+    printRasterTest();
     /* ...your existing init: clock, SysTick, GPIO, USART, SPI, EXTI... */
     ui_init();
 

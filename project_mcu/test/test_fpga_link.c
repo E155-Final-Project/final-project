@@ -9,8 +9,9 @@
 #include "mem_io.h"
 #include "rasterize.h"
 #include "strokes.h"
+#include "weights.h"
 
-/* Test 6: the SPI protocol against a simulated FPGA. */
+/* Test 6: fpga_link against a bit-level model of Pierce's BNN_spi / BNN_top. */
 
 #define SMOKE_IMAGES 16
 
@@ -18,7 +19,7 @@ static int failures;
 
 static void check(int ok, const char *what)
 {
-    printf("  %-56s %s\n", what, ok ? "ok" : "FAIL");
+    printf("  %-58s %s\n", what, ok ? "ok" : "FAIL");
     if (!ok) failures++;
 }
 
@@ -35,21 +36,23 @@ int main(void)
 
     printf("weight load:\n");
     check(fpga_load_weights() == FPGA_OK, "fpga_load_weights returns ok");
-    check(fake_weights_ok, "FPGA received all 121,792 weight bytes intact");
-    check(fake_thresh_ok, "FPGA received all 3,072 threshold bytes intact");
+    check(fake_weight_words == BNN_WEIGHT_WORDS, "FPGA wrote exactly 15,224 weight words");
+    check(fake_weight_mismatch == 0, "every weight word matches bnn_weights[]");
 
-    printf("classify the 16 smoke images over the link:\n");
-    int wire_ok = 1, cls_ok = 1;
+    printf("classify the 16 smoke images:\n");
+    int words_ok = 1, image_ok = 1, cls_ok = 1;
     for (int n = 0; n < SMOKE_IMAGES; n++) {
         const uint64_t *bm = &smoke[n * BITMAP_WORDS];
         uint8_t cls = 0xEE;
         fpga_status_t s = fpga_classify(bm, &cls);
+        if (fake_image_words != BITMAP_WORDS) words_ok = 0;
         for (int k = 0; k < BITMAP_WORDS; k++) {
-            if (fake_last_bitmap[k] != bm[k]) wire_ok = 0;
+            if (fake_image[k] != bm[k]) image_ok = 0;
         }
         if (s != FPGA_OK || cls != expected[n]) cls_ok = 0;
     }
-    check(wire_ok, "FPGA reassembles every bitmap word-exact");
+    check(words_ok, "each image arrives as exactly 13 words");
+    check(image_ok, "the image EBR holds every bitmap word-exact (pad = 0)");
     check(cls_ok, "every class read back matches expected.mem");
 
     printf("rasterized strokes end to end:\n");
@@ -64,17 +67,23 @@ int main(void)
         check(s == FPGA_OK && cls == st->expected_class, what);
     }
 
-    printf("error paths:\n");
+    printf("protocol timing:\n");
+    check(fake_partial_words == 0, "no transfer ends mid-word");
+    check(fake_gap_violations == 0, "every load/load_weights edge >= 1 us from SCK");
+    check(fake_runs == 1 + SMOKE_IMAGES + N_TEST_STROKES,
+          "core started once per image (+1 after the weight load)");
+
+    printf("error paths and clear:\n");
     uint8_t cls = 0xEE;
     fake_mode = FAKE_NEVER_DONE;
     check(fpga_classify(&smoke[0], &cls) == FPGA_ERR_TIMEOUT, "no done: FPGA_ERR_TIMEOUT");
-    fake_mode = FAKE_NO_RESULT;
-    check(fpga_classify(&smoke[0], &cls) == FPGA_ERR_NO_RESULT, "result 0xFF: FPGA_ERR_NO_RESULT");
+    fake_mode = FAKE_BAD_CLASS;
+    check(fpga_classify(&smoke[0], &cls) == FPGA_ERR_BAD_CLASS, "class 0x7F: FPGA_ERR_BAD_CLASS");
     fake_mode = FAKE_NORMAL;
-    int clears = fake_clears;
-    check(fpga_clear() == FPGA_OK && fake_clears == clears + 1, "fpga_clear sends one CLEAR frame");
-    check(fake_bad_frames == 0, "no malformed frames in the whole run");
+    check(fpga_classify(&smoke[0], &cls) == FPGA_OK && cls == expected[0],
+          "recovers on the next classify");
+    check(fpga_clear() == FPGA_OK && fake_clear_pulses == 1, "fpga_clear: one pulse >= 10 us");
 
-    printf("\ntest 6 (FPGA link vs simulated FPGA): %s\n", failures ? "FAIL" : "PASS");
+    printf("\ntest 6 (FPGA link vs BNN_spi model): %s\n", failures ? "FAIL" : "PASS");
     return failures ? 1 : 0;
 }

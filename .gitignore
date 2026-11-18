@@ -26,3 +26,7 @@ __pycache__/
 .vscode/
 .idea/
 *.swp
+
+# KiCad / schematic tool auto-save history (contains its own embedded .git)
+hardware/**/.history/
+project_mcu/build/

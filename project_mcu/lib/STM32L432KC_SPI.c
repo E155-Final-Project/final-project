@@ -25,9 +25,9 @@ void initSPI(int br, int cpol, int cpha) {
     // OSPEEDR "very high speed" for SCK / MOSI so edges are clean at 5 MHz+.
     GPIOA->OSPEEDR |= (0b11u << (2 * 5)) | (0b11u << (2 * 7));
 
-    // CS as a plain output, deasserted high.
-    pinMode   (PIN_SPI_CS, GPIO_OUTPUT);
-    digitalWrite(PIN_SPI_CS, PIO_HIGH);
+    // // CS as a plain output, deasserted high.
+    // pinMode   (PIN_SPI_CS, GPIO_OUTPUT);
+    // digitalWrite(PIN_SPI_CS, PIO_HIGH);
 
     // Disable before configuring.
     SPI1->CR1 = 0;
@@ -55,6 +55,3 @@ uint8_t spiSendReceive(uint8_t send) {
     while (!(SPI1->SR & SPI_SR_RXNE));
     return *((volatile uint8_t *)&SPI1->DR);
 }
-
-void spiCSLow(void)  { digitalWrite(PIN_SPI_CS, PIO_LOW);  }
-void spiCSHigh(void) { digitalWrite(PIN_SPI_CS, PIO_HIGH); }

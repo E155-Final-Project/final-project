@@ -49,7 +49,7 @@
 #define PIN_SPI_SCK     PA5     // SPI1_SCK,  AF5      -- VERIFY: DS11451 Table 15
 #define PIN_SPI_MISO    PA6     // SPI1_MISO, AF5      -- VERIFY
 #define PIN_SPI_MOSI    PA7     // SPI1_MOSI, AF5      -- VERIFY
-#define PIN_SPI_CS      PA4     // Plain GPIO output ("load" / CS)
+// #define PIN_SPI_CS      PA4     // Plain GPIO output ("load" / CS)
 #define SPI_AF          5
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,5 +67,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 #define PIN_FPGA_DONE   PB0     // EXTI0, rising edge
 #define PIN_BTN_CLEAR   PB1     // EXTI1, falling edge, internal pull-up
+
+#define PIN_FPGA_LOAD           PA4     // BNN load, ACTIVE HIGH
+#define PIN_FPGA_LOAD_WEIGHTS   PA1     // SPI words got ti weights SPI on FPGA.
+#define PIN_FPGA_CLEAR          PA3     // BNN clear, ACTIVE HIGH
 
 #endif // PINS_H

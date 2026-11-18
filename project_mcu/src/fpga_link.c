@@ -3,11 +3,20 @@
 #include "classes.h"
 #include "weights.h"
 
+/* Set by the done-pin interrupt, cleared before each classify. */
 static volatile int done_flag;
+
+static void gap(void)
+{
+    fpga_port_delay_us(FPGA_EDGE_US);
+}
 
 void fpga_link_init(void)
 {
-    fpga_port_cs(0);  /* release CS */
+    fpga_port_init();
+    fpga_port_load(0);
+    fpga_port_load_weights(0);
+    fpga_port_clear(0);
     done_flag = 0;
 }
 
@@ -16,48 +25,40 @@ void fpga_link_done_isr(void)
     done_flag = 1;
 }
 
-static void begin(uint8_t cmd)
-{
-    fpga_port_cs(1);  /* pull CS low */
-    (void)fpga_port_xfer(cmd);
-}
-
-static void end(void)
-{
-    fpga_port_cs(0);
-}
-
 fpga_status_t fpga_load_weights(void)
 {
-    begin(FPGA_CMD_LOAD_WEIGHTS);
+    fpga_port_load_weights(1);
+    gap();
+    fpga_port_load(1);                       /* FPGA resets its word address */
+    gap();
     for (uint32_t k = 0; k < BNN_WEIGHT_WORDS; k++) {
         uint64_t w = bnn_weights[k];
         for (int b = 0; b < 8; b++) {
             (void)fpga_port_xfer((uint8_t)(w >> (8 * b)));   /* LSB byte first */
         }
     }
-    end();
-
-    begin(FPGA_CMD_LOAD_THRESH);
-    for (uint32_t k = 0; k < BNN_THRESH_COUNT; k++) {
-        (void)fpga_port_xfer((uint8_t)(bnn_thresh[k]));
-        (void)fpga_port_xfer((uint8_t)(bnn_thresh[k] >> 8));
-    }
-    end();
+    gap();                                   /* last word reaches SPRAM */
+    fpga_port_load(0);
+    gap();
+    fpga_port_load_weights(0);               /* core leaves reset; it runs once on
+                                                a stale image, harmless */
+    gap();
     return FPGA_OK;
 }
 
 fpga_status_t fpga_classify(const uint64_t bm[BITMAP_WORDS], uint8_t *cls)
 {
-    /* Clear before sending, so a done pulse from this frame can't be missed
-     * and a stale one from an earlier frame can't be mistaken for it. */
+    /* Clear first: done stays high from the last result until load rises and
+     * resets the core, and that is not a rising edge, so it can't set the flag. */
     done_flag = 0;
 
-    begin(FPGA_CMD_CLASSIFY);
-    for (int i = 0; i < BITMAP_SPI_BYTES; i++) {
+    fpga_port_load(1);                       /* core held in reset while high */
+    gap();
+    for (int i = 0; i < FPGA_IMAGE_BYTES; i++) {
         (void)fpga_port_xfer(bitmap_byte(bm, i));
     }
-    end();
+    gap();                                   /* word 12 written before the core starts */
+    fpga_port_load(0);                       /* falling edge: the BNN starts */
 
     uint32_t start = fpga_port_millis();
     while (!done_flag) {
@@ -66,13 +67,10 @@ fpga_status_t fpga_classify(const uint64_t bm[BITMAP_WORDS], uint8_t *cls)
         }
     }
 
-    begin(FPGA_CMD_READ_RESULT);
-    uint8_t r = fpga_port_xfer(0x00);    /* dummy byte; the class comes back */
-    end();
-
-    if (r == FPGA_RESULT_NONE) {
-        return FPGA_ERR_NO_RESULT;
-    }
+    /* 8 clocks with load still LOW. Raising load here would reset the core and
+     * its falling edge would start another inference. */
+    uint8_t r = fpga_port_xfer(0x00);
+    gap();                                   /* keep the next load edge clear of SCK */
     if (r >= NUM_CLASSES) {
         return FPGA_ERR_BAD_CLASS;
     }
@@ -82,23 +80,22 @@ fpga_status_t fpga_classify(const uint64_t bm[BITMAP_WORDS], uint8_t *cls)
 
 fpga_status_t fpga_clear(void)
 {
-    begin(FPGA_CMD_CLEAR);
-    end();
+    fpga_port_clear(1);
+    fpga_port_delay_us(FPGA_CLEAR_PULSE_US);
+    fpga_port_clear(0);
     return FPGA_OK;
 }
 
 int fpga_link_loopback_test(const uint64_t bm[BITMAP_WORDS])
 {
     int bad = 0;
-    fpga_port_cs(1);
     for (int v = 0; v < 256; v++) {                  /* every byte value */
         if (fpga_port_xfer((uint8_t)v) != (uint8_t)v) bad++;
     }
-    for (int i = 0; i < BITMAP_SPI_BYTES; i++) {     /* the real payload */
+    for (int i = 0; i < FPGA_IMAGE_BYTES; i++) {     /* the real payload */
         uint8_t b = bitmap_byte(bm, i);
         if (fpga_port_xfer(b) != b) bad++;
     }
-    fpga_port_cs(0);
     return bad;
 }
 
@@ -107,7 +104,6 @@ const char *fpga_status_str(fpga_status_t s)
     switch (s) {
     case FPGA_OK:            return "ok";
     case FPGA_ERR_TIMEOUT:   return "timeout waiting for done";
-    case FPGA_ERR_NO_RESULT: return "FPGA has no result (0xFF)";
     case FPGA_ERR_BAD_CLASS: return "class out of range";
     }
     return "unknown";

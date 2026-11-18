@@ -1,39 +1,42 @@
-#ifndef FPGA_LINK_H
-#define FPGA_LINK_H
+#ifndef FPGA_LINK_H_INCLUDED
+#define FPGA_LINK_H_INCLUDED
 
 #include <stdint.h>
 #include "bitmap.h"
 
-/* MCU -> FPGA_A SPI protocol (Section E).
- * SPI Mode 0, 5 MHz, LSB first. One command per CS-low period:
- *   [command byte][payload]  */
-#define FPGA_CMD_CLASSIFY     0x01   /* + 98 B bitmap, pixel 0 first; FPGA raises done */
-#define FPGA_CMD_READ_RESULT  0x02   /* + 1 dummy byte; class returned during it */
-#define FPGA_CMD_CLEAR        0x03   /* no payload; FPGA blanks VGA, forwards to FPGA_B */
-#define FPGA_CMD_LOAD_WEIGHTS 0x10   /* + 121,792 B: 15,224 words, LSB byte first */
-#define FPGA_CMD_LOAD_THRESH  0x11   /* + 3,072 B: 1,536 thresholds, LSB byte first */
+/* MCU -> FPGA_A link, matching Pierce's BNN_top.sv / BNN_spi.sv and his
+ * tb_bnn_spi.sv. No command bytes: two level pins pick what a transfer is.
+ *
+ *   SPI Mode 0, 5 MHz, LSB first. load is ACTIVE HIGH (idle low).
+ *
+ *   Weights:  load_weights=1, load=1, 121,792 B (15,224 words), load=0, load_weights=0
+ *   Classify: load=1, 104 B (13 words, last 48 bits 0), load=0 -> BNN starts
+ *             wait for done (PB0 rising), then 8 clocks with load LOW -> class
+ *   Clear:    pulse the clear pin (FPGA_A side: our VGA + FPGA_B link RTL)
+ *
+ * Every load/load_weights edge is at least FPGA_EDGE_US from the nearest SCK
+ * edge, like the testbench: the FPGA syncs these pins into its 12 MHz clock,
+ * and the last word must be written before load_weights drops. */
 
-#define FPGA_RESULT_NONE      0xFF   /* READ_RESULT: no valid result */
-#define FPGA_DONE_TIMEOUT_MS  5u
+#define FPGA_IMAGE_BYTES      BITMAP_BYTES   /* 104 */
+#define FPGA_EDGE_US          1u
+#define FPGA_CLEAR_PULSE_US   10u
+#define FPGA_DONE_TIMEOUT_MS  5u             /* one inference is ~0.35 ms per the tb */
 
 typedef enum {
     FPGA_OK = 0,
-    FPGA_ERR_TIMEOUT,     /* done never rose after CLASSIFY */
-    FPGA_ERR_NO_RESULT,   /* READ_RESULT returned 0xFF */
-    FPGA_ERR_BAD_CLASS,   /* READ_RESULT returned a value above 46 */
+    FPGA_ERR_TIMEOUT,     /* done never rose after the image */
+    FPGA_ERR_BAD_CLASS,   /* class read back is above 46 */
 } fpga_status_t;
 
-void fpga_link_init(void);                  /* CS released, done flag cleared */
+void fpga_link_init(void);                 /* all three pins low, done flag cleared */
+void fpga_link_done_isr(void);             /* from the EXTI handler for done (PB0) */
 
-/* Call from the EXTI handler for the FPGA done pin (PB0, rising edge). */
-void fpga_link_done_isr(void);
-
-fpga_status_t fpga_load_weights(void);      /* weights then thresholds, from flash */
+fpga_status_t fpga_load_weights(void);     /* once at boot, from flash */
 fpga_status_t fpga_classify(const uint64_t bm[BITMAP_WORDS], uint8_t *cls);
 fpga_status_t fpga_clear(void);
 
-/* Loopback self-test: jumper MOSI (PA7) to MISO (PA6), no FPGA attached.
- * Sends 256 test bytes plus the bitmap and checks each echo.
+/* Loopback self-test: jumper MOSI (PA7) to MISO (PA6), FPGA disconnected.
  * Returns the number of mismatched bytes (0 = pass). */
 int fpga_link_loopback_test(const uint64_t bm[BITMAP_WORDS]);
 

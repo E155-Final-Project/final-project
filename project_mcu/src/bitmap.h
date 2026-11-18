@@ -8,7 +8,7 @@
 #define BITMAP_PIXELS (BITMAP_WIDTH * BITMAP_HEIGHT)         /* 784 */
 #define BITMAP_WORDS ((BITMAP_PIXELS + 63) / 64)    /* 13 */
 #define BITMAP_BYTES (BITMAP_WORDS * 8)             /* 104 */
-#define BITMAP_SPI_BYTES  (BITMAP_PIXELS / 8)   /* 98: pixels 0..783, no padding */
+#define BITMAP_SPI_BYTES BITMAP_BYTES  /* 104: 13 whole words */
 
 /* Byte i of the packed bitmap: pixels 8i..8i+7, pixel 8i in bit 0.
  * Sent with SPI LSBFIRST = 1, the wire carries pixel 0 first, pixel 783 last.

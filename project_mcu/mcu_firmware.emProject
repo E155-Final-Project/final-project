@@ -87,6 +87,7 @@
       <file file_name="src/fpga_port_stm32.c" />
       <file file_name="src/main.c" />
       <file file_name="src/rasterize.c" />
+      <file file_name="src/smoke_vectors.c" />
       <file file_name="src/strokes_mcu.c" />
       <file file_name="src/ui.c" />
       <file file_name="src/weights.c" />

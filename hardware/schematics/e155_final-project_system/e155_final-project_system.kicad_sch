@@ -1,0 +1,589 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "5dbfc5bf-eeb5-4ac6-aec0-26eb0abcbd7b")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 22.86 26.67)
+		(size 100.33 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "25f5d669-4bef-41eb-ae03-706dcfb93af6")
+		(property "Sheetname" "MCU"
+			(at 22.86 25.9584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu.kicad_sch"
+			(at 22.86 74.2446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FPGA_DONE" input
+			(at 22.86 29.21 180)
+			(uuid "98961820-87f7-43f2-8477-821fb4746c27")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGA_MISO" input
+			(at 22.86 31.75 180)
+			(uuid "045c5e2e-1843-4d69-aa2e-2f74b6ddceb0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGAB_CS" output
+			(at 123.19 29.21 0)
+			(uuid "94faa0cc-942c-42bd-91da-e36aa7fcf60c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_CLEAR" output
+			(at 123.19 31.75 0)
+			(uuid "2655ed14-1638-4c71-ac17-111e43304fee")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_LOAD" output
+			(at 123.19 34.29 0)
+			(uuid "c5e4029c-8c50-478c-bf40-604fc8f1735b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_LOAD_WEIGHTS" output
+			(at 123.19 36.83 0)
+			(uuid "93dc0128-6331-43f0-9b83-966956346824")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_MOSI" output
+			(at 123.19 39.37 0)
+			(uuid "6c9bed44-0cce-40ee-9165-dffa5aea2035")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_SCK" output
+			(at 123.19 41.91 0)
+			(uuid "9c413d1e-f4dc-4bda-a898-2c9f4ff02e8b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "e155_final-project_system"
+				(path "/5dbfc5bf-eeb5-4ac6-aec0-26eb0abcbd7b"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 22.86 104.14)
+		(size 100.33 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "26bbd669-e677-4618-a93c-c5f12c1e217e")
+		(property "Sheetname" "Display Driver"
+			(at 22.86 103.4284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "display_driver.kicad_sch"
+			(at 22.86 151.7146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Field2" ""
+			(at 22.86 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "VGA_B0" input
+			(at 22.86 106.68 180)
+			(uuid "26d00183-6123-4498-be30-2ad75036462e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_B1" input
+			(at 22.86 109.22 180)
+			(uuid "c9f9191a-51e4-4353-b769-c35f562d0b94")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_G0" input
+			(at 22.86 111.76 180)
+			(uuid "def63f14-ee4f-4fb9-9645-dd11c3c8f5eb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_G1" input
+			(at 22.86 114.3 180)
+			(uuid "87ecbbc8-764f-4628-8d23-e953f2c83807")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_G2" input
+			(at 22.86 116.84 180)
+			(uuid "3e054459-55e6-4838-975e-674c632eddcb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_HSYNC" input
+			(at 22.86 119.38 180)
+			(uuid "1b018853-0f91-438a-8cb7-9cafb2b6e7c9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_R0" input
+			(at 22.86 121.92 180)
+			(uuid "f2a07d77-5ea9-4efb-9268-7e83821bc989")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_R1" input
+			(at 22.86 124.46 180)
+			(uuid "cedc9edd-0994-46a6-b77e-ff72fa0f01cb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_R2" input
+			(at 22.86 127 180)
+			(uuid "edfd7135-c423-4d0e-8c78-26ef02d19a44")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VGA_VSYNC" input
+			(at 22.86 129.54 180)
+			(uuid "a1e8b8b2-115f-48ee-b575-293e43b7c614")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "e155_final-project_system"
+				(path "/5dbfc5bf-eeb5-4ac6-aec0-26eb0abcbd7b"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 166.37 102.87)
+		(size 100.33 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "92565f15-99f6-415d-98dc-4e9bc5797327")
+		(property "Sheetname" "FPGA-B"
+			(at 166.37 102.1584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "fpga-b.kicad_sch"
+			(at 166.37 150.4446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "e155_final-project_system"
+				(path "/5dbfc5bf-eeb5-4ac6-aec0-26eb0abcbd7b"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 166.37 26.67)
+		(size 100.33 46.99)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "eefdea93-5d53-4ff8-9454-8103eca93faa")
+		(property "Sheetname" "FPGA-A"
+			(at 166.37 25.9584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "fpga-a.kicad_sch"
+			(at 166.37 74.2446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FPGA_CLEAR" input
+			(at 166.37 29.21 180)
+			(uuid "702383af-3b77-4274-b7e9-225f55a1dd0d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGA_LOAD" input
+			(at 166.37 31.75 180)
+			(uuid "d56286f8-8257-468f-a8f7-da0bf4a4d476")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGA_LOAD_WEIGHTS" input
+			(at 166.37 34.29 180)
+			(uuid "fc38fd65-2ff9-403a-9388-b157b5aceb1d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGA_MOSI" input
+			(at 166.37 36.83 180)
+			(uuid "2b4fda8e-ad21-4138-b7c4-1401ee20679e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FPGA_SCK" input
+			(at 166.37 39.37 180)
+			(uuid "7357bfa9-5179-4477-b313-54245d267944")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "AB_CS" output
+			(at 266.7 29.21 0)
+			(uuid "3240fc00-8957-486e-9aa3-2a29662d766a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AB_MOSI" output
+			(at 266.7 31.75 0)
+			(uuid "0f1ceb07-5352-41fa-a1dd-e708db08b67a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "AB_SCK" output
+			(at 266.7 34.29 0)
+			(uuid "cbae2cdd-53ce-44c4-8ba4-54d89c6c4cda")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_DONE" output
+			(at 266.7 36.83 0)
+			(uuid "ed18f472-ea78-43d6-8ff3-e19a07d6689e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FPGA_MISO" output
+			(at 266.7 39.37 0)
+			(uuid "0204d6da-7163-4fb2-8f39-3535691a020d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_B0" output
+			(at 266.7 41.91 0)
+			(uuid "53bffdfe-2612-4fa2-b9c2-daa1ae718600")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_B1" output
+			(at 266.7 44.45 0)
+			(uuid "4e6edede-705b-4bae-916f-c80d195cc07f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_G0" output
+			(at 266.7 46.99 0)
+			(uuid "b8d9d88f-eee8-4eec-9688-7b2f78015778")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_G1" output
+			(at 266.7 49.53 0)
+			(uuid "aa0691bd-9fe6-4fd6-b9d2-2cd6c1054beb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_G2" output
+			(at 266.7 52.07 0)
+			(uuid "0c9b1544-b983-4ad3-84c1-3c28d7cfa405")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_HSYNC" output
+			(at 266.7 54.61 0)
+			(uuid "46e8ebca-56e6-4fc6-a9ac-154684c034bd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_R0" output
+			(at 266.7 57.15 0)
+			(uuid "5f23f6d6-e056-4ca9-97e1-38e36e4f9133")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_R1" output
+			(at 266.7 59.69 0)
+			(uuid "60054164-0768-4205-9523-24ce13bee78a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_R2" output
+			(at 266.7 62.23 0)
+			(uuid "9ba0e03c-3dc8-43ab-ab25-6d6fbaf87596")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VGA_VSYNC" output
+			(at 266.7 64.77 0)
+			(uuid "770f0252-602c-4d3c-9971-65f7a42e48b2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "e155_final-project_system"
+				(path "/5dbfc5bf-eeb5-4ac6-aec0-26eb0abcbd7b"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
