@@ -1,7 +1,0 @@
-#Start recording tcl command: 11/14/2026 15:41:24
-#Project Location: C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project; Project name: final_project
-prj_open "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/final_project.rdf"
-prj_add_source "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Activation_EBR.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_core.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_params.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_spi.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/BNN_top.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/EBR.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/Memory.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/popcount.sv" "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/src/SPRAM_1024KB.sv"
-prj_run PAR -impl impl_1
-prj_run Export -impl impl_1
-#Stop recording: 11/14/2026 16:23:33
