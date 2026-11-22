@@ -1,0 +1,475 @@
+---
+title: "Output Hardware: VGA + 16 × 14-Segment via a Second FPGA"
+description: "Why I split the BNN's output hardware across two iCE40 UP5Ks, how the pin budget actually works, and what RTL I need to write on top of Pierce's BNN."
+author: "Haspard Murphy"
+date: 2026-11-09
+categories:
+  - fpga
+  - hardware
+lightbox: true
+---
+
+Our current [BNN](../bnn-emnist-ice40/index.qmd) classifies a 28 × 28 bitmap into one of 47 EMNIST balanced classes. That gives us a 6-bit 'class' register and nothing to look at. This post covers the output hardware I'm adding around his design: a VGA screen showing the predicted character and a top-10 bar graph, plus a bank of 16 × 14-segment displays that acts as a rolling character log. Both are driven by a second iCE40 UP5K, chained to the BNN's UP5K over SPI.
+
+| | |
+|---|---|
+| Chips | 2 × iCE40 UP5K (FPGA_A + FPGA_B) |
+| FPGA_A pins used | 18 of ~39 (5 SPI from MCU + 10 VGA + 3 link) |
+| FPGA_B pins used | 34 of ~39 (3 link + 31 display multiplex) |
+| VGA resolution | 640 × 480 @ 60 Hz |
+| 14-seg displays | 16 (4 modules × 4 digits), common anode |
+| Latency per character | ~820 µs end-to-end |
+| External parts | VGA connector + 8 R DAC · 14-seg driver board |
+
+## The ask
+
+Three things need to happen when the BNN finishes an inference:
+
+1. **The predicted character** has to appear on the vga display .
+2. **Debug visibility** — on a 47-class problem, knowing the top-1 answer is often not enough. If "a" and "o" are neck and neck, wewant to see both scores.
+3. **Short-term memory** — a rolling log of the last several characters recognized, so a demo reads as writing a word, not firing one-off classifications.
+
+The VGA display covers (1) and (2). The 14-seg bank covers (3).
+
+## Why one UP5K can't do it alone
+
+The BNN already uses most of the SPRAM, 7 of 30 EBR blocks, and roughly 5 GPIO for the MCU SPI link. The UP5K on the UPduino has about 39 usable GPIO total. Adding VGA and a 16-digit display bank to the same chip violates the pin budget:
+
+| Scheme | Display pins | SPI | VGA | Total |
+|---|---|---|---|---|
+| Direct static drive on 16 × 14-seg | 240 | 5 | 10 | **255** |
+| 16-way multiplex on FPGA (shared 15-seg bus + 16 digit selects) | 31 | 5 | 10 | **46** |
+| External shift-register chain (74HC595) | 3 | 5 | 10 | **18** |
+| Dedicated driver IC (HT16K33) | 2 | 5 | 10 | **17** |
+
+Only the bottom two rows fit on one UP5K, and each has a cost I want to avoid — details in [Alternatives I considered](#alternatives-i-considered) below.
+
+The cleaner move is to split the output hardware onto a second UP5K. FPGA_A still runs the BNN and drives the VGA; FPGA_B owns the 14-seg bank. The pin budget then becomes:
+
+| | FPGA_A | FPGA_B |
+|---|---|---|
+| SPI from MCU | 5 | — |
+| VGA | 10 | — |
+| SPI link to the other FPGA | 3 | 3 |
+| 14-seg multiplex | — | 31 |
+| **Total** | **18** | **34** |
+
+Both fit with room to spare.
+
+## The two-FPGA split
+
+```{=html}
+<figure>
+  <svg role="img" aria-label="Full system block diagram. Trill Square touchpad feeds the STM32L432KC MCU over I²C. The MCU rasterizes strokes into a 784-bit bitmap and sends it to FPGA_A over SPI. FPGA_A runs the BNN and emits a predicted class and ten top-ranked scores; its vga_top drives a VGA display with the predicted character and a bar graph, and its spi_master sends each new character to FPGA_B. FPGA_B holds a 16-character ring buffer and scans 16 × 14-seg displays through a transistor driver board." viewBox="0 0 1280 580" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:100%;background:#f5f3ee;border-radius:6px;">
+    <defs>
+      <marker id="arrowSysA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8431e"/></marker>
+      <marker id="arrowSysN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6a2a7a"/></marker>
+      <marker id="arrowSys"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1f"/></marker>
+    </defs>
+    <style>
+      .b   { fill: #ffffff; stroke: #1a1a1f; stroke-width: 1.4; }
+      .bd  { fill: #e5c7b8; stroke: #b8431e; stroke-width: 1.4; }
+      .bn  { fill: #e4d6ea; stroke: #6a2a7a; stroke-width: 1.4; }
+      .bm  { fill: #d4d3cc; stroke: #5b5b63; stroke-width: 1.4; }
+      .lbl   { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #1a1a1f; }
+      .lbl-a { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #b8431e; }
+      .lbl-n { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #6a2a7a; }
+      .lbl-m { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #5b5b63; }
+      .inst  { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; }
+      .sub   { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; }
+      .wire       { stroke: #b8431e; stroke-width: 1.8; fill: none; }
+      .wire-new   { stroke: #6a2a7a; stroke-width: 1.8; fill: none; }
+      .wire-thin  { stroke: #1a1a1f; stroke-width: 1; fill: none; }
+      .zone   { fill: none; stroke: #cbc8bd; stroke-dasharray: 2 4; }
+      .zonelb { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; letter-spacing: 0.08em; }
+    </style>
+
+    <rect class="b" x="22" y="246" width="106" height="70" rx="4"/>
+    <text class="lbl" x="75" y="276" text-anchor="middle">Trill Square</text>
+    <text class="sub" x="75" y="294" text-anchor="middle">touchpad</text>
+
+    <rect class="zone" x="150" y="150" width="180" height="270" rx="4"/>
+    <text class="zonelb" x="158" y="168">STM32L432KC</text>
+    <rect class="b bd" x="162" y="182" width="156" height="50" rx="4"/>
+    <text class="lbl-a" x="240" y="202" text-anchor="middle">I²C driver</text>
+    <text class="sub"   x="240" y="220" text-anchor="middle">x, y stroke events</text>
+    <rect class="b bd" x="162" y="246" width="156" height="60" rx="4"/>
+    <text class="lbl-a" x="240" y="268" text-anchor="middle">stroke capture</text>
+    <text class="sub"   x="240" y="286" text-anchor="middle">→ 784-bit bitmap</text>
+    <text class="sub"   x="240" y="300" text-anchor="middle">+ scale / crop</text>
+    <rect class="b bd" x="162" y="320" width="156" height="50" rx="4"/>
+    <text class="lbl-a" x="240" y="340" text-anchor="middle">SPI master</text>
+    <text class="sub"   x="240" y="358" text-anchor="middle">to FPGA_A</text>
+
+    <rect class="zone" x="356" y="80" width="344" height="460" rx="4"/>
+    <text class="zonelb" x="364" y="98">FPGA_A · iCE40 UP5K · pins 18 / 39</text>
+    <rect class="b bd" x="370" y="112" width="160" height="56" rx="4"/>
+    <text class="lbl-a" x="450" y="132" text-anchor="middle">BNN_spi</text>
+    <text class="inst"  x="450" y="146" text-anchor="middle">u_spi</text>
+    <text class="sub"   x="450" y="160" text-anchor="middle">bitmap in · class out</text>
+    <rect class="b bd" x="370" y="186" width="320" height="162" rx="4"/>
+    <text class="lbl-a" x="530" y="206" text-anchor="middle">BNN_core</text>
+    <text class="inst"  x="530" y="220" text-anchor="middle">u_ctl + u_x + u_pc + u_acc + u_th + u_pk</text>
+    <text class="inst"  x="530" y="234" text-anchor="middle">+ u_w (SPRAM) + u_a (EBR) + u_t (EBR) + u_am</text>
+    <rect class="bn b" x="384" y="268" width="290" height="68" rx="4"/>
+    <text class="lbl-n" x="529" y="288" text-anchor="middle">top10_buffer  (new)</text>
+    <text class="sub"   x="529" y="305" text-anchor="middle">sorted insert over L3's 47 scores</text>
+    <text class="sub"   x="529" y="320" text-anchor="middle">→ top10_scores[9:0][9:0] + top10_classes[9:0][5:0]</text>
+    <rect class="bn b" x="370" y="368" width="170" height="124" rx="4"/>
+    <text class="lbl-n" x="455" y="388" text-anchor="middle">vga_top  (new)</text>
+    <text class="sub"   x="455" y="406" text-anchor="middle">25.175 MHz pixel clock</text>
+    <text class="sub"   x="455" y="422" text-anchor="middle">tile / scanline render</text>
+    <text class="sub"   x="455" y="438" text-anchor="middle">font_rom · char_renderer</text>
+    <text class="sub"   x="455" y="454" text-anchor="middle">bar_renderer · compositor</text>
+    <text class="sub"   x="455" y="472" text-anchor="middle">drives 10 VGA pins</text>
+    <rect class="bn b" x="552" y="368" width="138" height="124" rx="4"/>
+    <text class="lbl-n" x="621" y="388" text-anchor="middle">spi_master  (new)</text>
+    <text class="sub"   x="621" y="406" text-anchor="middle">to FPGA_B</text>
+    <text class="sub"   x="621" y="422" text-anchor="middle">on each done:</text>
+    <text class="sub"   x="621" y="438" text-anchor="middle">{pos, char} byte pair</text>
+    <text class="sub"   x="621" y="458" text-anchor="middle">~4 µs @ 5 MHz</text>
+    <text class="zonelb" x="364" y="528">pll: 48 → 25.175 MHz · HSOSC: 48 MHz</text>
+
+    <rect class="zone" x="720" y="80" width="252" height="340" rx="4"/>
+    <text class="zonelb" x="728" y="98">FPGA_B · iCE40 UP5K · pins 34 / 39</text>
+    <rect class="bn b" x="732" y="112" width="228" height="52" rx="4"/>
+    <text class="lbl-n" x="846" y="132" text-anchor="middle">spi_slave  (new)</text>
+    <text class="sub"   x="846" y="150" text-anchor="middle">receives {pos[3:0], char[7:0]}</text>
+    <rect class="bn b" x="732" y="178" width="228" height="62" rx="4"/>
+    <text class="lbl-n" x="846" y="198" text-anchor="middle">char_buffer  (new)</text>
+    <text class="sub"   x="846" y="216" text-anchor="middle">16 × 8-bit ring</text>
+    <text class="sub"   x="846" y="230" text-anchor="middle">rolling character log</text>
+    <rect class="bn b" x="732" y="254" width="110" height="78" rx="4"/>
+    <text class="lbl-n" x="787" y="274" text-anchor="middle">font_rom</text>
+    <text class="sub"   x="787" y="292" text-anchor="middle">ASCII → 16-bit</text>
+    <text class="sub"   x="787" y="306" text-anchor="middle">segment pattern</text>
+    <text class="sub"   x="787" y="322" text-anchor="middle">(1 EBR block)</text>
+    <rect class="bn b" x="850" y="254" width="110" height="78" rx="4"/>
+    <text class="lbl-n" x="905" y="274" text-anchor="middle">scan_fsm</text>
+    <text class="sub"   x="905" y="292" text-anchor="middle">mod-16 digit</text>
+    <text class="sub"   x="905" y="306" text-anchor="middle">200 Hz / digit</text>
+    <text class="sub"   x="905" y="322" text-anchor="middle">dead-time gap</text>
+    <text class="sub" x="846" y="356" text-anchor="middle">15 seg + 16 digit = 31 pins out</text>
+    <text class="sub" x="846" y="372" text-anchor="middle">to driver board</text>
+
+    <rect class="bm b" x="720" y="438" width="252" height="88" rx="4"/>
+    <text class="lbl-m" x="846" y="458" text-anchor="middle">transistor driver board</text>
+    <text class="sub"   x="846" y="476" text-anchor="middle">16 × PNP (digits, 150 mA peak)</text>
+    <text class="sub"   x="846" y="490" text-anchor="middle">15 × NPN (segs) + 15 current R</text>
+    <text class="sub"   x="846" y="504" text-anchor="middle">+ 31 base R</text>
+    <text class="sub"   x="846" y="520" text-anchor="middle">or 2 × UDN2981 + 2 × ULN2803 + 15 R</text>
+
+    <rect class="b" x="992" y="408" width="266" height="138" rx="4"/>
+    <text class="lbl"  x="1125" y="430" text-anchor="middle">16 × 14-seg displays</text>
+    <text class="sub"  x="1125" y="448" text-anchor="middle">4 modules · 4 digits each</text>
+    <text class="sub"  x="1125" y="462" text-anchor="middle">common anode</text>
+    <text class="sub"  x="1125" y="486" text-anchor="middle">shows rolling 16-char log</text>
+    <text class="sub"  x="1125" y="502" text-anchor="middle">of recognized characters</text>
+    <text class="sub"  x="1125" y="528" text-anchor="middle">(terminal-style)</text>
+
+    <rect class="b" x="992" y="110" width="266" height="258" rx="4"/>
+    <text class="lbl"  x="1125" y="132" text-anchor="middle">VGA display</text>
+    <text class="sub"  x="1125" y="150" text-anchor="middle">640 × 480 @ 60 Hz</text>
+    <line class="wire-thin" x1="1012" y1="162" x2="1238" y2="162"/>
+    <text class="sub"  x="1125" y="196" text-anchor="middle">predicted character (large)</text>
+    <text class="sub"  x="1125" y="236" text-anchor="middle">▇ ▆ ▅ ▃ ▂ ▁ ▁ · · ·</text>
+    <text class="sub"  x="1125" y="252" text-anchor="middle">a Q 9 C 2 g q 7 R 3</text>
+    <text class="sub"  x="1125" y="268" text-anchor="middle">top-10 bars + labels</text>
+    <line class="wire-thin" x1="1012" y1="286" x2="1238" y2="286"/>
+    <text class="sub"  x="1125" y="306" text-anchor="middle">resistor DAC per color</text>
+    <text class="sub"  x="1125" y="322" text-anchor="middle">3R + 3G + 2B + HSYNC + VSYNC</text>
+    <text class="sub"  x="1125" y="338" text-anchor="middle">= 10 pins</text>
+
+    <line class="wire-thin" x1="128" y1="280" x2="150" y2="280" marker-end="url(#arrowSys)"/>
+    <text class="sub" x="139" y="272" text-anchor="middle">I²C</text>
+    <path class="wire" d="M 330 345 L 350 345 L 350 140 L 370 140" marker-end="url(#arrowSysA)"/>
+    <text class="sub" x="340" y="230" text-anchor="middle">SPI</text>
+    <text class="sub" x="340" y="244" text-anchor="middle">5 pins</text>
+    <line class="wire" x1="450" y1="168" x2="450" y2="186" marker-end="url(#arrowSysA)"/>
+    <line class="wire-new" x1="455" y1="348" x2="455" y2="368" marker-end="url(#arrowSysN)"/>
+    <path class="wire-new" d="M 621 348 L 621 368" marker-end="url(#arrowSysN)"/>
+    <path class="wire-new" d="M 540 430 L 992 230" marker-end="url(#arrowSysN)"/>
+    <text class="sub" x="750" y="340">10 pins</text>
+    <path class="wire-new" d="M 690 400 L 710 400 L 710 138 L 732 138" marker-end="url(#arrowSysN)"/>
+    <text class="sub" x="700" y="72" text-anchor="middle" font-weight="bold">SPI link · 3 pins</text>
+    <path class="wire" d="M 846 420 L 846 438" marker-end="url(#arrowSysA)"/>
+    <text class="sub" x="876" y="432">31 pins</text>
+    <path class="wire" d="M 972 482 L 992 482" marker-end="url(#arrowSysA)"/>
+    <text class="sub" x="982" y="476">~260 wires</text>
+
+    <text class="zonelb" x="750" y="52" fill="#6a2a7a">SECTION 1 — VGA (FPGA_A internal)</text>
+    <text class="zonelb" x="750" y="70" fill="#b8431e">SECTION 3 — Inter-FPGA link</text>
+    <text class="zonelb" x="1070" y="398" fill="#5b5b63">SECTION 2 — 14-seg bank</text>
+  </svg>
+  <figcaption>Per character: MCU sends the bitmap over SPI (~157 µs), BNN_core runs 15,224 cycles (634 µs), the output layer's new <code>top10_buffer</code> produces 10 ranked scores, <code>vga_top</code> snapshots them during vblank and redraws the next frame, and <code>spi_master</code> sends the single new character byte to FPGA_B (~4 µs), which drops it into its 16-char ring buffer. FPGA_B's <code>scan_fsm</code> cycles through the 16 displays at 200 Hz per digit through the transistor driver board.</figcaption>
+</figure>
+```
+
+Rust arrows carry data; purple arrows carry new signals introduced by the output hardware (not present in Pierce's original design).
+
+### Section 1: VGA on FPGA_A
+
+VGA has to be driven by the FPGA. A 640 × 480 @ 60 Hz signal is a 25.175 MHz pixel stream with sync pulses on exact cycle boundaries.
+
+There is no framebuffer. 640 × 480 × 1 bpp = 38 KB, and the BNN has already taken most of SPRAM and EBR. Instead, pixels are generated on-the-fly from scanline logic:
+
+- **Big character readout.** An 8 × 16 bitmap font sits in one EBR block (128 characters × 16 bytes = 2 KB). For each pixel inside the character region, look up `font[predicted_class][v_within_char]` and pick bit `h_within_char`. Scaling to a ~64 × 128 pixel glyph is a shift on the within-char coordinates.
+- **Bar graph.** Keep the top 10 scores in a 10-entry register (10 × 10 bits). For each pixel, compute `bar_index = (hcount - bar_x0) / bar_width`. If the pixel is inside a bar's x range and below the bar's top, light it.
+- **Class labels under the bars.** Reuse the character ROM, one glyph per bar.
+
+The only new BNN-side logic is a **top-10 sorted-insert buffer** sitting beside Pierce's existing argmax. On each of the 47 output-layer scores, the buffer either drops the new score into its sorted position or discards it; linear-search insert, 10 compares, ≤ 10 cycles per score. Total overhead: 470 cycles. 
+
+The VGA controller itself is seven small modules under one wrapper:
+
+| Module | Job | Rough LOC |
+|---|---|---|
+| `vga_timing` | HSYNC/VSYNC counters, visible-region flag | 40 |
+| `font_rom` | 128 × 16-byte ASCII glyph table in EBR | 20 + hex file |
+| `class_to_ascii` | 47-entry combinational LUT | 50 |
+| `char_renderer` | Big-glyph pixel decision | 60 |
+| `bar_renderer` | Bar + label pixel decision | 80 |
+| `vga_compositor` | Merge → RGB | 30 |
+| `vga_top` | Wrapper + vblank snapshot register | 50 |
+
+### Section 2: 14-seg bank on FPGA_B
+
+Sixteen 14-segment displays, driven in a 16-way multiplex: 15 segment lines shared across all displays as a common bus, 16 digit-select lines enabling one display at a time. At any instant, exactly one display is lit, and the segment bus carries that display's pattern.
+
+Scan math:
+
+- Human flicker fusion is ~60–90 Hz; shooting for200 Hz per digit (can go higher to 500 Hz).
+- 200 Hz per digit × 16 digits = 3.2 kHz digit switch rate, so each digit gets a 312 µs slot. At 48 MHz FPGA clock that's 15,000 cycles per slot — thousands of cycles of margin for dead-time insertion and bus updates.
+- Dead time of 1–10 µs between digit transitions prevents ghosting from the previous pattern bleeding onto the new digit.
+
+The brightness problem is harder than the flicker problem. At 1/16 duty, average segment current is peak / 16, so to look as bright as a static display each segment needs ~150 mA **peak**. Driving an "8" lights 10 segments at once: 10 × 150 mA = 1.5 A peak flowing through a single digit-select line. Neither the UP5K's 8 mA/pin source current nor its 24 mA sink can survive that, so the FPGA pins only control the display through a transistor layer. The driver board BOM:
+
+| Function | Discretes | Chip-based |
+|---|---|---|
+| High-side (digit anode) drive | 16 PNP + 16 base R | 2 × UDN2981 |
+| Low-side (segment cathode) drive | 15 NPN + 15 base R | 2 × ULN2803 |
+| Segment current limit | 15 R | 15 R |
+| **Totals** | **31 transistors + 46 R** | **4 ICs + 15 R** |
+
+I'll go with the IC option if the stockroom has them. Two `UDN2981` and two `ULN2803` replace the 31 discretes and 31 of the base resistors; the 15 current-limit resistors still live on the board, sized for the display's forward voltage at ~150 mA peak.
+
+FPGA_B's logic is four small modules: SPI slave (to receive each new character from FPGA_A), a 16-byte ring buffer, a 128-entry ASCII → 16-bit segment-pattern ROM in one EBR block, and a scan FSM.
+
+### Section 3: Inter-FPGA link
+
+Three wires between the two chips: `SCK`, `MOSI`, `CS`. No `MISO` — the character stream only goes A → B, and B has nothing to report back that the overall system needs. FPGA_A runs the master, FPGA_B the slave. SPI clock rate is not time-critical; 5–10 MHz is fine. Payload per inference is 16 bits (`{position[3:0], char[7:0]}` with 4 bits padding, or a full 16-byte frame if we switch to batch updates), which takes ~4 µs at 5 MHz.
+
+Each FPGA uses its own HSOSC as its main clock. The SPI SCK is its own domain.
+
+## Inside bnn_top
+
+The only change inside the current BNN is the `top10_buffer`. Here is his datapath, with the new block called out in purple:
+
+```{=html}
+<figure>
+  <svg role="img" aria-label="BNN inference datapath with the new top10_buffer." viewBox="0 0 1280 820" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:100%;background:#f5f3ee;border-radius:6px;">
+    <defs>
+      <marker id="arrowBA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8431e"/></marker>
+      <marker id="arrowBC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#35598a"/></marker>
+      <marker id="arrowBN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6a2a7a"/></marker>
+      <marker id="arrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1f"/></marker>
+    </defs>
+    <style>
+      .b2  { fill: #ffffff; stroke: #1a1a1f; stroke-width: 1.4; }
+      .bm2 { fill: #d4d3cc; stroke: #5b5b63; stroke-width: 1.4; }
+      .bd2 { fill: #e5c7b8; stroke: #b8431e; stroke-width: 1.4; }
+      .bc2 { fill: #c6d3e4; stroke: #35598a; stroke-width: 1.4; }
+      .bn2 { fill: #e4d6ea; stroke: #6a2a7a; stroke-width: 1.4; }
+      .lbl2   { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #1a1a1f; }
+      .lbl-c2 { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #35598a; }
+      .lbl-a2 { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #b8431e; }
+      .lbl-m2 { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #5b5b63; }
+      .lbl-n2 { font-family: system-ui, sans-serif; font-size: 12.5px; font-weight: 600; fill: #6a2a7a; }
+      .inst2  { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; }
+      .sub2   { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; }
+      .pin2   { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #1a1a1f; }
+      .wire2       { stroke: #b8431e; stroke-width: 1.8; fill: none; }
+      .wire-ctrl2  { stroke: #35598a; stroke-width: 1.3; fill: none; stroke-dasharray: 5 3; }
+      .wire-new2   { stroke: #6a2a7a; stroke-width: 1.8; fill: none; }
+      .wire-thin2  { stroke: #1a1a1f; stroke-width: 1; fill: none; }
+      .zone2   { fill: none; stroke: #cbc8bd; stroke-dasharray: 2 4; }
+      .zonelb2 { font-family: ui-monospace, monospace; font-size: 10.5px; fill: #65625a; letter-spacing: 0.08em; }
+    </style>
+
+    <rect class="zone2" x="12"  y="30"  width="140" height="780" rx="4"/>
+    <text class="zonelb2" x="20" y="50">MCU ↔ FPGA</text>
+    <rect class="zone2" x="162" y="30"  width="1104" height="780" rx="4"/>
+    <text class="zonelb2" x="172" y="50">iCE40 UP5K · FPGA_A</text>
+
+    <text class="pin2" x="26" y="110">sclk</text>
+    <text class="pin2" x="26" y="130">mosi</text>
+    <text class="pin2" x="26" y="150">cs_n</text>
+    <line class="wire-thin2" x1="68" y1="106" x2="186" y2="106" marker-end="url(#arrowB)"/>
+    <line class="wire2"      x1="68" y1="126" x2="186" y2="126" marker-end="url(#arrowBA)"/>
+    <line class="wire-thin2" x1="68" y1="146" x2="186" y2="146" marker-end="url(#arrowB)"/>
+    <text class="pin2" x="26" y="180">miso</text>
+    <line class="wire2" x1="186" y1="176" x2="68" y2="176" marker-end="url(#arrowBA)"/>
+
+    <rect class="b2 bd2" x="186" y="78" width="162" height="180" rx="4"/>
+    <text class="lbl-a2" x="267" y="98" text-anchor="middle">spi_slave</text>
+    <text class="inst2"  x="267" y="112" text-anchor="middle">u_spi</text>
+    <text class="sub2"   x="267" y="130" text-anchor="middle">boot: shift 974 Kbit weights</text>
+    <text class="sub2"   x="267" y="144" text-anchor="middle">run: bitmap in · class out</text>
+    <text class="sub2"   x="267" y="158" text-anchor="middle">200 ms once @ 5 MHz</text>
+    <text class="pin2"   x="196" y="196">ld_data[63:0]</text>
+    <text class="pin2"   x="196" y="212">ld_we</text>
+    <text class="pin2"   x="196" y="228">start</text>
+    <text class="pin2"   x="196" y="244">class[5:0]</text>
+
+    <rect class="b2 bc2" x="186" y="380" width="162" height="340" rx="4"/>
+    <text class="lbl-c2" x="267" y="400" text-anchor="middle">controller</text>
+    <text class="inst2"  x="267" y="414" text-anchor="middle">u_ctl</text>
+    <text class="sub2"   x="267" y="430" text-anchor="middle">for L, n, k: addresses +</text>
+    <text class="sub2"   x="267" y="444" text-anchor="middle">first · last · out_layer</text>
+    <text class="pin2"   x="196" y="470">w_addr[13:0]</text>
+    <text class="pin2"   x="196" y="486">a_addr[4:0]</text>
+    <text class="pin2"   x="196" y="502">t_addr[10:0]</text>
+    <text class="pin2"   x="196" y="528">first</text>
+    <text class="pin2"   x="196" y="544">last</text>
+    <text class="pin2"   x="196" y="560">out_layer</text>
+    <text class="pin2"   x="196" y="576">neuron0</text>
+    <text class="pin2"   x="196" y="592">j[5:0]</text>
+
+    <rect class="b2 bm2" x="400" y="80" width="170" height="130" rx="4"/>
+    <text class="lbl-m2" x="485" y="100" text-anchor="middle">weight_spram</text>
+    <text class="inst2"  x="485" y="114" text-anchor="middle">u_w</text>
+    <text class="sub2"   x="485" y="134" text-anchor="middle">4 SPRAM blocks, 93 % full</text>
+    <text class="sub2"   x="485" y="148" text-anchor="middle">15,224 × 64-bit words</text>
+    <text class="sub2"   x="485" y="162" text-anchor="middle">read 1 word / clock</text>
+
+    <rect class="b2 bm2" x="400" y="248" width="170" height="160" rx="4"/>
+    <text class="lbl-m2" x="485" y="268" text-anchor="middle">act_ebr</text>
+    <text class="inst2"  x="485" y="282" text-anchor="middle">u_a</text>
+    <text class="sub2"   x="485" y="300" text-anchor="middle">2 banks · 1 EBR block</text>
+    <text class="sub2"   x="485" y="314" text-anchor="middle">read bank ↔ write bank</text>
+    <text class="sub2"   x="485" y="328" text-anchor="middle">swap on layer++</text>
+
+    <rect class="b2 bm2" x="400" y="500" width="170" height="130" rx="4"/>
+    <text class="lbl-m2" x="485" y="520" text-anchor="middle">thresh_ebr</text>
+    <text class="inst2"  x="485" y="534" text-anchor="middle">u_t</text>
+    <text class="sub2"   x="485" y="554" text-anchor="middle">1,536 thresholds</text>
+    <text class="sub2"   x="485" y="568" text-anchor="middle">6 EBR blocks · L0–L2 only</text>
+
+    <rect class="b2 bd2" x="620" y="178" width="110" height="80" rx="4"/>
+    <text class="lbl-a2" x="675" y="200" text-anchor="middle">xnor64</text>
+    <text class="inst2"  x="675" y="214" text-anchor="middle">u_x</text>
+    <text class="sub2"   x="675" y="238" text-anchor="middle">64 × XNOR</text>
+
+    <rect class="b2 bd2" x="754" y="178" width="110" height="80" rx="4"/>
+    <text class="lbl-a2" x="809" y="200" text-anchor="middle">popcount64</text>
+    <text class="inst2"  x="809" y="214" text-anchor="middle">u_pc</text>
+    <text class="sub2"   x="809" y="238" text-anchor="middle">6-level pipelined tree</text>
+
+    <rect class="b2 bd2" x="888" y="178" width="110" height="80" rx="4"/>
+    <text class="lbl-a2" x="943" y="200" text-anchor="middle">accumulator</text>
+    <text class="inst2"  x="943" y="214" text-anchor="middle">u_acc</text>
+    <text class="sub2"   x="943" y="238" text-anchor="middle">10-bit · reset on first</text>
+
+    <rect class="b2 bd2" x="1032" y="178" width="100" height="80" rx="4"/>
+    <text class="lbl-a2" x="1082" y="200" text-anchor="middle">threshold_cmp</text>
+    <text class="inst2"  x="1082" y="214" text-anchor="middle">u_th</text>
+    <text class="sub2"   x="1082" y="238" text-anchor="middle">fire = acc ≥ t</text>
+
+    <rect class="b2 bd2" x="1156" y="178" width="98" height="80" rx="4"/>
+    <text class="lbl-a2" x="1205" y="200" text-anchor="middle">pack_reg</text>
+    <text class="inst2"  x="1205" y="214" text-anchor="middle">u_pk</text>
+    <text class="sub2"   x="1205" y="234" text-anchor="middle">shift fire → 64-b word</text>
+
+    <rect class="b2 bd2" x="1032" y="440" width="222" height="80" rx="4"/>
+    <text class="lbl-a2" x="1143" y="462" text-anchor="middle">argmax</text>
+    <text class="inst2"  x="1143" y="476" text-anchor="middle">u_am  ·  out_layer only</text>
+    <text class="sub2"   x="1143" y="498" text-anchor="middle">strict &gt;, neuron0 forces class-0 load</text>
+    <text class="sub2"   x="1143" y="512" text-anchor="middle">→ class[5:0]</text>
+
+    <rect class="b2 bn2" x="1032" y="540" width="222" height="90" rx="4"/>
+    <text class="lbl-n2" x="1143" y="562" text-anchor="middle">top10_buffer  (new)</text>
+    <text class="sub2"   x="1143" y="580" text-anchor="middle">sorted-insert over L3's 47 scores</text>
+    <text class="sub2"   x="1143" y="596" text-anchor="middle">10 × {score[9:0], class[5:0]}</text>
+    <text class="sub2"   x="1143" y="612" text-anchor="middle">→ vga_top via vblank snapshot</text>
+
+    <rect class="b2 bn2" x="1032" y="650" width="222" height="60" rx="4"/>
+    <text class="lbl-n2" x="1143" y="672" text-anchor="middle">vga_top  (new)</text>
+    <text class="sub2"  x="1143" y="692" text-anchor="middle">consumes class + top10</text>
+    <text class="sub2"  x="1143" y="706" text-anchor="middle">(sibling of BNN_core)</text>
+
+    <path class="wire2" d="M 348 196 L 400 196" marker-end="url(#arrowBA)"/>
+    <path class="wire-thin2" d="M 348 212 L 380 212 L 380 145 L 400 145" marker-end="url(#arrowB)"/>
+    <path class="wire2" d="M 1156 220 L 585 220 L 585 358 L 570 358" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="810" y="214" text-anchor="middle">act_word[63:0]</text>
+    <path class="wire2" d="M 570 145 L 600 145 L 600 198 L 620 198" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="580" y="138">w_word[63:0]</text>
+    <path class="wire2" d="M 570 394 L 605 394 L 605 240 L 620 240" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="612" y="394">a_word[63:0]</text>
+    <line class="wire2" x1="730" y1="218" x2="754" y2="218" marker-end="url(#arrowBA)"/>
+    <line class="wire2" x1="864" y1="218" x2="888" y2="218" marker-end="url(#arrowBA)"/>
+    <line class="wire2" x1="998" y1="218" x2="1032" y2="218" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="1015" y="212" text-anchor="middle">acc[9:0]</text>
+    <path class="wire2" d="M 570 610 L 1082 610 L 1082 258" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="720" y="602">t[9:0]</text>
+    <line class="wire2" x1="1132" y1="218" x2="1156" y2="218" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="1144" y="212" text-anchor="middle">fire</text>
+
+    <path class="wire2" d="M 943 258 L 943 420 L 1080 420 L 1080 440" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="970" y="350">acc[9:0]</text>
+    <path class="wire-new2" d="M 943 258 L 943 400 L 1200 400 L 1200 540" marker-end="url(#arrowBN)"/>
+    <text class="sub2" x="1120" y="394" fill="#6a2a7a">per-neuron score</text>
+
+    <path class="wire2" d="M 1032 490 L 740 490 L 740 244 L 348 244" marker-end="url(#arrowBA)"/>
+    <text class="sub2" x="900" y="484" text-anchor="middle">class[5:0]</text>
+    <path class="wire-new2" d="M 1143 630 L 1143 650" marker-end="url(#arrowBN)"/>
+
+    <path class="wire-ctrl2" d="M 348 466 L 390 466 L 390 112 L 400 112" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="356" y="108" fill="#35598a">w_addr</text>
+    <path class="wire-ctrl2" d="M 348 482 L 388 482 L 388 282 L 400 282" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="356" y="276" fill="#35598a">a_addr</text>
+    <path class="wire-ctrl2" d="M 348 498 L 395 498 L 395 536 L 400 536" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="356" y="530" fill="#35598a">t_addr</text>
+    <path class="wire-ctrl2" d="M 348 524 L 943 524 L 943 258" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="620" y="518" fill="#35598a">first</text>
+    <path class="wire-ctrl2" d="M 348 540 L 1205 540 L 1205 258" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="1060" y="534" fill="#35598a">last</text>
+    <path class="wire-ctrl2" d="M 348 556 L 1140 556 L 1140 520" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="1060" y="550" fill="#35598a">out_layer</text>
+    <path class="wire-ctrl2" d="M 348 572 L 1100 572 L 1100 520" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="620" y="566" fill="#35598a">neuron0</text>
+    <path class="wire-ctrl2" d="M 348 588 L 1060 588 L 1060 520" marker-end="url(#arrowBC)"/>
+    <text class="sub2" x="620" y="582" fill="#35598a">j[5:0]</text>
+  </svg>
+  <figcaption>Pierce's existing datapath (rust and graphite) with the two new blocks (purple) wired in. <code>top10_buffer</code> taps the accumulator output on the output layer and produces a ranked list of 10 (score, class) pairs; <code>vga_top</code> consumes those plus the final <code>class[5:0]</code> and drives the VGA pins.</figcaption>
+</figure>
+```
+
+## Alternatives I considered
+
+| Option | Why I didn't pick it |
+|---|---|
+| **74HC595 shift-register chain on bare displays** | 32 chips, ~480 wires between them and the displays, and HC595s don't like the peak currents 14-seg displays want. Breadboard-infeasible at this scale. A PCB would work but is out of scope for now. |
+| **HT16K33 driver chip (Adafruit quad 14-seg backpacks)** | Would work — 4 backpacks on one I²C bus, 2 pins total — but it moves the whole display-driving story off the FPGA.|
+| **Single-UP5K FPGA-side multiplex for everything** | Multiplex alone fits (36 pins) but there's no room left for VGA. If we drop the 14-seg bank the VGA solution survives on one chip, but the whole point of this post was to keep both outputs. |
+| **MAX6955 (ASCII-in LED driver)** | Nicest of the dedicated chips (send an ASCII byte, get a lit digit) but availability through the class stockroom is uncertain, and it carries the same "chip does the work" tradeoff as the HT16K33. |
+
+## What's left to write
+
+The BNN is already specified across the [earlier post](../bnn-emnist-ice40/index.qmd) and `bnn_top.drawio`. Everything below is new RTL on top of that:
+
+| Module | Chip | Status | Rough LOC |
+|---|---|---|---|
+| `top10_buffer` | FPGA_A | new | 70 |
+| `vga_top` + submodules | FPGA_A | new | 430 |
+| `spi_master` (link) | FPGA_A | new | 30 |
+| `spi_slave` (link) | FPGA_B | new | 40 |
+| `char_buffer` | FPGA_B | new | 20 |
+| `font_rom` (14-seg) | FPGA_B | new | 20 + hex file |
+| `scan_fsm` | FPGA_B | new | 50 |
+
+Plus the external driver board (PCB or protoboard), a VGA breakout with the 8-resistor DAC ladder, and testbenches for each FPGA independently.
+
+## Sources
+
+- The BNN itself: [Fitting a Binarized Neural Network on an iCE40 UP5K](../bnn-emnist-ice40/index.qmd) by Pierce Clark.
+- Pierce's top-level block diagram: `website/posts/bnn-emnist-ice40/diagrams/bnn_top.drawio` on `main`.
+- Interactive version of the diagrams above: [BNN Datapath artifact on claude.ai](https://claude.ai/artifact/VxMbc7qFaLjFQZj1Hh4NPg).
