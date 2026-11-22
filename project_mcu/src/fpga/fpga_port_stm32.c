@@ -7,7 +7,7 @@
 #include "STM32L432KC.h"          // CMSIS: CoreDebug, DWT
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_SPI.h"
-#include "STM32L432KC_SYSTICK.h"              // CHECK: wherever millis() is declared
+#include "STM32L432KC_SYSTICK.h"   // millis()
 
 #define CPU_MHZ 80u               // SYSCLK after the RCC/PLL setup
 
