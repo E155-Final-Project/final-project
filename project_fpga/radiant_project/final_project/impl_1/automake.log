@@ -1,0 +1,586 @@
+
+pnmainc -log pnmain "final_project_impl_1_map.tcl"
+map:  version Radiant Software (64-bit) 2026.1.0.37.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
+
+Command line:   map -pdc C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/PDC.pdc -i final_project_impl_1_syn.udb -o final_project_impl_1_map.udb -mp final_project_impl_1.mrp -hierrpt -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml 
+
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2026.1/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+
+
+
+Design:  BNN_top
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:  High-Performance_1.2V
+
+Running general design DRC...
+
+
+
+
+Design Summary:
+   Number of slice registers: 223 out of  5280 (4%)
+   Number of I/O registers:      1 out of   117 (1%)
+   Number of LUT4s:           631 out of  5280 (12%)
+      Number of logic LUT4s:             414
+      Number of inserted feedthru LUT4s: 145
+      Number of ripple logic:             36 (72 LUT4s)
+   Number of IO sites used:   6 out of 39 (15%)
+      Number of IO sites used for general PIO: 6
+      Number of IO sites used for I3C: 0 out of 2 (0%)
+      (note: If I3C is not used, its site can be used as general PIO)
+      Number of IO sites used for PIO+I3C: 6 out of 36 (17%)
+      Number of IO sites used for OD+RGB IO buffers: 0 out of 3 (0%)
+      (note: If RGB LED drivers are not used, sites can be used as OD outputs,
+       see TN1288 iCE40 LED Driver Usage Guide)
+      Number of IO sites used for PIO+I3C+OD+RGB: 6 out of 39 (15%)
+   Number of DSPs:             0 out of 8 (0%)
+   Number of I2Cs:             0 out of 2 (0%)
+   Number of High Speed OSCs:  1 out of 1 (100%)
+   Number of Low Speed OSCs:   0 out of 1 (0%)
+   Number of RGB PWM:          0 out of 1 (0%)
+   Number of RGB Drivers:      0 out of 1 (0%)
+   Number of SCL FILTERs:      0 out of 2 (0%)
+   Number of SRAMs:            4 out of 4 (100%)
+   Number of WARMBOOTs:        0 out of 1 (0%)
+   Number of SPIs:             0 out of 2 (0%)
+   Number of EBRs:             10 out of 30 (33%)
+   Number of PLLs:             0 out of 1 (0%)
+   Number of Clocks:  2
+      Net clk: 88 loads, 88 rising, 0 falling (Driver: Pin hf_osc/CLKHF)
+      Net sck_c: 140 loads, 138 rising, 2 falling (Driver: Port sck)
+   Number of Clock Enables:  13
+      Net VCC_net: 47 loads, 0 SLICEs
+      Net w_we: 4 loads, 0 SLICEs
+      Net BNN_spi.n22: 64 loads, 64 SLICEs
+      Net n2799: 1 loads, 1 SLICEs
+      Net n2785: 10 loads, 10 SLICEs
+      Net n2753: 13 loads, 13 SLICEs
+      Net BNN_core.n2775: 10 loads, 10 SLICEs
+      Net n2749: 8 loads, 8 SLICEs
+      Net n2764: 8 loads, 8 SLICEs
+      Net memory.act_ram.we[1]: 1 loads, 0 SLICEs
+      Net memory.act_ram.we[0]: 1 loads, 0 SLICEs
+      Net memory.act_ram.we[3]: 1 loads, 0 SLICEs
+      Net memory.act_ram.we[2]: 1 loads, 0 SLICEs
+   Number of LSRs:  4
+      Net BNN_spi.wasdone: 1 loads, 1 SLICEs
+      Net BNN_spi.bitcnt_0__N_368: 4 loads, 4 SLICEs
+      Net load_start: 8 loads, 8 SLICEs
+      Net core_reset: 43 loads, 43 SLICEs
+   Top 10 highest fanout non-clock nets:
+      Net img_we: 87 loads
+      Net act_bit: 64 loads
+      Net BNN_spi.n22: 64 loads
+      Net VCC_net: 59 loads
+      Net core_reset: 54 loads
+      Net layer[0]: 31 loads
+      Net neuron[0]: 25 loads
+      Net neuron[3]: 25 loads
+      Net last_word_N_372: 22 loads
+      Net layer[1]: 18 loads
+Running physical design DRC...
+
+ 
+
+
+   Number of warnings:  0
+   Number of criticals: 0
+   Number of errors:    0
+
+Constraint Summary:
+   Total number of constraints: 8
+   Total number of constraints dropped: 0
+
+
+Total CPU Time: 0 secs  
+Total REAL Time: 0 secs  
+Peak Memory Usage: 76 MB
+
+Checksum -- map: 6df68a0e9a3d88cc85d6cce07dc4bf99fd106918
+**** CMD map_run - CPU/Elapsed: 0 secs / 0 secs , MEM/Increased: 59.761 Mb/ 0.188 Mb, DATE: 19:51:16 11/17/26
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /0 secs 
+
+pnmainc -log pnmain "final_project_impl_1_par.tcl"
+
+PAR: Place And Route Radiant Software (64-bit) 2026.1.0.37.0.
+PARed on: Tue Nov 17 19:51:21 2026
+
+Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
+	final_project_impl_1_map.udb final_project_impl_1_par.dir/5_1.udb 
+
+Loading final_project_impl_1_map.udb ...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2026.1/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Successfully read the udb in 0.00 s.
+
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Design:  BNN_top
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+
+Constraint Summary
+   Total number of constraints: 7
+   Total number of constraints dropped: 0
+
+Successfully loaded device info and constraints in 0.00 s.
+
+Beginning Place Design 
+Phase 1 Placer Initialization 
+Number of Signals: 1071
+Number of Connections: 2768
+Phase 1 Placer Initialization Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 88.37, Gain Memory : 4.60  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 88.37 ; gain = 4.60 
+
+Phase 2 Logic Packing 
+Device utilization summary:
+
+   SLICE (est.)     332/2640         13% used
+     LUT            631/5280         12% used
+     REG            223/5280          4% used
+   PIO                6/56           11% used
+                      6/36           16% bonded
+   IOLOGIC            1/56            2% used
+   DSP                0/8             0% used
+   I2C                0/2             0% used
+   HFOSC              1/1           100% used
+   LFOSC              0/1             0% used
+   LEDDA_IP           0/1             0% used
+   RGBA_DRV           0/1             0% used
+   FILTER             0/2             0% used
+   SRAM               4/4           100% used
+   WARMBOOT           0/1             0% used
+   SPI                0/2             0% used
+   EBR               10/30           33% used
+   PLL                0/1             0% used
+   RGBOUTBUF          0/3             0% used
+   I3C                0/2             0% used
+   OPENDRAIN          0/3             0% used
+
+Phase 2 Logic Packing Complete: Time (s) - CPU Time : 0.00, Real Time : 0.01  |   Memory (MB) - Peak Memory : 88.82, Gain Memory : 0.34  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 88.82 ; gain = 0.34 
+
+Phase 3 Hierarchical Placement 
+Pin Constraint Summary:
+   6 out of 6 pins locked (100% locked).
+Phase 3.1 Clustering & Global Placement 
+Phase 3.1 Clustering & Global Placement Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 90.35, Gain Memory : 0.01  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 90.35 ; gain = 0.01 
+
+Phase 3 Hierarchical Placement Complete: Time (s) - CPU Time : 0.02, Real Time : 0.02  |   Memory (MB) - Peak Memory : 90.36, Gain Memory : 1.54  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 90.36 ; gain = 1.54 
+
+Phase 4 Apollo Placement 
+
+.........................
+Finished Placer Phase 0 (AP).  CPU time: 1 secs , REAL time: 0 secs 
+
+Phase 4 Apollo Placement Complete: Time (s) - CPU Time : 0.61, Real Time : 0.64  |   Memory (MB) - Peak Memory : 97.81, Gain Memory : 7.45  
+
+Time: cpu = 00:00:01 ; elapsed : 00:00:01 . Memory (MB): peak = 97.81 ; gain = 7.45 
+
+Phase 5 Constructive Placement 
+Phase 5.1 Iterative Refinement 
+..  ..
+....................
+
+Placer score = 236106.
+
+Device SLICE utilization summary after final SLICE packing:
+   SLICE            329/2640         12% used
+
+Phase 5.1 Iterative Refinement Complete: Time (s) - CPU Time : 3.64, Real Time : 3.70  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 17.35  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 113.99 ; gain = 17.35 
+
+Phase 5 Constructive Placement Complete: Time (s) - CPU Time : 3.64, Real Time : 3.70  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 17.35  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 113.99 ; gain = 17.35 
+
+Phase 6 Placement Optimization 
+Phase 6.1 Local Optimization 
+.
+
+Placer score =  252761
+Phase 6.1 Local Optimization Complete: Time (s) - CPU Time : 0.12, Real Time : 0.11  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 6.56  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:05 . Memory (MB): peak = 113.99 ; gain = 6.56 
+
+Phase 6 Placement Optimization Complete: Time (s) - CPU Time : 0.12, Real Time : 0.11  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 6.56  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:05 . Memory (MB): peak = 113.99 ; gain = 6.56 
+
+Phase 7 IC1PL_TKPP 
+
+------------------ Clock Report ------------------
+
+Global Clocks :
+  PRIMARY "clk" from comp "hf_osc" on site "HFOSC_R1C32", clk load = 65, ce load = 0, sr load = 0
+  PRIMARY "sck_c" from comp "sck" on PIO site "21 (PL19B)", clk load = 74, ce load = 0, sr load = 0
+
+  PRIMARY  : 2 out of 8 (25%)
+
+--------------- End of Clock Report ---------------
+
+
+I/O Usage Summary (final):
+   6 out of 56 (10.7%) I/O sites used.
+   6 out of 36 (16.7%) bonded I/O sites used.
+   Number of I/O components: 6; differential: 0
+   Number of Vref pins used: 0
+
+I/O Bank Usage Summary:
++----------+---------------+------------+------------+------------+
+| I/O Bank | Usage         | Bank Vccio | Bank Vref1 | Bank Vref2 |
++----------+---------------+------------+------------+------------+
+| 0        | 2 / 14 ( 14%) | 3.3V       |            |            |
+| 1        | 4 / 14 ( 28%) | 3.3V       |            |            |
+| 2        | 0 / 8 (  0%)  | OFF        |            |            |
++----------+---------------+------------+------------+------------+
+
+Phase 7 IC1PL_TKPP Complete: Time (s) - CPU Time : 0.00, Real Time : 0.01  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 6.39  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:05 . Memory (MB): peak = 113.99 ; gain = 6.39 
+
+Total Placer CPU time: 4 secs, REAL time = 5 secs
+
+
+Checksum -- place: dc9e28019b331b3f67c0e204968e9a95cd2bdc2
+Ending Place Design : Time (s) - CPU Time : 4.52, Real Time : 4.58  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 30.23  
+
+Time: cpu = 00:00:05 ; elapsed : 00:00:05 . Memory (MB): peak = 113.99 ; gain = 30.23 
+
+
+ Phase Summary Table: 	
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+| Phase Name                                             | CPU Time(s) | Wall Time(s) | Peak Memory(MB) | Memory Gain(MB)|
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+| Phase 1 Placer Initialization                          | 0.00        |         0.00 |           88.37 |           4.60 |
+| Phase 2 Logic Packing                                  | 0.00        |         0.01 |           88.82 |           0.34 |
+| Phase 3 Hierarchical Placement                         | 0.02        |         0.02 |           90.36 |           1.54 |
+| Phase 3.1 Clustering & Global Placement                | 0.00        |         0.00 |           90.35 |           0.01 |
+| Phase 4 Apollo Placement                               | 0.61        |         0.64 |           97.81 |           7.45 |
+| Phase 5 Constructive Placement                         | 3.64        |         3.70 |          113.99 |          17.35 |
+| Phase 5.1 Iterative Refinement                         | 3.64        |         3.70 |          113.99 |          17.35 |
+| Phase 6 Placement Optimization                         | 0.12        |         0.11 |          113.99 |           6.56 |
+| Phase 6.1 Local Optimization                           | 0.12        |         0.11 |          113.99 |           6.56 |
+| Phase 7 IC1PL_TKPP                                     | 0.00        |         0.01 |          113.99 |           6.39 |
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+Writing design to file final_project_impl_1_par.dir/5_1.udb ...
+
+Starting Route Task
+Beginning Route Design 
+Phase 1 Build Route Design 
+
+Start NBR router at 19:51:26 11/17/26
+
+*****************************************************************
+Info: NBR allows conflicts(one node used by more than one signal)
+      in the earlier iterations. In each iteration, it tries to  
+      solve the conflicts while keeping the critical connections 
+      routed as short as possible. The routing process is said to
+      be completed when no conflicts exist and all connections   
+      are routed.                                                
+Note: NBR uses a different method to calculate timing slacks. The
+      worst slack and total negative slack may not be the same as
+      that in timing report. You should always run the timing    
+      tool to verify your design.                                
+*****************************************************************
+
+Phase 1 Build Route Design Complete: Time (s) - CPU Time : 0.05, Real Time : 0.05  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 27.16  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 113.99 ; gain = 27.16 
+
+Phase 2 Design Checks and Routing Setup 
+Phase 2 Design Checks and Routing Setup Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 113.99, Gain Memory : 8.34  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 113.99 ; gain = 8.34 
+
+Phase 3 Dedicated Net and Clock Routing 
+Phase 3.1 Routing User Constraints 
+Phase 3.1 Routing User Constraints Complete: Time (s) - CPU Time : 0.30, Real Time : 0.29  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 15.05  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 120.70 ; gain = 15.05 
+
+Phase 3.2 Dedicated Routing 
+Phase 3.2 Dedicated Routing Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 15.82  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 120.70 ; gain = 15.82 
+
+Phase 3.3 Clock Net Routing 
+Phase 3.3 Clock Net Routing Complete: Time (s) - CPU Time : 0.02, Real Time : 0.02  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 20.09  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 120.70 ; gain = 20.09 
+
+Phase 3.4 Dedicated Net and Clock Routing Finalization 
+Preassignment Summary:
+--------------------------------------------------------------------------------
+2 global clock signals routed
+429 connections routed (of 2615 total) (16.41%)
+---------------------------------------------------------
+Clock routing summary:
+Primary clocks (2 used out of 8 available):
+#4  Signal "clk"
+       Clock   loads: 65    out of    65 routed (100.00%)
+#7  Signal "sck_c"
+       Clock   loads: 74    out of    74 routed (100.00%)
+---------------------------------------------------------
+--------------------------------------------------------------------------------
+Phase 3.4 Dedicated Net and Clock Routing Finalization Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 18.55  
+
+Time: cpu = 00:00:00 ; elapsed : 00:00:00 . Memory (MB): peak = 120.70 ; gain = 18.55 
+
+Total conns with timing constraints =        0
+Phase 3 Dedicated Net and Clock Routing Complete: Time (s) - CPU Time : 0.42, Real Time : 0.42  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 15.05  
+
+Time: cpu = 00:00:01 ; elapsed : 00:00:01 . Memory (MB): peak = 120.70 ; gain = 15.05 
+
+Phase 4 Pre-Detailed Routing 
+Phase 4 Pre-Detailed Routing Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 120.70, Gain Memory : 15.04  
+
+Time: cpu = 00:00:01 ; elapsed : 00:00:01 . Memory (MB): peak = 120.70 ; gain = 15.04 
+
+Phase 5 Detailed Routing 
+    TimerIf::skewscore 0
+Phase 5.1 Initial Detailed Routing 
+
+Start NBR section for initial routing at 19:51:26 11/17/26
+Level 4, iteration 1
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Routing in Serial Mode ......
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+65(0.02%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack<setup>: 25.303ns/0.000ns; real time: 3 secs 
+
+Info: Initial congestion level at 75.00% usage is 0
+Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
+Phase 5.1 Initial Detailed Routing Complete: Time (s) - CPU Time : 2.55, Real Time : 2.65  |   Memory (MB) - Peak Memory : 132.89, Gain Memory : 27.23  
+
+Time: cpu = 00:00:03 ; elapsed : 00:00:03 . Memory (MB): peak = 132.89 ; gain = 27.23 
+
+Phase 5.2 Rip-Up and Route 
+
+Start NBR section for normal routing at 19:51:29 11/17/26
+Level 4, iteration 1
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack<setup>: 24.986ns/0.000ns; real time: 3 secs 
+Level 4, iteration 2
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack<setup>: 24.986ns/0.000ns; real time: 3 secs 
+Level 4, iteration 3
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack<setup>: 24.986ns/0.000ns; real time: 3 secs 
+Level 4, iteration 4
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack<setup>: 24.986ns/0.000ns; real time: 3 secs 
+Phase 5.2 Rip-Up and Route Complete: Time (s) - CPU Time : 0.17, Real Time : 0.17  |   Memory (MB) - Peak Memory : 133.14, Gain Memory : 0.25  
+
+Time: cpu = 00:00:03 ; elapsed : 00:00:03 . Memory (MB): peak = 133.14 ; gain = 0.25 
+
+Phase 5.3 Rip-Up and Reroute for setup timing improvement 
+Phase 5.3 Rip-Up and Reroute for setup timing improvement Complete: Time (s) - CPU Time : 0.00, Real Time : 0.00  |   Memory (MB) - Peak Memory : 133.14, Gain Memory : 0.00  
+
+Time: cpu = 00:00:03 ; elapsed : 00:00:03 . Memory (MB): peak = 133.14 ; gain = 0.00 
+
+Phase 5.4 Rip-Up and Reroute for hold timing fix 
+
+Start NBR section for setup/hold timing optimization with effort level 3 at 19:51:29 11/17/26
+Changing speed to m;   changing temperature to -40
+Changing speed to 6;   changing temperature to 100
+Phase 5.4 Rip-Up and Reroute for hold timing fix Complete: Time (s) - CPU Time : 0.25, Real Time : 0.24  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 6.88  
+
+Time: cpu = 00:00:03 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 6.88 
+
+Phase 5.5 TNS CleanUp 
+
+Start NBR section for post-routing at 19:51:29 11/17/26
+Phase 5.5 TNS CleanUp Complete: Time (s) - CPU Time : 0.02, Real Time : 0.02  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 1.21  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 1.21 
+
+Phase 5.6 Detail Routing Finalization 
+
+End NBR router with 0 unrouted connection(s)
+Changing speed to m;   changing temperature to -40
+Changing speed to 6;   changing temperature to 100
+
+Checksum -- route: 733b0855a8ac4ec343b819ade7b6ce05994297b7
+Phase 5.6 Detail Routing Finalization Complete: Time (s) - CPU Time : 0.52, Real Time : 0.51  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 1.21  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 1.21 
+
+
+Phase 5 Detailed Routing Complete: Time (s) - CPU Time : 3.50, Real Time : 3.60  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 34.37  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 34.37 
+
+Phase 6 Router Finalization 
+Total Router CPU time 3 secs , REAL time: 4 secs 
+Completely routed.
+End of route.  2615 routed (100.00%); 0 unrouted.
+Phase 6 Router Finalization Complete: Time (s) - CPU Time : 0.02, Real Time : 0.02  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 0.58  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 0.58 
+
+Ending Route Design : Time (s) - CPU Time : 4.03, Real Time : 4.13  |   Memory (MB) - Peak Memory : 140.02, Gain Memory : 48.77  
+
+Time: cpu = 00:00:04 ; elapsed : 00:00:04 . Memory (MB): peak = 140.02 ; gain = 48.77 
+
+
+ Phase Summary Table: 	
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+| Phase Name                                             | CPU Time(s) | Wall Time(s) | Peak Memory(MB) | Memory Gain(MB)|
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+| Phase 1 Build Route Design                             | 0.05        |         0.05 |          113.99 |          27.16 |
+| Phase 2 Design Checks and Routing Setup                | 0.00        |         0.00 |          113.99 |           8.34 |
+| Phase 3 Dedicated Net and Clock Routing                | 0.42        |         0.42 |          120.70 |          15.05 |
+| Phase 3.1 Routing User Constraints                     | 0.30        |         0.29 |          120.70 |          15.05 |
+| Phase 3.2 Dedicated Routing                            | 0.00        |         0.00 |          120.70 |          15.82 |
+| Phase 3.3 Clock Net Routing                            | 0.02        |         0.02 |          120.70 |          20.09 |
+| Phase 3.4 Dedicated Net and Clock Routing Finalization | 0.00        |         0.00 |          120.70 |          18.55 |
+| Phase 4 Pre-Detailed Routing                           | 0.00        |         0.00 |          120.70 |          15.04 |
+| Phase 5 Detailed Routing                               | 3.50        |         3.60 |          140.02 |          34.37 |
+| Phase 5.1 Initial Detailed Routing                     | 2.55        |         2.65 |          132.89 |          27.23 |
+| Phase 5.2 Rip-Up and Route                             | 0.17        |         0.17 |          133.14 |           0.25 |
+| Phase 5.3 Rip-Up and Reroute for setup timing improve* | 0.00        |         0.00 |          133.14 |           0.00 |
+| Phase 5.4 Rip-Up and Reroute for hold timing fix       | 0.25        |         0.24 |          140.02 |           6.88 |
+| Phase 5.5 TNS CleanUp                                  | 0.02        |         0.02 |          140.02 |           1.21 |
+| Phase 5.6 Detail Routing Finalization                  | 0.52        |         0.51 |          140.02 |           1.21 |
+| Phase 6 Router Finalization                            | 0.02        |         0.02 |          140.02 |           0.58 |
++--------------------------------------------------------+-------------+--------------+-----------------+----------------+
+
+Writing design to file final_project_impl_1_par.dir/5_1.udb ...
+
+
+PAR_SUMMARY::Run status = Completed
+PAR_SUMMARY::Number of unrouted conns = 0
+PAR_SUMMARY::Estimated worst slack<setup/<ns>> = 28.931
+PAR_SUMMARY::Timing score<setup/<ns>> = 0.000
+PAR_SUMMARY::Estimated worst slack<hold/<ns>> = 1.743
+PAR_SUMMARY::Timing score<hold/<ns>> = 0.000
+PAR_SUMMARY::Number of errors = 0
+
+Note: user must run 'timing' for timing closure signoff.
+
+Total CPU  Time: 9 secs 
+Total REAL Time: 9 secs 
+Peak Memory Usage: 140.02 MB
+
+
+par done!
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
+**** CMD par_run - CPU/Elapsed: 0 secs / 10 secs , MEM/Increased: 59.748 Mb/ 0.225 Mb, DATE: 19:51:30 11/17/26
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /10 secs 
+
+timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m   -pwrprd -html -rpt "final_project_impl_1.twr" "final_project_impl_1.udb" 
+timing -sethld -v 10 -u 10 -endpoints 10 -nperend 1 -sp High-Performance_1.2V -hsp m -pwrprd -html -rpt final_project_impl_1.twr final_project_impl_1.udb -gui -msgset C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/promote.xml
+Starting design reading...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2026.1/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Performance Hardware Data Status:   Advanced       Version 1.0.
+Loading udb::Database ...
+Design:  BNN_top
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+
+
+
+Successfully loading udb, 0.05 seconds
+
+Initializing timer
+Starting design annotation....
+
+Starting full timing analysis...
+Performance Hardware Data Status:   Advanced       Version 1.0.
+Connections ignored  139  counted  2307  covered  1879
+Changing speed to m;   changing temperature to -40
+
+STA Runtime and Peak Memory Usage :
+Total CPU Time: 1 secs 
+Total REAL Time: 2 secs 
+Peak Memory Usage: 108 MB
+
+ 1.489729s wall, 1.328125s user + 0.171875s system = 1.500000s CPU (100.7%)
+
+
+tmcheck -par "final_project_impl_1.par"  
+
+pnmainc -log pnmain "final_project_impl_1_bit.tcl"
+Loading final_project_impl_1.udb ...
+Loading device for application GENERIC from file 'itpa08.nph' in environment: C:/lscc/radiant/2026.1/ispfpga.
+Package Status:                     Preliminary    Version 1.5.
+Successfully read the udb in 0.00 s.
+
+Performance Hardware Data Status:   Advanced       Version 1.0.
+
+
+
+Design:  BNN_top
+Family:  iCE40UP
+Device:  iCE40UP5K
+Package: SG48
+Performance Grade:   High-Performance_1.2V
+
+Constraint Summary
+   Total number of constraints: 7
+   Total number of constraints dropped: 0
+
+Successfully loaded device info and constraints in 0.00 s.
+
+Successfully loading design udb and device data from disks and to up-layer in CPU time: 0 secs , REAL time: 0 secs 
+
+
+
+BITGEN: Bitstream Generator Radiant Software (64-bit) 2026.1.0.37.0
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2026 Lattice Semiconductor Corporation,  All rights reserved.
+
+
+Running DRC.
+DRC detected 0 errors and 0 warnings.
+
+Preference Summary:
++---------------------------------+---------------------------------+
+|  Preference                     |  Current Setting                |
++---------------------------------+---------------------------------+
+ *  Default setting.
+ ** The specified setting matches the default setting.
+
+
+Creating bit map...
+Saving bit stream in "C:/Users/pclark/Documents/GitHub/final-project/project_fpga/radiant_project/final_project/impl_1/final_project_impl_1.bin".
+Bitstream generation complete!
+
+Total CPU Time: 0 secs 
+Total REAL Time: 5 secs 
+Peak Memory Usage: 125 MB
+
+**** CMD bit_generate - CPU/Elapsed: 0 secs / 5 secs , MEM/Increased: 59.822 Mb/ 0.205 Mb, DATE: 19:51:39 11/17/26
+Thank you for using Radiant. Total CPU/Elapsed time: 0 secs /5 secs 

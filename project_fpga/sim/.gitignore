@@ -1,0 +1,18 @@
+# Simulation outputs (Questa work libraries, waveforms, Radiant sim projects)
+# are large and are rebuilt on every run. Track only the testbench sources
+# and the small result files.
+*
+!*/
+!.gitignore
+!.gitkeep
+!*.sv
+!*.svh
+!*.do
+!*.mpf
+!predictions*.txt
+!*.log
+!transcript
+!*.png
+
+# Questa compile library, even the files above would match
+work/

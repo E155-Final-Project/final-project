@@ -1,0 +1,12 @@
+# Radiant build outputs. Keep the bitstream and the logs.
+impl_1/*
+!impl_1/*.bin
+!impl_1/*.log
+*_tcr.dir/
+*_tcl.html
+.ng_run_manager.ini
+.recovery
+.setting.ini
+promote.pfl
+promote.xml
+reportview.xml

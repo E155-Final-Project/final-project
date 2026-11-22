@@ -1,0 +1,50 @@
+module BNN_thresh (
+    input  logic       clk,
+    input  logic [1:0] layer,
+    input  logic [8:0] neuron,
+    output logic [9:0] thresh
+);
+
+    // Paths are relative to Radiant's synthesis folder (radiant_project/final_project/impl_1).
+    // Testbenches load these ROMs themselves from +MEM_DIR.
+    // The .mem files hold 3 hex digits (12 bits) per value, so the ROMs are 12 bits
+    // wide; every threshold fits in 10 bits, so only the low 10 are used.
+    logic [11:0] l0_thresh, l1_thresh, l2_thresh;
+
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l0_thresh.mem")) l0_thresh_rom (
+        .clk(clk), .addr(neuron), .data(l0_thresh));
+
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l1_thresh.mem")) l1_thresh_rom (
+        .clk(clk), .addr(neuron), .data(l1_thresh));
+
+    BNN_ebr_rom #(.DEPTH(512), .WIDTH(12), .MEM_FILE("../../BNN/mem/l2_thresh.mem")) l2_thresh_rom (
+        .clk(clk), .addr(neuron), .data(l2_thresh));
+
+    always_comb
+        case (layer)
+            2'd0:    thresh = l0_thresh[9:0];
+            2'd1:    thresh = l1_thresh[9:0];
+            2'd2:    thresh = l2_thresh[9:0];
+            default: thresh = '0;    // output layer uses argmax, not a threshold
+        endcase
+
+endmodule
+
+module BNN_ebr_rom #(
+    parameter int DEPTH    = 512,
+    parameter int WIDTH    = 10,
+    parameter     MEM_FILE = "l0_thresh.mem"
+)(
+    input  logic                     clk,
+    input  logic [$clog2(DEPTH)-1:0] addr,
+    output logic [WIDTH-1:0]         data
+);
+
+    logic [WIDTH-1:0] mem [0:DEPTH-1];
+
+    initial $readmemh(MEM_FILE, mem);
+
+    always_ff @(posedge clk)
+        data <= mem[addr];
+
+endmodule

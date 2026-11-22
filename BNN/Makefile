@@ -68,7 +68,7 @@ GEN   := mem/bnn_params.svh
 RTL_DIR    ?= ../project_fpga/src
 TB_DIR     ?= ../project_fpga/sim
 TB         ?= tb_bnn
-RTL_SRCS   ?= $(filter-out $(RTL_DIR)/tb_%,$(wildcard $(RTL_DIR)/*.sv))
+RTL_SRCS   ?= $(RTL_DIR)/BNN_params.sv $(filter-out $(RTL_DIR)/tb_% $(RTL_DIR)/BNN_params.sv,$(wildcard $(RTL_DIR)/*.sv))  # package first
 TB_SRCS    ?= $(TB_DIR)/$(TB).sv
 # QUESTA_BIN: e.g. C:/lscc/radiant/<ver>/questasim/win64/ if vsim is not on PATH
 # VSIM_FLAGS: e.g. -L iCE40UP for the Lattice SB_SPRAM256KA simulation model
@@ -135,6 +135,7 @@ sim: $(PRED) | $(VENV)  ## simulate vector set VEC (smoke|full) in Questa and sc
 $(PRED): $(RTL_SRCS) $(wildcard $(TB_SRCS)) $(GEN)
 	@test -f $(TB_SRCS) || { echo "no testbench at $(TB_SRCS) (set TB_DIR / TB)"; exit 1; }
 	rm -rf $(SIM_DIR) && mkdir -p $(SIM_DIR)
+	cp mem/l*_thresh.mem $(SIM_DIR)/                 # BNN_thresh opens these by bare name
 	cd $(SIM_DIR) && $(QUESTA_BIN)vlib work && $(QUESTA_BIN)vlog -sv \
 	    +incdir+$(abspath mem) +incdir+$(abspath vectors/$(VEC)) \
 	    $(abspath $(RTL_SRCS) $(TB_SRCS))
