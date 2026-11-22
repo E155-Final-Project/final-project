@@ -8,7 +8,7 @@ module BNN_top #(parameter BNN_params::bnn_params_t P = BNN_params::BNN_PARAMS) 
 	);
 
 
-	// declare an internal clock of 12 Mhz TODO pipeline to increase speed to 48Mhz
+	// Interal clock 12 Mhz
 	logic clk;
 	HSOSC #(.CLKHF_DIV(2'b10)) hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(clk));
 

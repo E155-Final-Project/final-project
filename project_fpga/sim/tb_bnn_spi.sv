@@ -4,6 +4,7 @@
 //   1. Weights: raise load_weights and load, send 121,792 bytes, drop both.
 //   2. For each image: raise load, send 104 bytes, drop load,
 //      wait for done, clock out 8 bits and read the class.
+//   3. Blank image: send 104 zero bytes, the class must read back as 0xFF.
 // SPI mode 0, 5 MHz, LSB first. Predictions go to +PRED_FILE.
 //
 // Run from BNN/ with: make sim TB=tb_bnn_spi VEC=smoke VSIM_FLAGS="-L iCE40UP"
@@ -122,9 +123,28 @@ module tb_bnn_spi;
             #1000;
         end
 
+        // 3. blank image: no 1 bits, so the class should read back as all 1's
+        $display("%t  classifying a blank image", $time);
+        load = 1;
+        #1000;
+        for (int j = 0; j < IMG_BYTES; j++)
+            send_byte(8'h00);
+        #1000 load = 0;
+
+        t0 = $realtime;
+        while (!done && $realtime - t0 < TIMEOUT) #100;
+        if (!done) $error("blank: done never rose");
+
+        read_byte(cls);
+        if (cls !== 8'hFF) begin
+            $display("blank image: class %0d, expected 255", cls);
+            mismatches++;
+        end
+        #1000;
+
         $fclose(fd);
-        if (mismatches == 0) $display("PASS: %0d images over SPI match expected.mem", n_run);
-        else                 $display("FAIL: %0d of %0d images differ from expected.mem", mismatches, n_run);
+        if (mismatches == 0) $display("PASS: %0d images and the blank image over SPI match", n_run);
+        else                 $display("FAIL: %0d of %0d images (including blank) differ", mismatches, n_run + 1);
         $finish;
     end
 

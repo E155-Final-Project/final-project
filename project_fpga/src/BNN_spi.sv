@@ -11,6 +11,7 @@ module BNN_spi(input  logic        sck,
     logic [63:0] shreg;                 // spi shift register
     logic        sdodelayed, wasdone;   
     logic [7:0]  resultcaptured;        // class from BNN core
+    logic        started, ink;          // ink: frame had at least one 1 bit
 
     // How a transaction works:
     //   1. The MCU raises load (and load_weights too, if it is sending weights).
@@ -34,13 +35,19 @@ module BNN_spi(input  logic        sck,
         end
     end
 
-    // bitcnt[5] falls on the same edge word updates (63 -> 0), and resets
-    // with load, so it needs no initial value
+    // bitcnt[5] signals the memory to take the new last word
     assign word_half = bitcnt[5];
 
-    // class out, LSB first
+    // blank frame check
+    always_ff @(posedge sck or negedge load)
+        if (!load) started <= 1'b0;
+        else       started <= 1'b1;
     always_ff @(posedge sck)
-        if (!wasdone) resultcaptured <= class_out;
+        if (load) ink <= (started & ink) | sdi;
+
+    // class out, LSB first; a blank frame sends all 1's
+    always_ff @(posedge sck)
+        if (!wasdone) resultcaptured <= ink ? class_out : 8'hFF; // if no data, output all 1's
         else          resultcaptured <= {1'b0, resultcaptured[7:1]};
 
     // sdo should change on the negative edge of sck
@@ -50,5 +57,5 @@ module BNN_spi(input  logic        sck,
     end
 
     // when done is first asserted, shift out the lsb before the clock edge
-    assign sdo = (done & !wasdone) ? class_out[0] : sdodelayed;
+    assign sdo = (done & !wasdone) ? (class_out[0] | ~ink) : sdodelayed;
 endmodule
